@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta content="ie=edge" http-equiv="x-ua-compatible" />
+  <title th:text="'INI TITLE DARI TEMPLATE FRONT FRAGMENT HEADER.HTML'"></title>
+</head>
+
+<body>
+  <!--header.html-->
+  <div th:replace="public/front/fragments/header :: header"></div>
+
+  <div layout:fragment="content"></div>
+
+  <!--footer.html-->
+  <div th:replace="public/front/fragments/footer :: footer"></div>
+</body>
+
+</html>
