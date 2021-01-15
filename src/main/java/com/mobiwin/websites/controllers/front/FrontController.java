@@ -9,7 +9,6 @@ public class FrontController {
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Index() {
-
         return "public/front/index";
     }
 }
