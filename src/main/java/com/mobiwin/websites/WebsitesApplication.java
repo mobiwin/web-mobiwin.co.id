@@ -23,10 +23,10 @@ public class WebsitesApplication implements WebMvcConfigurer {
                 "/css/**",
                 "/js/**")
                 .addResourceLocations(
-						"classpath:/static/vendor/",
-                        "classpath:/static/img/",
-                        "classpath:/static/css/",
-                        "classpath:/static/js/");
+						"classpath:/static/front/vendor/",
+                        "classpath:/static/front/img/",
+                        "classpath:/static/front/css/",
+                        "classpath:/static/front/js/");
     }
 
 }
