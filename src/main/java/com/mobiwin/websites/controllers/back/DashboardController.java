@@ -22,30 +22,6 @@ public class DashboardController {
     @Autowired
     private AdminService adminService;
 
-    // @RequestMapping(value = "/admin/", method = RequestMethod.GET)
-    public String template(Model sendDataToPublic, HttpSession sessi, HttpServletResponse httpResponse) {
-
-        try {
-            if (sessi.getAttribute("id_session") != null) {
-                List<AdminModel> loadUsersData = adminService
-                        .serviceListUsersExcept(sessi.getAttribute("id_session").toString());
-
-                sendDataToPublic.addAttribute("list_user", loadUsersData);
-                sendDataToPublic.addAttribute("username", sessi.getAttribute("name_session"));
-
-                return "public/cms/admin/fragments/header";
-            } else {
-                httpResponse.sendRedirect("/admin/");
-                return null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e);
-            sendDataToPublic.addAttribute("msg", e);
-            return "public/cms/admin/fragments/header";
-        }
-    }
-
     @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public String dashboard(Model sendDataToPublic, HttpSession sessi, HttpServletResponse httpResponse) {
 
@@ -53,7 +29,7 @@ public class DashboardController {
             if (sessi.getAttribute("id_session") != null) {
                 List<AdminModel> loadUsersData = adminService
                         .serviceListUsersExcept(sessi.getAttribute("id_session").toString());
-
+                sendDataToPublic.addAttribute("title", "Dashboard");
                 sendDataToPublic.addAttribute("list_user", loadUsersData);
                 sendDataToPublic.addAttribute("username", sessi.getAttribute("name_session"));
 

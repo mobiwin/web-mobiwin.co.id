@@ -21,6 +21,7 @@ public class AboutController {
     AboutUsService aboutService;
     @RequestMapping(value = "/admin/about/{id}")
     public String about(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("title", "About Us");
         AboutUsModel aboutUsModel = aboutService.findOne(id);
         model.addAttribute("about", aboutUsModel);
         model.addAttribute("abouts", aboutService.findAll());

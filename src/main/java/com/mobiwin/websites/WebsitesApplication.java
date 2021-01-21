@@ -22,10 +22,10 @@ public class WebsitesApplication implements WebMvcConfigurer {
 				"/img/**",
                 "/css/**",
                 "/js/**",
-                // "/css/**",
-                // "/js/plugins/**",
-                // "/img/**",
-                // "/fonts/**",
+                "/css/**",
+                "/js/plugins/**",
+                "/img/**",
+                "/fonts/**",
                 "/ckeditor/**"
                 )
                 .addResourceLocations(
@@ -33,10 +33,10 @@ public class WebsitesApplication implements WebMvcConfigurer {
                         "classpath:/static/front/img/",
                         "classpath:/static/front/css/",
                         "classpath:/static/front/js/",
-                        // "classpath:/static/back/css/",
-                        // "classpath:/static/back/js/",
-                        // "classpath:/static/back/img/",
-                        // "classpath:/static/back/fonts/",
+                        "classpath:/static/back/css/",
+                        "classpath:/static/back/js/",
+                        "classpath:/static/back/img/",
+                        "classpath:/static/back/fonts/",
                         "classpath:/static/back/ckeditor/"
                         );
     }

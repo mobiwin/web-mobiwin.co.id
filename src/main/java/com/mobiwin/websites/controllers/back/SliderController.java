@@ -24,9 +24,9 @@ public class SliderController {
     
     @RequestMapping(value = "/admin/slider")
     public String slider(Model model) {
+        model.addAttribute("title", "Sliders");
         List<CarouselModel> tes = carouselService.listAll();
         model.addAttribute("carousel", tes);
-
         return "public/cms/admin/pages/slider/slider";
     }
 
