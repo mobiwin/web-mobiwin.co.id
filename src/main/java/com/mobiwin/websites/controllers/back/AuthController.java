@@ -4,12 +4,98 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mobiwin.websites.models.AdminModel;
+import com.mobiwin.websites.services.AdminService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
     
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @Autowired
+    private AdminService adminService;
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String Index() {
 
         return "public/cms/admin/login";
+    }
+    @RequestMapping(value = "/masuk", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String login(Model sendDataToPublic, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam Map<String, String> body) {
+
+        if (body.get("password") != "") {
+
+            try {
+                var idUser = "";
+                var nameUser = "";
+                // var flagUser = "";
+
+                List<AdminModel> loginUserData = adminService.serviceUserPassword(body.get("password"),body.get("username"));
+                int countData = loginUserData.size();
+
+                for (AdminModel udata : loginUserData) {
+                    idUser = udata.getId().toString();
+                    nameUser = udata.getUserName();
+                }
+
+                sendDataToPublic.addAttribute("name_user_nya", nameUser);
+
+                System.out.println("Datanta ADA " + countData);
+                System.out.println("ID USER SESSION DARI DB " + idUser);
+                System.out.println("NAMA USER SESSION DARI DB " + nameUser);
+
+                if (countData > 0) {
+                    sessi.setAttribute("id_session", idUser);
+                    sessi.setAttribute("name_session", nameUser);
+
+                    httpResponse.sendRedirect("/admin/dashboard");
+                    return null;
+                } else {
+                    sendDataToPublic.addAttribute("msg", "Password atau username salah atau tidak ditemukan");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                sendDataToPublic.addAttribute("msg", e);
+            }
+        } else {
+            sendDataToPublic.addAttribute("msg", "data tidak boleh kosong");
+        }
+
+        return "public/cms/admin/login";
+    }
+
+    
+
+    @RequestMapping(value = "/keluar", method = RequestMethod.GET)
+    public String logout(Model sendDataToPublic, HttpSession sessi, HttpServletResponse httpResponse) {
+
+        try {
+            if (sessi.getAttribute("id_session") != null) {
+                sessi.removeAttribute("id_session");
+            }
+
+            httpResponse.sendRedirect("/admin");
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e);
+            sendDataToPublic.addAttribute("msg", e);
+        }
+
+        return null;
     }
 }

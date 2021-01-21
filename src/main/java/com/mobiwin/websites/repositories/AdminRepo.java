@@ -1,5 +1,7 @@
 package com.mobiwin.websites.repositories;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.mobiwin.websites.models.AdminModel;
@@ -18,4 +20,13 @@ public interface AdminRepo extends CrudRepository<AdminModel, Long> {
         @Param("satu") String txtSatu,
         @Param("satu") String txtDua
     );
+
+    @Transactional
+    @Modifying
+    @Query(value = "SELECT * FROM admin_tb WHERE user_name = :username_value AND user_password = :password_value LIMIT 1", nativeQuery = true)
+    List<AdminModel> repoFindByPassword(@Param("password_value") String passwordUsr,@Param("username_value") String userName);
+
+    @Modifying
+    @Query(value = "SELECT * FROM admin_tb WHERE id <> :id_value", nativeQuery = true)
+    List<AdminModel> repoFindUsersExcept(@Param("id_value") String idSessi);
 }

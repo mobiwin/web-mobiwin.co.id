@@ -21,12 +21,22 @@ public class WebsitesApplication implements WebMvcConfigurer {
 				"/vendor/**",
 				"/img/**",
                 "/css/**",
-                "/js/**")
+                "/js/**",
+                "/css/**",
+                "/js/plugins/**",
+                "/img/**",
+                "/fonts/**",
+                "/ckeditor/**")
                 .addResourceLocations(
 						"classpath:/static/front/vendor/",
                         "classpath:/static/front/img/",
                         "classpath:/static/front/css/",
-                        "classpath:/static/front/js/");
+                        "classpath:/static/front/js/plugins/AdminLTE",
+                        "classpath:/static/back/css/",
+                        "classpath:/static/back/js/",
+                        "classpath:/static/back/img/",
+                        "classpath:/static/back/fonts/",
+                        "classpath:/static/back/ckeditor/");
     }
 
 }
