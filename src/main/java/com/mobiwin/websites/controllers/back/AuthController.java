@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mobiwin.websites.common.MD5Util;
 import com.mobiwin.websites.models.AdminModel;
 import com.mobiwin.websites.services.AdminService;
 
@@ -25,10 +26,15 @@ public class AuthController {
     private AdminService adminService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String Index() {
-
-        return "public/cms/admin/login";
+    public String index(HttpSession sessi) {
+        if(sessi.getAttribute("id_session") != null){
+            return "redirect:/admin/dashboard";
+        }else{
+            return "public/cms/admin/login";
+        }
+        
     }
+
     @RequestMapping(value = "/masuk", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String login(Model sendDataToPublic, HttpSession sessi, HttpServletResponse httpResponse,
             @RequestParam Map<String, String> body) {
@@ -40,7 +46,7 @@ public class AuthController {
                 var nameUser = "";
                 // var flagUser = "";
 
-                List<AdminModel> loginUserData = adminService.serviceUserPassword(body.get("password"),body.get("username"));
+                List<AdminModel> loginUserData = adminService.serviceUserPassword(MD5Util.string2MD5(body.get("password")),body.get("username"));
                 int countData = loginUserData.size();
 
                 for (AdminModel udata : loginUserData) {
