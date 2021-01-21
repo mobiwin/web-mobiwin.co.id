@@ -1,6 +1,5 @@
 package com.mobiwin.websites.common;
 
-import org.springframework.util.DigestUtils;
  
 import java.security.MessageDigest;
  

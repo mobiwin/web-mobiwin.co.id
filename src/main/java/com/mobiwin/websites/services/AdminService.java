@@ -6,7 +6,7 @@ import com.mobiwin.websites.models.AdminModel;
 import com.mobiwin.websites.repositories.AdminRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+
 import org.springframework.stereotype.Service;
 
 @Service
