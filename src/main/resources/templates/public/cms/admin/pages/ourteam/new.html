@@ -14,6 +14,8 @@
                     <h1>
                         Teams
                         <small>Control panel</small>
+                        <small style="color: blue;" th:text="${sucmsg}" />
+                        <small style="color: red;" th:text="${errmsg}" />
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -32,31 +34,30 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form role="form">
+                                <form th:action="@{/admin/team/save}" method="POST" class="form-group" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label for="namaKaryawan">Nama Karyawan</label>
-                                            <input type="text" class="form-control" id="namaKaryawan"
-                                                placeholder="Tulis nama karywan">
+                                            <input type="text" class="form-control" id="namaKaryawan" name="namaKaryawanTxt" placeholder="Tulis nama karywan">
                                         </div>
                                         <div class="form-group">
                                             <label for="position">Posisi / Jabatab</label>
-                                            <input type="text" class="form-control" id="position"
-                                                placeholder="Tulis nama jabatan">
+                                            <input type="text" class="form-control" id="position" name="positionTxt" placeholder="Tulis nama jabatan">
                                         </div>
                                         <div class="form-group">
-                                            <textarea class="textareaTeam" placeholder="Place some text here"
+                                            <label for="biodata">Biodata</label>
+                                            <textarea class="textareaTeam" placeholder="Place some text here" id="biodata" name="bioTxt"
                                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="pilihAvatar">Pilih Photo Profil</label>
-                                            <input type="file" id="pilihAvatar">
+                                            <input type="file" id="pilihAvatar" name="pilihAvatarInp">
                                         </div>
                                     </div>
                                     <!-- /.box-body -->
 
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Tambah Karywan</button>
                                     </div>
                                 </form>
                             </div>
@@ -67,13 +68,6 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
     </div>
-
-    <script>
-        $(function () {
-            CKEDITOR.replace('editor1')
-            $('.textareaTeam').wysihtml5()
-        })
-    </script>
 </body>
 
 </html>

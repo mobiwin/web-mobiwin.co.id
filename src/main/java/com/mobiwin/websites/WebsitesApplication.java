@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 @EnableWebMvc
 @Configuration
 @SpringBootApplication
@@ -35,6 +36,7 @@ public class WebsitesApplication implements WebMvcConfigurer {
                         "classpath:/static/front/js/",
                         "classpath:/static/back/css/",
                         "classpath:/static/back/js/",
+                        "classpath:/static/back/js/plugins/",
                         "classpath:/static/back/img/",
                         "classpath:/static/back/fonts/",
                         "classpath:/static/back/ckeditor/"

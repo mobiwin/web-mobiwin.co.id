@@ -12,11 +12,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "testimony_tb")
 public class TestimonyModel {
-    
+
     @Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "user_ava_path")
     private String userAvaPath;
 
@@ -28,7 +28,58 @@ public class TestimonyModel {
 
     @Column(name = "testimony_text")
     private String testimonyText;
-    
+
     @Column(name = "created_at")
     private Date createdAt;
+
+    public TestimonyModel() {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserAvaPath() {
+        return this.userAvaPath;
+    }
+
+    public void setUserAvaPath(String userAvaPath) {
+        this.userAvaPath = userAvaPath;
+    }
+
+    public String getNameUser() {
+        return this.nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public String getCompany() {
+        return this.company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getTestimonyText() {
+        return this.testimonyText;
+    }
+
+    public void setTestimonyText(String testimonyText) {
+        this.testimonyText = testimonyText;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

@@ -1,5 +1,6 @@
 package com.mobiwin.websites.services;
 
+import com.mobiwin.websites.models.OurTeamModel;
 import com.mobiwin.websites.repositories.OurTeamRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,9 @@ public class OurTeamService {
 
         ourTeamRepo.repoInsert(one, two);
 
+    }
+
+    public void saveOurTeam(OurTeamModel ourTeamModel) {
+        ourTeamRepo.save(ourTeamModel);
     }
 }
