@@ -14,8 +14,12 @@ public class CarouselService {
     @Autowired
     CarouselRepo carouselRepo;
 
-    public void save(CarouselModel carouselModel) {
-        carouselRepo.save(carouselModel);
+    public void sliderSave(String nameImg,String caption) {
+        carouselRepo.sliderSave(nameImg,caption);
+    }
+
+    public void sliderUpdate(long id,String nameImg,String caption) {
+        carouselRepo.sliderUpdate(id,nameImg,caption);
     }
 
     public List<CarouselModel> listAll() {
