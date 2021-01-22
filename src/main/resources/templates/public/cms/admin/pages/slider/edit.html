@@ -11,13 +11,13 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        New Slider
+                        Edit Slider
                         <small>Control panel</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Slider</li>
-                        <li class="active">New Slider</li>
+                        <li class="active">Edit Slider</li>
                     </ol>
                 </section>
     
@@ -25,18 +25,19 @@
                 <section class="content">
                     <div class="row">
                         <div class="card">
-                            <div class="card-body">
-                                <form th:action="@{/admin/slider/save}" method="post" class="form-group" enctype="multipart/form-data">
+                            <div class="card-body" th:each="item:${carousel}">
+                                <form th:action="@{/admin/slider/update/{id}(id = ${item.id})}" method="post" class="form-group" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" th:value="${item.id}">
                                     <div class="col-md-6">
                                         <label for="">Image</label>
-                                        <input type="file" name="carouselImage" class="form-control" accept="image/png, image/jpeg">
+                                        <input type="file" th:value="${item.carouselImage}" name="carouselImage" class="form-control">[[${item.carouselImage}]]
                                     </div>
                                     <div class="col-md-12"><br>
                                         <label for="">Caption</label>
-                                        <textarea name="caption"  id="ckeditor" class="form-control ckeditor"></textarea>
+                                        <textarea name="caption" id="ckeditor" class="form-control ckeditor">[[${item.caption}]]</textarea>
                                     </div>
                                     <div class="col-md-12"><br>
-                                        <button class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
+                                        <button class="btn btn-primary"><i class="fa fa-edit"></i> Submit</button>
                                     </div>
                                 </form>
                             </div>

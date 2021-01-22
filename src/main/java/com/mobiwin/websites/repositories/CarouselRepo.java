@@ -13,9 +13,18 @@ public interface CarouselRepo extends JpaRepository<CarouselModel, Long> {
     
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO aaaa(xxxx, yyyy) VALUES(:satu, :satu)", nativeQuery = true)
-    public void repoInsert(
-        @Param("satu") String txtSatu,
-        @Param("satu") String txtDua
+    @Query(value = "INSERT INTO carousel_tb (carousel_image,caption) VALUES(:nameImg, :caption)", nativeQuery = true)
+    public void sliderSave(
+        @Param("nameImg") String nameImg,
+        @Param("caption") String caption
+    );
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE carousel_tb SET carousel_image= :nameImg, caption= :caption WHERE id = :id", nativeQuery = true)
+    public void sliderUpdate(
+        @Param("id") long id,
+        @Param("nameImg") String nameImg,
+        @Param("caption") String caption
     );
 }
