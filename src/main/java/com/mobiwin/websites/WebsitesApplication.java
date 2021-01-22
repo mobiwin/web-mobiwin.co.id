@@ -39,7 +39,8 @@ public class WebsitesApplication implements WebMvcConfigurer {
                         "classpath:/static/back/js/plugins/",
                         "classpath:/static/back/img/",
                         "classpath:/static/back/fonts/",
-                        "classpath:/static/back/ckeditor/"
+                        "classpath:/static/back/ckeditor/",
+                        "classpath:/static/back/upload/**"
                         );
     }
 

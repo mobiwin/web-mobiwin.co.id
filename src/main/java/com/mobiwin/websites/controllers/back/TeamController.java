@@ -92,16 +92,21 @@ public class TeamController {
                     Date tanggal = new Date();
                     String random = simpleDateFormat.format(tanggal).toString();
 
-                    // MKDIR
+                    // MKDIR TEMP
                     if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
                         Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
+                    }
+
+                    // MKDIR PATH
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/team/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/team/"));
                     }
 
                     // UPLOAD
                     byte[] fileBytes = avatarFiles.getBytes();
                     namaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "."
-                            + ext;
+                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
+                    
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
 
@@ -111,7 +116,7 @@ public class TeamController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/" + namaKaryawanTxt + "_" + random + "."
+                    String uploadCompressPath = "src/main/resources/static/upload/team/" + namaKaryawanTxt + "_" + random + "."
                             + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
@@ -151,6 +156,11 @@ public class TeamController {
                     imageWriter.dispose();
                     // COMPRESS SELESAI
 
+
+                    // INIT PATH
+                    // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/team/" + namaKaryawanTxt + "_" + random + "." + ext;
+
                     
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -160,7 +170,7 @@ public class TeamController {
 
                     // Membuat Object Models Team
                     OurTeamModel ourTeamModel = new OurTeamModel();
-                    ourTeamModel.setAvatarPath(uploadCompressPath);
+                    ourTeamModel.setAvatarPath(fixRealPath);
                     ourTeamModel.setEmployeeName(namaKaryawanTxt);
                     ourTeamModel.setPotition(positionTxt);
                     ourTeamModel.setBio(bioTxt);
