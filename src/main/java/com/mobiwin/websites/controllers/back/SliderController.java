@@ -6,10 +6,10 @@ import com.mobiwin.websites.services.CarouselService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 @Controller
 public class SliderController {
 
@@ -33,7 +33,7 @@ public class SliderController {
     }
 
     @RequestMapping(value = "/admin/slider/edit/{id}",method = RequestMethod.GET)
-    public String sliderEdit(@PathVariable("id") Integer id, Model model){
+    public String sliderEdit(@PathVariable("id") Integer id, Model model) {
         CarouselModel carouselModel = carouselService.findOne(id);
         model.addAttribute("carousel", carouselModel);
         model.addAttribute("carousels", carouselService.listAll());
@@ -41,7 +41,7 @@ public class SliderController {
     }
 
     @RequestMapping(value = "/admin/slider/delete/{id}",method = RequestMethod.DELETE)
-    public String sliderDelete(@PathVariable("id") Integer id, Model model){
+    public String sliderDelete(@PathVariable("id") Integer id, Model model) {
         carouselService.delete(id);
         model.addAttribute("carousels", carouselService.listAll());
         return "redirect:/admin/slider";

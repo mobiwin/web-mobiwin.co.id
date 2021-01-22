@@ -11,9 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @Controller
 public class DashboardController {
+
     @Autowired
     private AdminService adminService;
 
@@ -40,5 +40,4 @@ public class DashboardController {
             return "public/cms/admin/pages/dashboard/dashboard";
         }
     }
-    
 }

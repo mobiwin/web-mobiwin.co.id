@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+
 @Controller
 public class AuthController {
     
@@ -66,7 +67,6 @@ public class AuthController {
         } else {
             sendDataToPublic.addAttribute("msg", "data tidak boleh kosong");
         }
-
         return "public/cms/admin/login";
     }
 
@@ -87,7 +87,6 @@ public class AuthController {
             System.out.println(e);
             sendDataToPublic.addAttribute("msg", e);
         }
-
         return null;
     }
     

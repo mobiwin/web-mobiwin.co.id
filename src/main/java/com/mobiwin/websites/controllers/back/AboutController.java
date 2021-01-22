@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
+
 @Controller
 public class AboutController {
 
@@ -18,14 +19,13 @@ public class AboutController {
     AboutUsService aboutService;
 
     @RequestMapping(value = "/admin/about/edit/{id}", method = RequestMethod.GET)
-    public String about(@PathVariable("id") Integer id, Model model){
+    public String about(@PathVariable("id") Integer id, Model model) {
 
         model.addAttribute("title", "About Us");
         AboutUsModel aboutUsModel = aboutService.findOne(id);
         model.addAttribute("about", aboutUsModel);
         model.addAttribute("abouts", aboutService.findAll());
         return "public/cms/admin/pages/about/about";
-
     }
 
     @RequestMapping(value = "/admin/about/update/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -35,10 +35,8 @@ public class AboutController {
         try{
             aboutService.update(id,title,summary,wording);
             response.sendRedirect("/admin/about/1");
-        }catch(IOException e){
+        } catch(IOException e){
             System.out.println(e);
         }
-        
     }
-
 }
