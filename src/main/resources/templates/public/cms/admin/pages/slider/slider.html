@@ -48,7 +48,7 @@
                                     <tbody>
                                         <tr th:each="item,no : ${carousel}">
                                             <td th:text="${no.count}"></td>
-                                            <td> <img th:src="${item.carouselImage}" width="100px" height="100px"> </td>
+                                            <td> <img th:src="@{${'/upload'+ item.carouselImage}}"  width="100px" height="100px"> </td>
                                             <td th:text="${item.caption}"></td>
                                             <td th:text="${item.createdAt}"></td>
                                             <td>
