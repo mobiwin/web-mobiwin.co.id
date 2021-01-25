@@ -14,6 +14,7 @@
                 <h1>
                     Teams
                     <small>Control panel</small>
+                    <small style="color: blue;" th:text="${param.msg}" />
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -39,21 +40,25 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Image</th>
-                                            <th>Caption</th>
-                                            <th>Date</th>
+                                            <th>Photo</th>
+                                            <th>Name</th>
+                                            <th>Potition</th>
+                                            <th>Bio</th>
                                             <th>Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="item,no : ${carousel}">
+                                        <tr th:each="item,no : ${list_data}">
                                             <td th:text="${no.count}"></td>
-                                            <td th:text="${item.carouselImage}"></td>
-                                            <td th:text="${item.caption}"></td>
-                                            <td th:text="${item.createdAt}"></td>
                                             <td>
-                                                <a th:href="@{/admin/slider/edit/{id}(id = ${item.id})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
-                                                <a th:href="@{/admin/slider/delete/{id}(id = ${item.id})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                                <img class="img img-responsive" style="width: 30%; height: 50px;" th:src="@{'/upload'+${item.getAvatarPath}}" />
+                                            </td>
+                                            <td th:text="${item.getEmployeeName}"></td>
+                                            <td th:text="${item.getPotition}"></td>
+                                            <td th:utext="${item.getBio}"></td>
+                                            <td>
+                                                <a th:href="@{/admin/team/edit/{id}(id = ${item.getId})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
+                                                <a th:href="@{/admin/team/delete/{id}(id = ${item.getId})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -32,7 +32,17 @@ public class OurTeamModel {
     @Column(name = "created_at")
     private Date createdAt;
 
+
     public OurTeamModel() {
+    }
+
+    public OurTeamModel(Long id, String avatarPath, String employeeName, String potition, String bio, Date createdAt) {
+        this.id = id;
+        this.avatarPath = avatarPath;
+        this.employeeName = employeeName;
+        this.potition = potition;
+        this.bio = bio;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -82,6 +92,4 @@ public class OurTeamModel {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-
 }

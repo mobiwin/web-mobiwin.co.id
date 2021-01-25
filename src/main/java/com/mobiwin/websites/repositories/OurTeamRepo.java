@@ -4,18 +4,20 @@ import javax.transaction.Transactional;
 
 import com.mobiwin.websites.models.OurTeamModel;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface OurTeamRepo extends CrudRepository<OurTeamModel, Long> {
+public interface OurTeamRepo extends JpaRepository<OurTeamModel, Long> {
     
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO aaaa(xxxx, yyyy) VALUES(:satu, :satu)", nativeQuery = true)
-    public void repoInsert(
-        @Param("satu") String txtSatu,
-        @Param("satu") String txtDua
+    @Query(value = "UPDATE our_team_tb SET employee_name = :empName, potition = :pos, bio = :bio WHERE id = :id", nativeQuery = true)
+    public void repoUpdatePart(
+        @Param("empName") String txtEmpName,
+        @Param("pos") String txtPos,
+        @Param("bio") String txtBio,
+        @Param("id") String txtId
     );
 }

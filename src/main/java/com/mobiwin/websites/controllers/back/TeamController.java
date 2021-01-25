@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -27,6 +28,7 @@ import com.mobiwin.websites.services.OurTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +44,10 @@ public class TeamController {
     ServletContext servletContext;
 
     @RequestMapping(value = "/admin/team", method = RequestMethod.GET)
-    public String listTeam() {
+    public String listTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
+
+        List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
+        publicData.addAttribute("list_data", ourTeamListData);
 
         return "public/cms/admin/pages/ourteam/list";
     }
@@ -58,10 +63,169 @@ public class TeamController {
             @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
             @RequestParam(value = "positionTxt", required = false) String positionTxt,
             @RequestParam(value = "bioTxt", required = false) String bioTxt,
-            @RequestParam(value = "pilihAvatarInp") MultipartFile avatarFiles) {
+            @RequestParam(value = "pilihAvatarInp", required = false) MultipartFile avatarFiles) {
+
+                String msg = "";
 
         if (avatarFiles.isEmpty()) {
-            System.out.println("File kosong");
+            msg = "File kosong";
+        } else {
+
+            String exten = avatarFiles.getContentType().toString();
+            String ext = "";
+            switch (exten) {
+                case "image/png":
+                    ext = "png";
+                    break;
+
+                case "image/jpeg":
+                    ext = "jpg";
+                    break;
+
+                case "image/jpg":
+                    ext = "jpg";
+                    break;
+                default:
+                    ext = "";
+                    break;
+            }
+
+            if (ext.isEmpty()) {
+                msg = "File kosong";
+            } else {
+
+                try {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                    Date tanggal = new Date();
+                    String random = simpleDateFormat.format(tanggal).toString();
+
+                    // MKDIR TEMP
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
+                    }
+
+                    // MKDIR PATH
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/team/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/team/"));
+                    }
+
+                    // UPLOAD
+                    byte[] fileBytes = avatarFiles.getBytes();
+                    namaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "."
+                            + ext;
+
+                    // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
+
+                    // WRITE FILE I/O
+                    Files.write(Paths.get(uploadPath), fileBytes);
+
+                    // COMRESS IMAGE
+                    File imageFile = new File(uploadPath);
+
+                    String uploadCompressPath = "src/main/resources/static/upload/team/" + namaKaryawanTxt + "_"
+                            + random + "." + ext;
+                    File compressedImageFile = new File(uploadCompressPath);
+
+                    // SET INPUT OUTPUT IMAGE
+                    InputStream inputStream = new FileInputStream(imageFile);
+                    OutputStream outputStream = new FileOutputStream(compressedImageFile);
+
+                    float imageQuality = 0.3f;
+
+                    // TULIS BUFFER IMAGE
+                    BufferedImage bufferedImage = ImageIO.read(inputStream);
+
+                    // TULIS DAN CONVERT KE JPG
+                    Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
+
+                    if (!imageWriters.hasNext()) {
+                        msg = "imageWriters.hasNext";
+                    }
+
+                    ImageWriter imageWriter = (ImageWriter) imageWriters.next();
+                    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+                    imageWriter.setOutput(imageOutputStream);
+
+                    ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+
+                    // COMPRESS IMAGE
+                    imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    imageWriteParam.setCompressionQuality(imageQuality);
+
+                    // MEMBUAT IMAGE BARU
+                    imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+
+                    // TUTUP SEMUA STREAM
+                    inputStream.close();
+                    outputStream.close();
+                    imageOutputStream.close();
+                    imageWriter.dispose();
+                    // COMPRESS SELESAI
+
+                    // INIT PATH
+                    // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/team/" + namaKaryawanTxt + "_" + random + "." + ext;
+
+                    // FINAL, namaKaryawanTxt
+                    // FINAL, positionTxt
+                    // FINAL, bioTxt
+                    // FINAL, jika tidak mau pakai Compress pakai uploadPath untuk path image
+                    // FINAL, jika mau pakai Compress pakai uploadCompressPath untuk path image
+
+                    // Membuat Object Models Team
+                    OurTeamModel ourTeamModel = new OurTeamModel();
+                    ourTeamModel.setAvatarPath(fixRealPath);
+                    ourTeamModel.setEmployeeName(namaKaryawanTxt);
+                    ourTeamModel.setPotition(positionTxt);
+                    ourTeamModel.setBio(bioTxt);
+
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String dateString = format.format(new Date());
+                    Date datenow = format.parse(dateString);
+
+                    ourTeamModel.setCreatedAt(datenow);
+
+                    // SAVE TO DATABASE WITH MODELS OBJECT DATA
+                    ourTeamService.saveTeam(ourTeamModel);
+
+                    msg = "Upload Berhasil";
+                } catch (Exception e) {
+                    msg = e.getMessage();
+                }
+            }
+        }
+
+        return "redirect:/admin/team?msg=" + msg;
+    }
+
+    @RequestMapping(value = "/admin/team/edit/{id}", method = RequestMethod.GET)
+    public String editTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @PathVariable("id") Long id) {
+
+        OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
+        publicData.addAttribute("list_data", ourTeamListDataWithId);
+
+        return "public/cms/admin/pages/ourteam/edit";
+    }
+
+    @RequestMapping(value = "/admin/team/update", method = RequestMethod.POST)
+    public String updateTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam(value = "idTxt", required = false) String id,
+            @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
+            @RequestParam(value = "positionTxt", required = false) String positionTxt,
+            @RequestParam(value = "bioTxt", required = false) String bioTxt,
+            @RequestParam(value = "pilihAvatarInp") MultipartFile avatarFiles) {
+
+        String msg = "";
+
+        if (avatarFiles.isEmpty()) {
+            try {
+                ourTeamService.updatePartDataTeam(namaKaryawanTxt, positionTxt, bioTxt, id);
+                msg = "Edit Data Berhasil";
+            } catch (Exception e) {
+                msg = e.getMessage();
+            }
         } else {
 
             String exten = avatarFiles.getContentType().toString();
@@ -105,8 +269,8 @@ public class TeamController {
                     // UPLOAD
                     byte[] fileBytes = avatarFiles.getBytes();
                     namaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    
+                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "."
+                            + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
 
@@ -116,8 +280,8 @@ public class TeamController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/team/" + namaKaryawanTxt + "_" + random + "."
-                            + ext;
+                    String uploadCompressPath = "src/main/resources/static/upload/team/" + namaKaryawanTxt + "_"
+                            + random + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
                     // SET INPUT OUTPUT IMAGE
@@ -133,7 +297,8 @@ public class TeamController {
                     Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
                     if (!imageWriters.hasNext()) {
-                        publicData.addAttribute("errmsg", "imageWriters.hasNext");
+                        msg = "imageWriters.hasNext";
+
                     }
 
                     ImageWriter imageWriter = (ImageWriter) imageWriters.next();
@@ -156,12 +321,10 @@ public class TeamController {
                     imageWriter.dispose();
                     // COMPRESS SELESAI
 
-
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
                     String fixRealPath = "/team/" + namaKaryawanTxt + "_" + random + "." + ext;
 
-                    
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
                     // FINAL, bioTxt
@@ -177,20 +340,40 @@ public class TeamController {
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());
-                    Date datenow  = format.parse (dateString); 
-                
+                    Date datenow = format.parse(dateString);
+
                     ourTeamModel.setCreatedAt(datenow);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
-                    ourTeamService.saveOurTeam(ourTeamModel);
+                    ourTeamService.saveTeam(ourTeamModel);
 
-                    publicData.addAttribute("sucmsg", "Upload Berhasil");
+                    msg = "Edit Data Berhasil";
                 } catch (Exception e) {
-                    publicData.addAttribute("errmsg", e.getMessage());
+                    msg = e.getMessage();
                 }
             }
         }
 
-        return "public/cms/admin/pages/ourteam/new";
+        return "redirect:/admin/team?msg=" + msg;
+    }
+
+    @RequestMapping(value = "/admin/team/delete/{id}", method = RequestMethod.GET)
+    public String deleteTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse, @PathVariable("id") Long id) {
+
+        String msg = "";
+
+        OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
+        if(ourTeamListDataWithId.getId() > 0) {
+            try {
+                ourTeamService.deleteTeam(id);
+                msg = "Delete data success";
+            } catch (Exception e) {
+                msg = "Delete data failed";
+            }
+        } else {
+            msg = "Data not found";
+        }
+
+        return "redirect:/admin/team?msg=" + msg;
     }
 }

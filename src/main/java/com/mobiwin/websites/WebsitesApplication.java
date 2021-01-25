@@ -27,7 +27,8 @@ public class WebsitesApplication implements WebMvcConfigurer {
                 "/js/plugins/**",
                 "/img/**",
                 "/fonts/**",
-                "/ckeditor/**"
+                "/ckeditor/**",
+                "/upload/**"
                 )
                 .addResourceLocations(
 						"classpath:/static/front/vendor/",
@@ -40,7 +41,7 @@ public class WebsitesApplication implements WebMvcConfigurer {
                         "classpath:/static/back/img/",
                         "classpath:/static/back/fonts/",
                         "classpath:/static/back/ckeditor/",
-                        "classpath:/static/back/upload/**"
+                        "classpath:/static/upload/"
                         );
     }
 

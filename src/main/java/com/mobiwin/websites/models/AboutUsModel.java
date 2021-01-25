@@ -30,74 +30,55 @@ public class AboutUsModel {
     @Column(name = "created_at")
     private Date createdAt;
 
-    /**
-     * @return Long return the id
-     */
-    public Long getId() {
-        return id;
+
+    public AboutUsModel() {
     }
 
-    /**
-     * @param id the id to set
-     */
+    public AboutUsModel(Long id, String title, String summary, String wording, Date createdAt) {
+        this.id = id;
+        this.title = title;
+        this.summary = summary;
+        this.wording = wording;
+        this.createdAt = createdAt;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * @return String return the title
-     */
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
-    /**
-     * @param title the title to set
-     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     * @return String return the summary
-     */
     public String getSummary() {
-        return summary;
+        return this.summary;
     }
 
-    /**
-     * @param summary the summary to set
-     */
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
-    /**
-     * @return String return the wording
-     */
     public String getWording() {
-        return wording;
+        return this.wording;
     }
 
-    /**
-     * @param wording the wording to set
-     */
     public void setWording(String wording) {
         this.wording = wording;
     }
 
-    /**
-     * @return Date return the createdAt
-     */
     public Date getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
-    /**
-     * @param createdAt the createdAt to set
-     */
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
 }
