@@ -11,13 +11,13 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Edit Service
+                        New Project
                         <small>Control panel</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Service</li>
-                        <li class="active">Edit Service</li>
+                        <li class="active">Project</li>
+                        <li class="active">New Project</li>
                     </ol>
                 </section>
     
@@ -26,33 +26,43 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- general form elements -->
-                            <div class="box box-primary" th:each="item : ${service}">
+                            <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Edit Service</h3>
+                                    <h3 class="box-title">New Project</h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form th:action="@{/admin/service/update/{id}(id = ${item.id})}" method="POST" class="form-group">
+                                <form th:action="@{/admin/project/save}" method="POST" class="form-group" enctype="multipart/form-data">
                                     <div class="box-body">
-                                        <input type="hidden" name="id" th:value="${item.id}">
                                         <div class="form-group">
-                                            <label for="pilihAvatar">Icon</label>
-                                            <input type="text" name="icon_path" th:value="${item.iconPath}" placeholder="Example : fa fa-avatar / glyphicon glyphicon-user " class="form-control">
+                                            <label for="">Project Image</label>
+                                            <input type="file" name="preview_path" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="biodata">Short Wording</label>
-                                            <textarea class="textareaTeam" placeholder="Short Wording" id="short_wording" name="short_wording"
-                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">[[${item.shortWording}]]</textarea>
+                                            <label for="title">Title</label>
+                                            <input type="text" name="project_title" placeholder="Title" class="form-control" id="">
                                         </div>
                                         <div class="form-group">
-                                            <label for="biodata">Full Wording</label>
-                                            <textarea class="textareaTeam" placeholder="Full Wording" id="full_wording" name="full_wording"
-                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">[[${item.fullWording}]]</textarea>
+                                            <label for="">Kind</label>
+                                            <select name="kind" class="form-control" id="">
+                                                <option selected>Select Kind</option>
+                                                <option value="app">App</option>
+                                                <option value="web">Web</option>
+                                                <option value="api">Api</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="client">Client</label>
+                                            <input type="text" name="client" placeholder="Client" class="form-control" id="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="client">Technology</label>
+                                            <input type="text" name="technology" placeholder="Example : PHP,ANGULAR,IONIC,HTML" class="form-control" id="">
                                         </div>
                                     </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Submit</button>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
                                     </div>
                                 </form>
                             </div>

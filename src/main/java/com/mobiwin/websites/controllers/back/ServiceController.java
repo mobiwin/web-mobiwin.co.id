@@ -11,7 +11,7 @@ import com.mobiwin.websites.services.OurServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+// import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,7 +69,7 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "/admin/service/delete/{id}", method = RequestMethod.GET)
-    public String sliderDelete(@PathVariable("id") Integer id,
+    public String serviceDelete(@PathVariable("id") Integer id,
      Model model) {
         ourServiceService.delete(id);
         model.addAttribute("services", ourServiceService.listAll());

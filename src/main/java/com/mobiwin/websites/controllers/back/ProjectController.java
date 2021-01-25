@@ -1,5 +1,5 @@
 package com.mobiwin.websites.controllers.back;
-
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -15,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.awt.image.BufferedImage;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -25,13 +23,12 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mobiwin.websites.models.CarouselModel;
-import com.mobiwin.websites.repositories.CarouselRepo;
-import com.mobiwin.websites.services.CarouselService;
+import com.mobiwin.websites.models.OurProjectModel;
+import com.mobiwin.websites.services.OurProjectService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,38 +37,38 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class SliderController {
+public class ProjectController {
 
     @Autowired
-    CarouselService carouselService;
+    OurProjectService ourProjectService;
 
-    @Autowired
-    CarouselRepo carouselRepo;
-
-    @RequestMapping(value = "/admin/slider", method = RequestMethod.GET)
-    public String slider(Model model) {
-        model.addAttribute("title", "Sliders");
-        List<CarouselModel> tes = carouselService.listAll();
-        model.addAttribute("carousel", tes);
-        return "public/cms/admin/pages/slider/slider";
+    @RequestMapping(value = "/admin/project", method = RequestMethod.GET)
+    public String project(Model model) {
+        model.addAttribute("title","Project / Portofolio");
+        List<OurProjectModel> getData = ourProjectService.listAll();
+        model.addAttribute("project", getData);
+        return "public/cms/admin/pages/project/project";
     }
 
-    @RequestMapping(value = "/admin/slider/new", method = RequestMethod.GET)
-    public String sliderNew(Model model) {
-        model.addAttribute("title", "Sliders New");
-        return "public/cms/admin/pages/slider/new";
+    @RequestMapping(value = "/admin/project/new", method = RequestMethod.GET)
+    public String projectNew(Model model) {
+        model.addAttribute("title","New Project");
+        return "public/cms/admin/pages/project/new";
     }
 
-    @RequestMapping(value = "/admin/slider/save", method = RequestMethod.POST)
-    public String SliderSave(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
-            @RequestParam(value = "caption", required = false) String caption,
-            @RequestParam(value = "carouselImage") MultipartFile carouselImage) {
+    @RequestMapping(value = "/admin/project/save", method = RequestMethod.POST)
+    public String projectSave(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam(value = "project_title", required = false) String title,
+            @RequestParam(value = "kind", required = false) String kind,
+            @RequestParam(value = "client", required = false) String client,
+            @RequestParam(value = "technology", required = false) String technology,
+            @RequestParam(value = "preview_path") MultipartFile preview_path) {
 
-        if (carouselImage.isEmpty()) {
+        if (preview_path.isEmpty()) {
             System.out.println("File kosong");
         } else {
 
-            String exten = carouselImage.getContentType().toString();
+            String exten = preview_path.getContentType().toString();
             String ext = "";
             switch (exten) {
                 case "image/png":
@@ -105,14 +102,14 @@ public class SliderController {
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/slider/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/slider/"));
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/project/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/project/"));
                     }
 
                     // UPLOAD
-                    byte[] fileBytes = carouselImage.getBytes();
-                    // carouselImage = carouselImage.getOriginalFilename();
-                    String uploadPath = "src/main/resources/static/upload/temp/" + random + "." + ext;
+                    byte[] fileBytes = preview_path.getBytes();
+                    title = title.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/"+ title + "_" + random + "." + ext;
                     
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -123,7 +120,7 @@ public class SliderController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/slider/"+ random + "."
+                    String uploadCompressPath = "src/main/resources/static/upload/project/"+ title + "_" + random + "."
                             + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
@@ -166,7 +163,7 @@ public class SliderController {
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/slider/" + random + "." + ext;
+                    String fixRealPath = "/project/"+ title + "_" + random + "." + ext;
 
                     
                     // FINAL, namaKaryawanTxt
@@ -176,12 +173,15 @@ public class SliderController {
                     // FINAL, jika mau pakai Compress pakai uploadCompressPath untuk path image
 
                     // Membuat Object Models Team
-                    CarouselModel carouselModel = new CarouselModel();
-                    carouselModel.setCarouselImage(fixRealPath);
-                    carouselModel.setCaption(caption);
+                    OurProjectModel ourProjectModel = new OurProjectModel();
+                    ourProjectModel.setPreviewPath(fixRealPath);
+                    ourProjectModel.setProjectTitle(title);
+                    ourProjectModel.setKind(kind);
+                    ourProjectModel.setClient(client);
+                    ourProjectModel.setTechnology(technology);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
-                    carouselService.saveSlider(carouselModel);
+                    ourProjectService.saveProject(ourProjectModel);
                     publicData.addAttribute("sucmsg", "Upload Berhasil");
                 } catch (Exception e) {
                     publicData.addAttribute("errmsg", e.getMessage());
@@ -189,14 +189,28 @@ public class SliderController {
             }
         }
 
-        return "public/cms/admin/pages/slider/new";
+        return "public/cms/admin/pages/project/new";
     }
 
-    @RequestMapping(value = "/admin/slider/update/{id}", method = RequestMethod.POST, consumes = {
-            "multipart/form-data" })
-    public String sliderUpdate(@RequestParam("carouselImage") MultipartFile carouselImage, @RequestParam("id") long id,
-            @RequestParam("caption") String caption, RedirectAttributes attributes, Model model) {
-        String exten = carouselImage.getContentType().toString();
+    @RequestMapping(value = "/admin/project/edit/{id}", method = RequestMethod.GET)
+    public String projectEdit(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("title","Edit Project");
+        OurProjectModel ourProjectModel = ourProjectService.findOne(id);
+        model.addAttribute("project", ourProjectModel);
+        model.addAttribute("projects", ourProjectService.listAll());
+        return "public/cms/admin/pages/project/edit";
+    }
+
+    @RequestMapping(value = "/admin/project/update/{id}", method = RequestMethod.POST, consumes = {
+        "multipart/form-data" })
+    public String projectUpdate(
+        @RequestParam("id") long id,
+        @RequestParam(value = "project_title", required = false) String title,
+        @RequestParam(value = "kind", required = false) String kind,
+        @RequestParam(value = "client", required = false) String client,
+        @RequestParam(value = "technology", required = false) String technology,
+        @RequestParam(value = "preview_path") MultipartFile preview_path,RedirectAttributes attributes, Model model) {
+        String exten = preview_path.getContentType().toString();
         String ext = "";
             switch (exten) {
                 case "image/png":
@@ -214,49 +228,42 @@ public class SliderController {
                     ext = "";
                     break;
             }
-        if (carouselImage.isEmpty()) {
+        if (preview_path.isEmpty()) {
             attributes.addFlashAttribute("message", "Please select a file to upload.");
-            carouselService.sliderUpdateWithOutImg(id,caption);
-            return "redirect:/admin/slider";
+            title = title.replaceAll("[^a-zA-Z0-9]", "_");
+            ourProjectService.projectUpdateWithOutImg(id,title,kind,client,technology);
+            return "redirect:/admin/project";
         }
         // String fileName = StringUtils.cleanPath(carouselImage.getOriginalFilename());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         Date tanggal = new Date();
         String random = simpleDateFormat.format(tanggal).toString();
-        String nameImg = "/slider/" + random + "." + ext;
+        title = title.replaceAll("[^a-zA-Z0-9]", "_");
+        String nameImg = "/project/"+ title + "_" + random + "." + ext;
         try {
-            Path path = Paths.get("src/main/resources/static/upload/slider/" + random + "." + ext);
-            Files.copy(carouselImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            carouselService.sliderUpdate(id, nameImg, caption);
+            Path path = Paths.get("src/main/resources/static/upload/project/" + title + "_" + random + "." + ext);
+            Files.copy(preview_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            ourProjectService.projectUpdate(id,title,kind,client,technology,nameImg);
         } catch (IOException e) {
             e.printStackTrace();
         }
         attributes.addFlashAttribute("message", "You successfully uploaded " + random + "." + ext + '!');
 
-        return "redirect:/admin/slider";
+        return "redirect:/admin/project";
     }
 
-    @RequestMapping(value = "/admin/slider/edit/{id}", method = RequestMethod.GET)
-    public String sliderEdit(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("title", "Sliders Edit");
-        CarouselModel carouselModel = carouselService.findOne(id);
-        model.addAttribute("carousel", carouselModel);
-        model.addAttribute("carousels", carouselService.listAll());
-        return "public/cms/admin/pages/slider/edit";
-    }
-
-    @RequestMapping(value = "/admin/slider/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/project/delete/{id}", method = RequestMethod.GET)
     public String sliderDelete(@PathVariable("id") Integer id,
      Model model) {
-        CarouselModel carouselModel = carouselService.findOne(id);
-        Path path = Paths.get("src/main/resources/static/upload/" + carouselModel.getCarouselImage());
+        OurProjectModel ourProjectModel = ourProjectService.findOne(id);
+        Path path = Paths.get("src/main/resources/static/upload/" + ourProjectModel.getPreviewPath());
          try{
             Files.deleteIfExists(path);
-            carouselService.delete(id);
-            model.addAttribute("carousels", carouselService.listAll());
+            ourProjectService.delete(id);
+            model.addAttribute("projects", ourProjectService.listAll());
          }catch(IOException io){
             System.out.printf("No such file or directory: %s\n", path);
          }
-        return "redirect:/admin/slider";
+        return "redirect:/admin/project";
     }
 }

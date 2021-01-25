@@ -20,18 +20,76 @@ public class OurProjectModel {
     @Column(name = "preview_path")
     private String previewPath;
 
-    @Column(name = "peoject_title")
-    private String peojectTitle;
+    @Column(name = "project_title")
+    private String projectTitle;
 
-    @Column(name = "year")
-    private String year;
+    @Column(name = "kind")
+    private String kind;
 
-    @Column(name = "name_user")
-    private String nameUser;
+    @Column(name = "client")
+    private String client;
 
-    @Column(name = "tecknology")
-    private String tecknology;
+    @Column(name = "technology")
+    private String technology;
     
     @Column(name = "created_at")
     private Date createdAt;
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPreviewPath() {
+        return this.previewPath;
+    }
+
+    public void setPreviewPath(String previewPath) {
+        this.previewPath = previewPath;
+    }
+
+    public String getProjectTitle() {
+        return this.projectTitle;
+    }
+
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
+    }
+
+    public String getKind() {
+        return this.kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public String getClient() {
+        return this.client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getTechnology() {
+        return this.technology;
+    }
+
+    public void setTechnology(String technology) {
+        this.technology = technology;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+   
 }

@@ -20,10 +20,7 @@ public class OurServiceService {
     public void serviceUpdate(long id,String icon_path, String short_wording,String full_wording) {
         ourServiceRepo.serviceUpdate(id,icon_path,short_wording,full_wording);
     }
-    // public void serviceSave(OurServiceModel ourServiceModel) {
-    //     ourServiceRepo.save(ourServiceModel);
-    // }
-
+    
     public List<OurServiceModel> listAll() {
         return ourServiceRepo.findAll();
     }
