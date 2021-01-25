@@ -18,31 +18,41 @@ public class WebsitesApplication implements WebMvcConfigurer {
 
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // registry.addResourceHandler(
+		// 		"/vendor/**",
+		// 		"/img/**",
+        //         "/css/**",
+        //         "/js/**",
+        //         "/css/**",
+        //         "/js/plugins/**",
+        //         "/img/**",
+        //         "/fonts/**",
+        //         "/ckeditor/**",
+        //         "/upload/**"
+        //         )
+        //         .addResourceLocations(
+		// 				"classpath:/static/front/vendor/",
+        //                 "classpath:/static/front/img/",
+        //                 "classpath:/static/front/css/",
+        //                 "classpath:/static/front/js/",
+        //                 "classpath:/static/back/css/",
+        //                 "classpath:/static/back/js/",
+        //                 "classpath:/static/back/js/plugins/",
+        //                 "classpath:/static/back/img/",
+        //                 "classpath:/static/back/fonts/",
+        //                 "classpath:/static/back/ckeditor/",
+        //                 "classpath:/static/upload/**"
+        //                 );
         registry.addResourceHandler(
-				"/vendor/**",
-				"/img/**",
-                "/css/**",
-                "/js/**",
-                "/css/**",
-                "/js/plugins/**",
-                "/img/**",
-                "/fonts/**",
-                "/ckeditor/**",
-                "/upload/**"
-                )
-                .addResourceLocations(
-						"classpath:/static/front/vendor/",
-                        "classpath:/static/front/img/",
-                        "classpath:/static/front/css/",
-                        "classpath:/static/front/js/",
-                        "classpath:/static/back/css/",
-                        "classpath:/static/back/js/",
-                        "classpath:/static/back/js/plugins/",
-                        "classpath:/static/back/img/",
-                        "classpath:/static/back/fonts/",
-                        "classpath:/static/back/ckeditor/",
-                        "classpath:/static/upload/"
-                        );
+            "/**",
+            "/front/**",
+            "/back/**"
+        )
+        .addResourceLocations(
+            "classpath:/static/",
+            "classpath:/static/front/",
+            "classpath:/static/back/"
+        );
     }
 
 }

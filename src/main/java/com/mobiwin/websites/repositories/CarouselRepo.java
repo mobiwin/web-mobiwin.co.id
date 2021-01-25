@@ -27,4 +27,12 @@ public interface CarouselRepo extends JpaRepository<CarouselModel, Long> {
         @Param("nameImg") String nameImg,
         @Param("caption") String caption
     );
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE carousel_tb SET caption= :caption WHERE id = :id", nativeQuery = true)
+    public void sliderUpdateWithOutImg(
+        @Param("id") long id,
+        @Param("caption") String caption
+    );
 }

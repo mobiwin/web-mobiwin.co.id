@@ -11,13 +11,13 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        New Slider
+                        New Service
                         <small>Control panel</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Slider</li>
-                        <li class="active">New Slider</li>
+                        <li class="active">Service</li>
+                        <li class="active">New Service</li>
                     </ol>
                 </section>
     
@@ -28,19 +28,24 @@
                             <!-- general form elements -->
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">New Slider</h3>
+                                    <h3 class="box-title">New Service</h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form th:action="@{/admin/slider/save}" method="POST" class="form-group" enctype="multipart/form-data">
+                                <form th:action="@{/admin/service/save}" method="POST" class="form-group">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="pilihAvatar">Pilih Image</label>
-                                            <input type="file" id="pilihAvatar" name="carouselImage" class="form-control">
+                                            <label for="pilihAvatar">Icon</label>
+                                            <input type="text" name="icon_path" placeholder="Example : fa fa-avatar / glyphicon glyphicon-user " class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="biodata">Caption</label>
-                                            <textarea class="textareaTeam" placeholder="caption" id="caption" name="caption"
+                                            <label for="biodata">Short Wording</label>
+                                            <textarea class="textareaTeam" placeholder="Short Wording" id="short_wording" name="short_wording"
+                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="biodata">Full Wording</label>
+                                            <textarea class="textareaTeam" placeholder="Full Wording" id="full_wording" name="full_wording"
                                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
                                     </div>

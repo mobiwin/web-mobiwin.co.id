@@ -31,7 +31,7 @@
                                     <h2>Sliders</h2>
                                 </div>
                                 <div class="col-md-2">
-                                    <a th:href="@{/admin/slider/new}" class="btn btn-primary"><i class="fa fa-plus"></i> New Slider</a>
+                                    <a th:href="@{/admin/service/new}" class="btn btn-primary"><i class="fa fa-plus"></i> New Slider</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -39,21 +39,23 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Image</th>
-                                            <th>Caption</th>
+                                            <th>Icon</th>
+                                            <th>Short Word</th>
+                                            <th>Full Word</th>
                                             <th>Date</th>
                                             <th>Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="item,no : ${carousel}">
+                                        <tr th:each="item,no : ${service}">
                                             <td th:text="${no.count}"></td>
-                                            <td> <img th:src="@{${'/upload'+ item.carouselImage}}"  width="100px" height="100px"> </td>
-                                            <td th:text="${item.caption}"></td>
+                                            <td><i th:class="${item.iconPath}"></i></td>
+                                            <td th:text="${item.shortWording}"></td>
+                                            <td th:text="${item.fullWording}"></td>
                                             <td th:text="${item.createdAt}"></td>
                                             <td>
-                                                <a th:href="@{/admin/slider/edit/{id}(id = ${item.id})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
-                                                <a th:href="@{/admin/slider/delete/{id}(id = ${item.id})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                                <a th:href="@{/admin/service/edit/{id}(id = ${item.id})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
+                                                <a th:href="@{/admin/service/delete/{id}(id = ${item.id})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
                                             </td>
                                         </tr>
                                     </tbody>

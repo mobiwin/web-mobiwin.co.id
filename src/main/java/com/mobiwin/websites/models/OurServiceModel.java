@@ -27,5 +27,47 @@ public class OurServiceModel {
     private String fullWording;
     
     @Column(name = "created_at")
-    private Date createdAt;
+    private Date CreatedAt;
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getIconPath() {
+        return this.iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public String getShortWording() {
+        return this.shortWording;
+    }
+
+    public void setShortWording(String shortWording) {
+        this.shortWording = shortWording;
+    }
+
+    public String getFullWording() {
+        return this.fullWording;
+    }
+
+    public void setFullWording(String fullWording) {
+        this.fullWording = fullWording;
+    }
+
+    public Date getCreatedAt() {
+        return this.CreatedAt;
+    }
+
+    public void setCreatedAt(Date CreatedAt) {
+        this.CreatedAt = CreatedAt;
+    }
+
 }

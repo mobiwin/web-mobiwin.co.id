@@ -23,27 +23,40 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="card">
-                            <div class="card-body" th:each="item:${about}">
+                        <div class="col-md-12">
+                            <!-- general form elements -->
+                            <div class="box box-primary" th:each="item:${about}">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">About Us</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <!-- form start -->
                                 <form th:action="@{/admin/about/update/{id}(id = ${item.id})}" method="post" class="form-group">
-                                    <input type="hidden" readonly name="id" th:value="${item.id}">
-                                    <div class="col-md-6">
-                                        <label for="">Title</label>
-                                        <input type="text" th:value="${item.title}" placeholder="Title" name="title" class="form-control">
+                                    <div class="box-body">
+                                        <input type="hidden" readonly name="id" th:value="${item.id}">
+                                        <div class="form-group">
+                                            <label for="">Title</label>
+                                            <input type="text" th:value="${item.title}" placeholder="Title" name="title" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="biodata">Summary</label>
+                                            <textarea class="textareaTeam" placeholder="Place some text here" id="summary" name="summary"
+                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">[[${item.summary}]]</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="biodata">About us</label>
+                                            <textarea class="textareaTeam" placeholder="Place some text here" id="wording" name="wording"
+                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">[[${item.wording}]]</textarea>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="">Summary</label>
-                                        <input type="text" th:value="${item.summary}" placeholder="Summary" name="summary" class="form-control">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="">Content</label>
-                                        <textarea name="wording"  id="ckeditor" class="form-control ckeditor">[[${item.wording}]]</textarea>
-                                    </div>
-                                    <div class="col-md-12"><br>
-                                        <button class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
+                                    <!-- /.box-body -->
+
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
                                     </div>
                                 </form>
                             </div>
+                            <!-- /.box -->
                         </div>
                     </div>
                 </section><!-- /.content -->
