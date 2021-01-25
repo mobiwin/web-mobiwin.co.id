@@ -14,7 +14,7 @@ public interface OurTeamRepo extends JpaRepository<OurTeamModel, Long> {
     @Transactional
     @Modifying
     @Query(value = "UPDATE our_team_tb SET employee_name = :empName, potition = :pos, bio = :bio WHERE id = :id", nativeQuery = true)
-    public void repoUpdatePart(
+    public void repoUpdate(
         @Param("empName") String txtEmpName,
         @Param("pos") String txtPos,
         @Param("bio") String txtBio,

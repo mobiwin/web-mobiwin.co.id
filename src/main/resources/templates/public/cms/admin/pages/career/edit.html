@@ -12,14 +12,14 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Teams
+                        Career
                         <small>Control panel</small>
                         <small style="color: blue;" th:text="${sucmsg}" />
                         <small style="color: red;" th:text="${errmsg}" />
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Teams</li>
+                        <li class="active">Career</li>
                     </ol>
                 </section>
 
@@ -30,34 +30,41 @@
                             <!-- general form elements -->
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Input Data New Member</h3>
+                                    <h3 class="box-title">Update Data Member</h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form th:action="@{/admin/team/save}" method="POST" class="form-group" enctype="multipart/form-data">
+                                <form th:each="item : ${list_data}" th:action="@{/admin/career/update}" method="POST" class="form-group" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="namaKaryawan">Employee Name</label>
-                                            <input type="text" class="form-control" id="namaKaryawan" name="namaKaryawanTxt" placeholder="Employee Name" required>
+                                            <label for="jobTitle">Job Title</label>
+                                            <input th:value="${list_data.getJobTitle}" type="text" class="form-control" id="jobTitle" name="jobTitleTxt" placeholder="Job title" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="position">Potition</label>
-                                            <input type="text" class="form-control" id="position" name="positionTxt" placeholder="Potition" required>
+                                            <label for="potition">Potition</label>
+                                            <input th:value="${list_data.getPotition}" type="text" class="form-control" id="potition" name="potitionTxt" placeholder="Job potition" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="biodataNew">Bio</label>
-                                            <textarea class="form-control" placeholder="Place some text here" id="biodataNew" name="bioTxt"
+                                            <label for="requirementEdit">Requirement</label>
+                                            <textarea th:text="${list_data.getRequirement}" class="form-control" placeholder="Place some text here" id="requirementEdit" name="requirementTxt"
                                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pilihAvatar">Photo</label>
-                                            <input type="file" id="pilihAvatar" name="pilihAvatarInp" required>
+                                            <label for="descriptionEdit">Job Description</label>
+                                            <textarea th:text="${list_data.getPotitionDesc}" class="form-control" placeholder="Place some text here" id="descriptionEdit" name="descriptionTxt"
+                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobIcon">Job Icon</label>
+                                            <input type="file" id="jobIcon" name="jobIconFile" required>
+                                            <img class="img img-responsive" style="width: 20%;" th:src="@{'/upload'+${item.getIconOf}}" />
                                         </div>
                                     </div>
                                     <!-- /.box-body -->
 
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Add Employee</button>
+                                        <input th:value="${list_data.getId}" name="idTxt" type="hidden" required>
+                                        <button type="submit" class="btn btn-primary">Update Career</button>
                                     </div>
                                 </form>
                             </div>

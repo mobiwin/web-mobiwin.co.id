@@ -37,20 +37,20 @@
                                 <form th:each="item : ${list_data}" th:action="@{/admin/team/update}" method="POST" class="form-group" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="namaKaryawan">Nama Karyawan</label>
+                                            <label for="namaKaryawan">Employee Name</label>
                                             <input th:value="${list_data.getEmployeeName}" type="text" class="form-control" id="namaKaryawan" name="namaKaryawanTxt" placeholder="Tulis nama karywan" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="position">Posisi / Jabatab</label>
+                                            <label for="position">Potition</label>
                                             <input th:value="${list_data.getPotition}" type="text" class="form-control" id="position" name="positionTxt" placeholder="Tulis nama jabatan" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="biodata">Biodata</label>
-                                            <textarea th:text="${list_data.getBio}" class="textareaTeamEdit" placeholder="Place some text here" id="biodataEdit" name="bioTxt"
+                                            <label for="biodata">Bio</label>
+                                            <textarea th:text="${list_data.getBio}" class="form-control" placeholder="Place some text here" id="biodataEdit" name="bioTxt"
                                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pilihAvatar">Pilih Photo Profil</label>
+                                            <label for="pilihAvatar">Photo</label>
                                             <input type="file" id="pilihAvatar" name="pilihAvatarInp">
                                             <img class="img img-responsive" style="width: 20%;" th:src="@{'/upload'+${item.getAvatarPath}}" />
                                         </div>
@@ -59,7 +59,7 @@
 
                                     <div class="box-footer">
                                         <input th:value="${list_data.getId}" name="idTxt" type="hidden" required>
-                                        <button type="submit" class="btn btn-primary">Update Karywan</button>
+                                        <button type="submit" class="btn btn-primary">Update Employee</button>
                                     </div>
                                 </form>
                             </div>

@@ -27,7 +27,7 @@ public class OurTeamService {
     }
 
     public void updatePartDataTeam(String valEmpName, String valPos, String valBio, String valId) {
-        ourTeamRepo.repoUpdatePart(valEmpName, valPos, valBio, valId);
+        ourTeamRepo.repoUpdate(valEmpName, valPos, valBio, valId);
     }
 
     public void deleteTeam(Long id) {

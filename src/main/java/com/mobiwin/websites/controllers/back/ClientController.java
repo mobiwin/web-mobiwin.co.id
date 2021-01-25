@@ -67,7 +67,7 @@ public class ClientController {
         String msg = "";
 
         if (logoFile.isEmpty()) {
-            msg = "Empty file";
+            publicData.addAttribute("errmsg", "Empty file option");
         } else {
 
             String exten = logoFile.getContentType().toString();
@@ -90,7 +90,7 @@ public class ClientController {
             }
 
             if (ext.isEmpty()) {
-                msg = "Choose file";
+                publicData.addAttribute("errmsg", "Choose file");
             } else {
 
                 try {
@@ -110,8 +110,8 @@ public class ClientController {
 
                     // UPLOAD
                     byte[] fileBytes = logoFile.getBytes();
-                    clientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + clientNameTxt + "_" + random + "."
+                    String cleanClientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanClientNameTxt + "_" + random + "."
                             + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -122,7 +122,7 @@ public class ClientController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/client/" + clientNameTxt + "_"
+                    String uploadCompressPath = "src/main/resources/static/upload/client/" + cleanClientNameTxt + "_"
                             + random + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
@@ -139,7 +139,7 @@ public class ClientController {
                     Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
                     if (!imageWriters.hasNext()) {
-                        msg = "imageWriters.hasNext";
+                        publicData.addAttribute("errmsg", imageWriters.hasNext());
                     }
 
                     ImageWriter imageWriter = (ImageWriter) imageWriters.next();
@@ -164,7 +164,7 @@ public class ClientController {
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/client/" + clientNameTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/client/" + cleanClientNameTxt + "_" + random + "." + ext;
 
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -187,9 +187,9 @@ public class ClientController {
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
                     ourClientService.saveClient(ourClientModel);
 
-                    msg = "Add client success";
+                    msg = "Add Client success";
                 } catch (Exception e) {
-                    msg = e.getMessage();
+                    publicData.addAttribute("errmsg", e.getMessage());
                 }
             }
         }
@@ -221,7 +221,7 @@ public class ClientController {
                 ourClientService.updatePartDataClient(clientNameTxt, yearsTxt, id);
                 msg = "Edit Data Client Berhasil";
             } catch (Exception e) {
-                msg = e.getMessage();
+                publicData.addAttribute("errmsg", e.getMessage());
             }
         } else {
 
@@ -265,8 +265,8 @@ public class ClientController {
 
                     // UPLOAD
                     byte[] fileBytes = logoFile.getBytes();
-                    clientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + clientNameTxt + "_" + random + "."
+                    String cleanClientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanClientNameTxt + "_" + random + "."
                             + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -277,7 +277,7 @@ public class ClientController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/client/" + clientNameTxt + "_"
+                    String uploadCompressPath = "src/main/resources/static/upload/client/" + cleanClientNameTxt + "_"
                             + random + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
@@ -294,7 +294,7 @@ public class ClientController {
                     Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
                     if (!imageWriters.hasNext()) {
-                        msg = "imageWriters.hasNext";
+                        publicData.addAttribute("errmsg", imageWriters.hasNext());
 
                     }
 
@@ -320,7 +320,7 @@ public class ClientController {
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/client/" + clientNameTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/client/" + cleanClientNameTxt + "_" + random + "." + ext;
 
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -343,9 +343,9 @@ public class ClientController {
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
                     ourClientService.saveClient(ourClientModel);
 
-                    msg = "Edit Data Client Success";
+                    msg = "Update Client data success";
                 } catch (Exception e) {
-                    msg = e.getMessage();
+                    publicData.addAttribute("errmsg", e.getMessage());
                 }
             }
         }
@@ -358,16 +358,16 @@ public class ClientController {
 
         String msg = "";
 
-        OurClientModel ourTeamListDataWithId = ourClientService.listClientById(id);
-        if(ourTeamListDataWithId.getId() > 0) {
+        OurClientModel ourClientListDataWithId = ourClientService.listClientById(id);
+        if(ourClientListDataWithId.getId() > 0) {
             try {
                 ourClientService.deleteClient(id);
-                msg = "Delete data client success";
+                msg = "Delete Client data success";
             } catch (Exception e) {
-                msg = "Delete data client failed";
+                msg = "Delete Client data failed";
             }
         } else {
-            msg = "Data client not found";
+            msg = "Data Client not found";
         }
 
         return "redirect:/admin/client?msg=" + msg;

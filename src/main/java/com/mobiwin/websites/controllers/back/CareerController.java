@@ -22,8 +22,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mobiwin.websites.models.OurTeamModel;
-import com.mobiwin.websites.services.OurTeamService;
+import com.mobiwin.websites.models.CareerModel;
+import com.mobiwin.websites.services.CareerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,43 +35,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class TeamController {
+public class CareerController {
 
     @Autowired
-    OurTeamService ourTeamService;
+    CareerService careerService;
 
     @Autowired
     ServletContext servletContext;
 
-    @RequestMapping(value = "/admin/team", method = RequestMethod.GET)
-    public String listTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
+    @RequestMapping(value = "/admin/carrer", method = RequestMethod.GET)
+    public String listCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
 
-        List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
-        publicData.addAttribute("list_data", ourTeamListData);
+        List<CareerModel> careerListData = careerService.listAllCareer();
+        publicData.addAttribute("list_data", careerListData);
 
-        return "public/cms/admin/pages/ourteam/list";
+        return "public/cms/admin/pages/career/list";
     }
 
-    @RequestMapping(value = "/admin/team/new", method = RequestMethod.GET)
-    public String newTeam() {
+    @RequestMapping(value = "/admin/career/new", method = RequestMethod.GET)
+    public String newCareer() {
 
-        return "public/cms/admin/pages/ourteam/new";
+        return "public/cms/admin/pages/career/new";
     }
 
-    @RequestMapping(value = "/admin/team/save", method = RequestMethod.POST)
-    public String saveTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
-            @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
-            @RequestParam(value = "positionTxt", required = false) String positionTxt,
-            @RequestParam(value = "bioTxt", required = false) String bioTxt,
-            @RequestParam(value = "pilihAvatarInp", required = false) MultipartFile avatarFiles) {
+    @RequestMapping(value = "/admin/career/save", method = RequestMethod.POST)
+    public String saveCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam(value = "jobTitleTxt", required = false) String jobTitleTxt,
+            @RequestParam(value = "potitionTxt", required = false) String potitionTxt,
+            @RequestParam(value = "requirementTxt", required = false) String requirementTxt,
+            @RequestParam(value = "descriptionTxt", required = false) String descriptionTxt,
+            @RequestParam(value = "jobIconFile", required = false) MultipartFile jobIconFile) {
 
-                String msg = "";
+        String msg = "";
 
-        if (avatarFiles.isEmpty()) {
+        if (jobIconFile.isEmpty()) {
             publicData.addAttribute("errmsg", "Empty file option");
         } else {
 
-            String exten = avatarFiles.getContentType().toString();
+            String exten = jobIconFile.getContentType().toString();
             String ext = "";
             switch (exten) {
                 case "image/png":
@@ -105,14 +106,14 @@ public class TeamController {
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/team/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/team/"));
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/career/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/career/"));
                     }
 
                     // UPLOAD
-                    byte[] fileBytes = avatarFiles.getBytes();
-                    String cleanNamaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanNamaKaryawanTxt + "_" + random + "."
+                    byte[] fileBytes = jobIconFile.getBytes();
+                    String cleanJobTitleTxt = jobTitleTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanJobTitleTxt + "_" + random + "."
                             + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -123,8 +124,8 @@ public class TeamController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/team/" + cleanNamaKaryawanTxt + "_"
-                            + random + "." + ext;
+                    String uploadCompressPath = "src/main/resources/static/upload/career/" + cleanJobTitleTxt + "_" + random
+                            + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
                     // SET INPUT OUTPUT IMAGE
@@ -164,71 +165,74 @@ public class TeamController {
                     // COMPRESS SELESAI
 
                     // INIT PATH
-                    // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/team/" + cleanNamaKaryawanTxt + "_" + random + "." + ext;
+                    // String fixTempPath = "/temp/" + jobTitleTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/career/" + cleanJobTitleTxt + "_" + random + "." + ext;
 
-                    // FINAL, namaKaryawanTxt
+                    // FINAL, jobTitleTxt
                     // FINAL, positionTxt
                     // FINAL, bioTxt
                     // FINAL, jika tidak mau pakai Compress pakai uploadPath untuk path image
                     // FINAL, jika mau pakai Compress pakai uploadCompressPath untuk path image
 
-                    // Membuat Object Models Team
-                    OurTeamModel ourTeamModel = new OurTeamModel();
-                    ourTeamModel.setAvatarPath(fixRealPath);
-                    ourTeamModel.setEmployeeName(namaKaryawanTxt);
-                    ourTeamModel.setPotition(positionTxt);
-                    ourTeamModel.setBio(bioTxt);
+                    // Membuat Object Models Career
+                    CareerModel careerModel = new CareerModel();
+                    careerModel.setIconOf(fixRealPath);
+                    careerModel.setJobTitle(jobTitleTxt);
+                    careerModel.setPotition(potitionTxt);
+                    careerModel.setRequirement(requirementTxt);
+                    careerModel.setPotitionDesc(descriptionTxt);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());
                     Date datenow = format.parse(dateString);
 
-                    ourTeamModel.setCreatedAt(datenow);
+                    careerModel.setCreatedAt(datenow);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
-                    ourTeamService.saveTeam(ourTeamModel);
+                    careerService.saveCareer(careerModel);
 
-                    msg = "Add Team success";
+                    msg = "Add Career success";
                 } catch (Exception e) {
                     publicData.addAttribute("errmsg", e.getMessage());
                 }
             }
         }
 
-        return "redirect:/admin/team?msg=" + msg;
+        return "redirect:/admin/career?msg=" + msg;
     }
 
-    @RequestMapping(value = "/admin/team/edit/{id}", method = RequestMethod.GET)
-    public String editTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+    @RequestMapping(value = "/admin/career/edit/{id}", method = RequestMethod.GET)
+    public String editCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @PathVariable("id") Long id) {
 
-        OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
-        publicData.addAttribute("list_data", ourTeamListDataWithId);
+        CareerModel ourCareerListDataWithId = careerService.listCareerById(id);
+        publicData.addAttribute("list_data", ourCareerListDataWithId);
 
-        return "public/cms/admin/pages/ourteam/edit";
+        return "public/cms/admin/pages/career/edit";
     }
 
-    @RequestMapping(value = "/admin/team/update", method = RequestMethod.POST)
-    public String updateTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
-            @RequestParam(value = "idTxt", required = false) String id,
-            @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
-            @RequestParam(value = "positionTxt", required = false) String positionTxt,
-            @RequestParam(value = "bioTxt", required = false) String bioTxt,
-            @RequestParam(value = "pilihAvatarInp") MultipartFile avatarFiles) {
+    @RequestMapping(value = "/admin/career/update", method = RequestMethod.POST)
+    public String updateCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam(value = "idTxt", required = false) String idTxt,
+            @RequestParam(value = "jobTitleTxt", required = false) String jobTitleTxt,
+            @RequestParam(value = "potitionTxt", required = false) String potitionTxt,
+            @RequestParam(value = "requirementTxt", required = false) String requirementTxt,
+            @RequestParam(value = "descriptionTxt", required = false) String descriptionTxt,
+            @RequestParam(value = "jobIconFile", required = false) MultipartFile jobIconFile) {
 
         String msg = "";
 
-        if (avatarFiles.isEmpty()) {
+        if (jobIconFile.isEmpty()) {
             try {
-                ourTeamService.updatePartDataTeam(namaKaryawanTxt, positionTxt, bioTxt, id);
-                msg = "Update Team data success";
+                careerService.updatePartDataCareer(jobTitleTxt, potitionTxt, requirementTxt, descriptionTxt, idTxt);
+                ;
+                msg = "Update Career data success";
             } catch (Exception e) {
                 publicData.addAttribute("errmsg", e.getMessage());
             }
         } else {
 
-            String exten = avatarFiles.getContentType().toString();
+            String exten = jobIconFile.getContentType().toString();
             String ext = "";
             switch (exten) {
                 case "image/png":
@@ -262,14 +266,14 @@ public class TeamController {
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/team/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/team/"));
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/career/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/career/"));
                     }
 
                     // UPLOAD
-                    byte[] fileBytes = avatarFiles.getBytes();
-                    String cleanNamaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanNamaKaryawanTxt + "_" + random + "."
+                    byte[] fileBytes = jobIconFile.getBytes();
+                    String cleanJobTitleTxt = jobTitleTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanJobTitleTxt + "_" + random + "."
                             + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -280,8 +284,8 @@ public class TeamController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/team/" + cleanNamaKaryawanTxt + "_"
-                            + random + "." + ext;
+                    String uploadCompressPath = "src/main/resources/static/upload/career/" + cleanJobTitleTxt + "_" + random
+                            + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
                     // SET INPUT OUTPUT IMAGE
@@ -322,58 +326,60 @@ public class TeamController {
                     // COMPRESS SELESAI
 
                     // INIT PATH
-                    // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/team/" + cleanNamaKaryawanTxt + "_" + random + "." + ext;
+                    // String fixTempPath = "/temp/" + jobTitleTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/career/" + cleanJobTitleTxt + "_" + random + "." + ext;
 
-                    // FINAL, namaKaryawanTxt
+                    // FINAL, jobTitleTxt
                     // FINAL, positionTxt
                     // FINAL, bioTxt
                     // FINAL, jika tidak mau pakai Compress pakai uploadPath untuk path image
                     // FINAL, jika mau pakai Compress pakai uploadCompressPath untuk path image
 
-                    // Membuat Object Models Team
-                    OurTeamModel ourTeamModel = new OurTeamModel();
-                    ourTeamModel.setAvatarPath(fixRealPath);
-                    ourTeamModel.setEmployeeName(namaKaryawanTxt);
-                    ourTeamModel.setPotition(positionTxt);
-                    ourTeamModel.setBio(bioTxt);
+                    // Membuat Object Models Career
+                    CareerModel careerModel = new CareerModel();
+                    careerModel.setIconOf(fixRealPath);
+                    careerModel.setJobTitle(jobTitleTxt);
+                    careerModel.setPotition(potitionTxt);
+                    careerModel.setRequirement(requirementTxt);
+                    careerModel.setPotitionDesc(descriptionTxt);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());
                     Date datenow = format.parse(dateString);
 
-                    ourTeamModel.setCreatedAt(datenow);
+                    careerModel.setCreatedAt(datenow);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
-                    ourTeamService.saveTeam(ourTeamModel);
+                    careerService.saveCareer(careerModel);
 
-                    msg = "Update Team data success";
+                    msg = "Update Career data success";
                 } catch (Exception e) {
                     publicData.addAttribute("errmsg", e.getMessage());
                 }
             }
         }
 
-        return "redirect:/admin/team?msg=" + msg;
+        return "redirect:/admin/career?msg=" + msg;
     }
 
-    @RequestMapping(value = "/admin/team/delete/{id}", method = RequestMethod.GET)
-    public String deleteTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/admin/career/delete/{id}", method = RequestMethod.GET)
+    public String deleteCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @PathVariable("id") Long id) {
 
         String msg = "";
 
-        OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
-        if(ourTeamListDataWithId.getId() > 0) {
+        CareerModel ourCareerListDataWithId = careerService.listCareerById(id);
+        if (ourCareerListDataWithId.getId() > 0) {
             try {
-                ourTeamService.deleteTeam(id);
-                msg = "Delete Team data success";
+                careerService.deleteCareer(id);
+                msg = "Delete Career data success";
             } catch (Exception e) {
-                msg = "Delete Team data failed";
+                msg = "Delete Career data failed";
             }
         } else {
-            msg = "Data Team not found";
+            msg = "Data Career not found";
         }
 
-        return "redirect:/admin/team?msg=" + msg;
+        return "redirect:/admin/career?msg=" + msg;
     }
 }
