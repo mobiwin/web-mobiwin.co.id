@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="public/cms/admin/fragments/main">
+
+<body class="skin-blue">
+    <div layout:fragment="content">
+    <!-- header logo: style can be found in header.less -->
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="right-side">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Testimonials
+                    <small>Control panel</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Testimonials</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="col-md-10">
+                                    <h2>Testimonials</h2>
+                                </div>
+                                <div class="col-md-2">
+                                    <a th:href="@{/admin/testimony/new}" class="btn btn-primary"><i class="fa fa-plus"></i> New Testimonials</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Company</th>
+                                            <th>Testimony</th>
+                                            <th>Date</th>
+                                            <th>Options</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item,no : ${testimony}">
+                                            <td th:text="${no.count}"></td>
+                                            <td> <img th:src="@{${'/upload'+ item.userAvaPath}}"  width="100px" height="100px"> </td>
+                                            <td th:text="${item.nameUser}"></td>
+                                            <td th:text="${item.company}"></td>
+                                            <td th:text="${item.testimonyText}"></td>
+                                            <td th:text="${item.createdAt}"></td>
+                                            <td>
+                                                <a th:href="@{/admin/testimony/edit/{id}(id = ${item.id})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
+                                                <a th:href="@{/admin/testimony/delete/{id}(id = ${item.id})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- /.content -->
+        </aside><!-- /.right-side -->
+    </div><!-- ./wrapper -->
+</div>
+</body>
+
+</html>
