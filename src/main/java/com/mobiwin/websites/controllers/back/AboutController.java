@@ -31,10 +31,9 @@ public class AboutController {
     @RequestMapping(value = "/admin/about/update/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public void aboutUpdate(HttpServletResponse response,@RequestParam long id, @RequestParam String title , @RequestParam String summary, 
     @RequestParam String wording) {
-
         try{
             aboutService.update(id,title,summary,wording);
-            response.sendRedirect("/admin/about/1");
+            response.sendRedirect("/admin/about/update/1");
         } catch(IOException e){
             System.out.println(e);
         }
