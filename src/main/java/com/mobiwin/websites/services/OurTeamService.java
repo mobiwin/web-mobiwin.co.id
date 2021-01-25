@@ -1,5 +1,7 @@
 package com.mobiwin.websites.services;
 
+import java.util.List;
+
 import com.mobiwin.websites.models.OurTeamModel;
 import com.mobiwin.websites.repositories.OurTeamRepo;
 
@@ -12,13 +14,23 @@ public class OurTeamService {
     @Autowired
     OurTeamRepo ourTeamRepo;
 
-    public void serviceInsert(String one, String two) {
-
-        ourTeamRepo.repoInsert(one, two);
-
+    public List<OurTeamModel> listAllTeam() {
+        return ourTeamRepo.findAll();
     }
 
-    public void saveOurTeam(OurTeamModel ourTeamModel) {
+    public OurTeamModel listTeamById(Long id) {
+        return ourTeamRepo.findById(id).get();
+    }
+
+    public void saveTeam(OurTeamModel ourTeamModel) {
         ourTeamRepo.save(ourTeamModel);
+    }
+
+    public void updatePartDataTeam(String valEmpName, String valPos, String valBio, String valId) {
+        ourTeamRepo.repoUpdatePart(valEmpName, valPos, valBio, valId);
+    }
+
+    public void deleteTeam(Long id) {
+        ourTeamRepo.deleteById(id);
     }
 }

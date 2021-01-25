@@ -20,13 +20,16 @@ public class AboutUsService {
         aboutUsRepo.repoInsert(one, two);
 
     }
+    
     public void update(long id,String title, String summary, String wording) {
         // aboutUsRepo.save(about);
         aboutUsRepo.updateSql(id,title,summary,wording);
     }
+
     public List<AboutUsModel> findAll() {
         return aboutUsRepo.findAll();
     }
+
     public AboutUsModel findOne(long id) {
         return aboutUsRepo.findById(id).get();
     }

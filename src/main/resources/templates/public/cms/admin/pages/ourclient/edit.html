@@ -30,34 +30,31 @@
                             <!-- general form elements -->
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Input Data New Member</h3>
+                                    <h3 class="box-title">Update Data Client</h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form th:action="@{/admin/team/save}" method="POST" class="form-group" enctype="multipart/form-data">
+                                <form th:action="@{/admin/client/update}" method="POST" class="form-group" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="namaKaryawan">Nama Karyawan</label>
-                                            <input type="text" class="form-control" id="namaKaryawan" name="namaKaryawanTxt" placeholder="Tulis nama karywan" required>
+                                            <label for="clientName">Client Name</label>
+                                            <input th:value="${list_data.getClientName}" type="text" class="form-control" id="clientName" name="clientNameTxt" placeholder="Tulis client name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="position">Posisi / Jabatab</label>
-                                            <input type="text" class="form-control" id="position" name="positionTxt" placeholder="Tulis nama jabatan" required>
+                                            <label for="yearsCooperation">Years of Cooperation</label>
+                                            <input th:value="${list_data.getYear}" type="number" minlength="4" maxlength="4" class="form-control" id="yearsCooperation" name="yearsCooperationTxt" placeholder="Tulis years cooperation" required value="2021">
                                         </div>
                                         <div class="form-group">
-                                            <label for="biodata">Biodata</label>
-                                            <textarea class="textareaTeam" placeholder="Place some text here" id="biodata" name="bioTxt"
-                                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pilihAvatar">Pilih Photo Profil</label>
-                                            <input type="file" id="pilihAvatar" name="pilihAvatarInp" required>
+                                            <label for="pilihLogo">Pilih Logo</label>
+                                            <input type="file" id="pilihLogo" name="pilihLogoInp">
+                                            <img class="img img-responsive" style="width: 20%;" th:src="@{'/upload'+${list_data.getPreviewPath}}" />
                                         </div>
                                     </div>
                                     <!-- /.box-body -->
 
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Tambah Karywan</button>
+                                        <input th:value="${list_data.getId}" name="idTxt" type="hidden" required>
+                                        <button type="submit" class="btn btn-primary">Update Client</button>
                                     </div>
                                 </form>
                             </div>

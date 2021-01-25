@@ -12,13 +12,13 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Teams
+                    Client
                     <small>Control panel</small>
                     <small style="color: blue;" th:text="${param.msg}" />
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Teams</li>
+                    <li class="active">Client</li>
                 </ol>
             </section>
 
@@ -29,10 +29,10 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-md-10">
-                                    <h2>Team Member</h2>
+                                    <h2>Our Client</h2>
                                 </div>
                                 <div class="col-md-2">
-                                    <a th:href="@{/admin/team/new}" class="btn btn-primary"><i class="fa fa-plus"></i> New Member</a>
+                                    <a th:href="@{/admin/client/new}" class="btn btn-primary"><i class="fa fa-plus"></i> New Client</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -40,10 +40,9 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Photo</th>
+                                            <th>Logo</th>
                                             <th>Name</th>
-                                            <th>Potition</th>
-                                            <th>Bio</th>
+                                            <th>Year</th>
                                             <th>Options</th>
                                         </tr>
                                     </thead>
@@ -51,14 +50,13 @@
                                         <tr th:each="item,no : ${list_data}">
                                             <td th:text="${no.count}"></td>
                                             <td>
-                                                <img class="img img-responsive" style="width: 30%; height: 50px;" th:src="@{'/upload'+${item.getAvatarPath}}" />
+                                                <img class="img img-responsive" style="width: 30%; height: 50px;" th:src="@{'/upload'+${item.getPreviewPath}}" />
                                             </td>
-                                            <td th:text="${item.getEmployeeName}"></td>
-                                            <td th:text="${item.getPotition}"></td>
-                                            <td th:utext="${item.getBio}"></td>
+                                            <td th:text="${item.getClientName}"></td>
+                                            <td th:utext="${item.getYear}"></td>
                                             <td>
-                                                <a th:href="@{/admin/team/edit/{id}(id = ${item.getId})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
-                                                <a th:href="@{/admin/team/delete/{id}(id = ${item.getId})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                                <a th:href="@{/admin/client/edit/{id}(id = ${item.getId})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
+                                                <a th:href="@{/admin/client/delete/{id}(id = ${item.getId})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
                                             </td>
                                         </tr>
                                     </tbody>

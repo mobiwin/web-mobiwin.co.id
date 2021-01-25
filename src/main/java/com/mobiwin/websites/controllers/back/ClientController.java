@@ -22,8 +22,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mobiwin.websites.models.OurTeamModel;
-import com.mobiwin.websites.services.OurTeamService;
+import com.mobiwin.websites.models.OurClientModel;
+import com.mobiwin.websites.services.OurClientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,43 +35,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class TeamController {
+public class ClientController {
 
     @Autowired
-    OurTeamService ourTeamService;
+    OurClientService ourClientService;
 
     @Autowired
     ServletContext servletContext;
 
-    @RequestMapping(value = "/admin/team", method = RequestMethod.GET)
-    public String listTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
+    @RequestMapping(value = "/admin/client", method = RequestMethod.GET)
+    public String listClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
 
-        List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
-        publicData.addAttribute("list_data", ourTeamListData);
+        List<OurClientModel> ourClientListData = ourClientService.listAllClient();
+        publicData.addAttribute("list_data", ourClientListData);
 
-        return "public/cms/admin/pages/ourteam/list";
+        return "public/cms/admin/pages/ourclient/list";
     }
 
-    @RequestMapping(value = "/admin/team/new", method = RequestMethod.GET)
-    public String newTeam() {
+    @RequestMapping(value = "/admin/client/new", method = RequestMethod.GET)
+    public String newClient() {
 
-        return "public/cms/admin/pages/ourteam/new";
+        return "public/cms/admin/pages/ourclient/new";
     }
 
-    @RequestMapping(value = "/admin/team/save", method = RequestMethod.POST)
-    public String saveTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
-            @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
-            @RequestParam(value = "positionTxt", required = false) String positionTxt,
-            @RequestParam(value = "bioTxt", required = false) String bioTxt,
-            @RequestParam(value = "pilihAvatarInp", required = false) MultipartFile avatarFiles) {
+    @RequestMapping(value = "/admin/client/save", method = RequestMethod.POST)
+    public String saveClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam(value = "clientNameTxt", required = false) String clientNameTxt,
+            @RequestParam(value = "yearsCooperationTxt", required = false) String yearsTxt,
+            @RequestParam(value = "pilihLogoInp", required = false) MultipartFile logoFile) {
 
-                String msg = "";
+        String msg = "";
 
-        if (avatarFiles.isEmpty()) {
-            msg = "File kosong";
+        if (logoFile.isEmpty()) {
+            msg = "Empty file";
         } else {
 
-            String exten = avatarFiles.getContentType().toString();
+            String exten = logoFile.getContentType().toString();
             String ext = "";
             switch (exten) {
                 case "image/png":
@@ -91,7 +90,7 @@ public class TeamController {
             }
 
             if (ext.isEmpty()) {
-                msg = "File kosong";
+                msg = "Choose file";
             } else {
 
                 try {
@@ -105,14 +104,14 @@ public class TeamController {
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/team/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/team/"));
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/client/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/client/"));
                     }
 
                     // UPLOAD
-                    byte[] fileBytes = avatarFiles.getBytes();
-                    namaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "."
+                    byte[] fileBytes = logoFile.getBytes();
+                    clientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + clientNameTxt + "_" + random + "."
                             + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -123,7 +122,7 @@ public class TeamController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/team/" + namaKaryawanTxt + "_"
+                    String uploadCompressPath = "src/main/resources/static/upload/client/" + clientNameTxt + "_"
                             + random + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
@@ -165,7 +164,7 @@ public class TeamController {
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/team/" + namaKaryawanTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/client/" + clientNameTxt + "_" + random + "." + ext;
 
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -173,62 +172,60 @@ public class TeamController {
                     // FINAL, jika tidak mau pakai Compress pakai uploadPath untuk path image
                     // FINAL, jika mau pakai Compress pakai uploadCompressPath untuk path image
 
-                    // Membuat Object Models Team
-                    OurTeamModel ourTeamModel = new OurTeamModel();
-                    ourTeamModel.setAvatarPath(fixRealPath);
-                    ourTeamModel.setEmployeeName(namaKaryawanTxt);
-                    ourTeamModel.setPotition(positionTxt);
-                    ourTeamModel.setBio(bioTxt);
+                    // Membuat Object Models Client
+                    OurClientModel ourClientModel = new OurClientModel();
+                    ourClientModel.setClientName(clientNameTxt);
+                    ourClientModel.setPreviewPath(fixRealPath);
+                    ourClientModel.setYear(yearsTxt);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());
                     Date datenow = format.parse(dateString);
 
-                    ourTeamModel.setCreatedAt(datenow);
+                    ourClientModel.setCreatedAt(datenow);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
-                    ourTeamService.saveTeam(ourTeamModel);
+                    ourClientService.saveClient(ourClientModel);
 
-                    msg = "Upload Berhasil";
+                    msg = "Add client success";
                 } catch (Exception e) {
                     msg = e.getMessage();
                 }
             }
         }
 
-        return "redirect:/admin/team?msg=" + msg;
+        return "redirect:/admin/client?msg=" + msg;
     }
 
-    @RequestMapping(value = "/admin/team/edit/{id}", method = RequestMethod.GET)
-    public String editTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+    @RequestMapping(value = "/admin/client/edit/{id}", method = RequestMethod.GET)
+    public String editClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @PathVariable("id") Long id) {
 
-        OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
-        publicData.addAttribute("list_data", ourTeamListDataWithId);
+        OurClientModel ourClientListDataWithId = ourClientService.listClientById(id);
+        publicData.addAttribute("list_data", ourClientListDataWithId);
 
-        return "public/cms/admin/pages/ourteam/edit";
+        return "public/cms/admin/pages/ourclient/edit";
     }
 
-    @RequestMapping(value = "/admin/team/update", method = RequestMethod.POST)
-    public String updateTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+    @RequestMapping(value = "/admin/client/update", method = RequestMethod.POST)
+    public String updateClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @RequestParam(value = "idTxt", required = false) String id,
-            @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
-            @RequestParam(value = "positionTxt", required = false) String positionTxt,
-            @RequestParam(value = "bioTxt", required = false) String bioTxt,
-            @RequestParam(value = "pilihAvatarInp") MultipartFile avatarFiles) {
+            @RequestParam(value = "clientNameTxt", required = false) String clientNameTxt,
+            @RequestParam(value = "yearsCooperationTxt", required = false) String yearsTxt,
+            @RequestParam(value = "pilihLogoInp", required = false) MultipartFile logoFile) {
 
         String msg = "";
 
-        if (avatarFiles.isEmpty()) {
+        if (logoFile.isEmpty()) {
             try {
-                ourTeamService.updatePartDataTeam(namaKaryawanTxt, positionTxt, bioTxt, id);
-                msg = "Edit Data Berhasil";
+                ourClientService.updatePartDataClient(clientNameTxt, yearsTxt, id);
+                msg = "Edit Data Client Berhasil";
             } catch (Exception e) {
                 msg = e.getMessage();
             }
         } else {
 
-            String exten = avatarFiles.getContentType().toString();
+            String exten = logoFile.getContentType().toString();
             String ext = "";
             switch (exten) {
                 case "image/png":
@@ -248,7 +245,7 @@ public class TeamController {
             }
 
             if (ext.isEmpty()) {
-                publicData.addAttribute("errmsg", "File kosong");
+                publicData.addAttribute("errmsg", "Empty file option");
             } else {
 
                 try {
@@ -262,14 +259,14 @@ public class TeamController {
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/team/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/team/"));
+                    if (!Files.exists(Paths.get("src/main/resources/static/upload/client/"))) {
+                        Files.createDirectories(Paths.get("src/main/resources/static/upload/client/"));
                     }
 
                     // UPLOAD
-                    byte[] fileBytes = avatarFiles.getBytes();
-                    namaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + namaKaryawanTxt + "_" + random + "."
+                    byte[] fileBytes = logoFile.getBytes();
+                    clientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
+                    String uploadPath = "src/main/resources/static/upload/temp/" + clientNameTxt + "_" + random + "."
                             + ext;
 
                     // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
@@ -280,7 +277,7 @@ public class TeamController {
                     // COMRESS IMAGE
                     File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/team/" + namaKaryawanTxt + "_"
+                    String uploadCompressPath = "src/main/resources/static/upload/client/" + clientNameTxt + "_"
                             + random + "." + ext;
                     File compressedImageFile = new File(uploadCompressPath);
 
@@ -323,7 +320,7 @@ public class TeamController {
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/team/" + namaKaryawanTxt + "_" + random + "." + ext;
+                    String fixRealPath = "/client/" + clientNameTxt + "_" + random + "." + ext;
 
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -331,49 +328,48 @@ public class TeamController {
                     // FINAL, jika tidak mau pakai Compress pakai uploadPath untuk path image
                     // FINAL, jika mau pakai Compress pakai uploadCompressPath untuk path image
 
-                    // Membuat Object Models Team
-                    OurTeamModel ourTeamModel = new OurTeamModel();
-                    ourTeamModel.setAvatarPath(fixRealPath);
-                    ourTeamModel.setEmployeeName(namaKaryawanTxt);
-                    ourTeamModel.setPotition(positionTxt);
-                    ourTeamModel.setBio(bioTxt);
+                    // Membuat Object Models Client
+                    OurClientModel ourClientModel = new OurClientModel();
+                    ourClientModel.setClientName(clientNameTxt);
+                    ourClientModel.setPreviewPath(fixRealPath);
+                    ourClientModel.setYear(yearsTxt);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());
                     Date datenow = format.parse(dateString);
 
-                    ourTeamModel.setCreatedAt(datenow);
+                    ourClientModel.setCreatedAt(datenow);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
-                    ourTeamService.saveTeam(ourTeamModel);
+                    ourClientService.saveClient(ourClientModel);
 
-                    msg = "Edit Data Berhasil";
+                    msg = "Edit Data Client Success";
                 } catch (Exception e) {
                     msg = e.getMessage();
                 }
             }
         }
 
-        return "redirect:/admin/team?msg=" + msg;
+        return "redirect:/admin/client?msg=" + msg;
     }
 
-    @RequestMapping(value = "/admin/team/delete/{id}", method = RequestMethod.GET)
-    public String deleteTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/admin/client/delete/{id}", method = RequestMethod.GET)
+    public String deleteClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse, @PathVariable("id") Long id) {
 
         String msg = "";
 
-        OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
+        OurClientModel ourTeamListDataWithId = ourClientService.listClientById(id);
         if(ourTeamListDataWithId.getId() > 0) {
             try {
-                ourTeamService.deleteTeam(id);
-                msg = "Delete data success";
+                ourClientService.deleteClient(id);
+                msg = "Delete data client success";
             } catch (Exception e) {
-                msg = "Delete data failed";
+                msg = "Delete data client failed";
             }
         } else {
-            msg = "Data not found";
+            msg = "Data client not found";
         }
 
-        return "redirect:/admin/team?msg=" + msg;
+        return "redirect:/admin/client?msg=" + msg;
     }
 }
