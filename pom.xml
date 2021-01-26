@@ -11,8 +11,8 @@
 	<groupId>com.mobiwin</groupId>
 	<artifactId>websites</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>websites</name>
-	<description>Demo project for Spring Boot</description>
+	<name>mobiwin-website</name>
+	<description>Website mobiwin.co.id</description>
 
 	<properties>
 		<java.version>11</java.version>

@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -43,9 +45,9 @@ public class CareerController {
     @Autowired
     ServletContext servletContext;
 
-    @RequestMapping(value = "/admin/carrer", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/career", method = RequestMethod.GET)
     public String listCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
-        publicData.addAttribute("title", "Carrer");
+        publicData.addAttribute("title", "career");
         List<CareerModel> careerListData = careerService.listAllCareer();
         publicData.addAttribute("list_data", careerListData);
 
@@ -54,7 +56,7 @@ public class CareerController {
 
     @RequestMapping(value = "/admin/career/new", method = RequestMethod.GET)
     public String newCareer(Model publicData) {
-        publicData.addAttribute("title", "New Carrer");
+        publicData.addAttribute("title", "New career");
         return "public/cms/admin/pages/career/new";
     }
 
@@ -198,13 +200,19 @@ public class CareerController {
             }
         }
 
+        try {
+            msg = URLEncoder.encode(msg, StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            msg = "Error";
+        }
+
         return "redirect:/admin/career?msg=" + msg;
     }
 
     @RequestMapping(value = "/admin/career/edit/{id}", method = RequestMethod.GET)
     public String editCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @PathVariable("id") Long id) {
-        publicData.addAttribute("title", "Edit Carrer");
+        publicData.addAttribute("title", "Edit career");
         CareerModel ourCareerListDataWithId = careerService.listCareerById(id);
         publicData.addAttribute("list_data", ourCareerListDataWithId);
 
@@ -218,7 +226,7 @@ public class CareerController {
             @RequestParam(value = "potitionTxt", required = false) String potitionTxt,
             @RequestParam(value = "requirementTxt", required = false) String requirementTxt,
             @RequestParam(value = "descriptionTxt", required = false) String descriptionTxt,
-            @RequestParam(value = "jobIconFile", required = false) MultipartFile jobIconFile) {
+            @RequestParam(value = "jobIconFile") MultipartFile jobIconFile) {
 
         String msg = "";
 
@@ -359,7 +367,13 @@ public class CareerController {
             }
         }
 
-        return "redirect:/admin/career?msg=" + msg;
+        try {
+            msg = URLEncoder.encode(msg, StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            msg = "Error";
+        }
+
+        return "redirect:/admin/career?msg=" + msg; 
     }
 
     @RequestMapping(value = "/admin/career/delete/{id}", method = RequestMethod.GET)

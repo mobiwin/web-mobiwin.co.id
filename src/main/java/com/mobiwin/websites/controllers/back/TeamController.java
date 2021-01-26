@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -196,6 +198,12 @@ public class TeamController {
             }
         }
 
+        try {
+            msg = URLEncoder.encode(msg, StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            msg = "Error";
+        }
+        
         return "redirect:/admin/team?msg=" + msg;
     }
 
@@ -352,6 +360,12 @@ public class TeamController {
                     publicData.addAttribute("errmsg", e.getMessage());
                 }
             }
+        }
+
+        try {
+            msg = URLEncoder.encode(msg, StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            msg = "Error";
         }
 
         return "redirect:/admin/team?msg=" + msg;
