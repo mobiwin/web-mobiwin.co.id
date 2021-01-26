@@ -45,7 +45,7 @@ public class CareerController {
 
     @RequestMapping(value = "/admin/carrer", method = RequestMethod.GET)
     public String listCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
-
+        publicData.addAttribute("title", "Carrer");
         List<CareerModel> careerListData = careerService.listAllCareer();
         publicData.addAttribute("list_data", careerListData);
 
@@ -53,8 +53,8 @@ public class CareerController {
     }
 
     @RequestMapping(value = "/admin/career/new", method = RequestMethod.GET)
-    public String newCareer() {
-
+    public String newCareer(Model publicData) {
+        publicData.addAttribute("title", "New Carrer");
         return "public/cms/admin/pages/career/new";
     }
 
@@ -204,7 +204,7 @@ public class CareerController {
     @RequestMapping(value = "/admin/career/edit/{id}", method = RequestMethod.GET)
     public String editCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @PathVariable("id") Long id) {
-
+        publicData.addAttribute("title", "Edit Carrer");
         CareerModel ourCareerListDataWithId = careerService.listCareerById(id);
         publicData.addAttribute("list_data", ourCareerListDataWithId);
 

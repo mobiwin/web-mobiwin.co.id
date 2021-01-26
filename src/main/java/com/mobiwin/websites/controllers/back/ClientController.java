@@ -45,7 +45,7 @@ public class ClientController {
 
     @RequestMapping(value = "/admin/client", method = RequestMethod.GET)
     public String listClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
-
+        publicData.addAttribute("title", "Client");
         List<OurClientModel> ourClientListData = ourClientService.listAllClient();
         publicData.addAttribute("list_data", ourClientListData);
 
@@ -53,8 +53,8 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/admin/client/new", method = RequestMethod.GET)
-    public String newClient() {
-
+    public String newClient(Model publicData) {
+        publicData.addAttribute("title", "New Client");
         return "public/cms/admin/pages/ourclient/new";
     }
 
@@ -200,7 +200,7 @@ public class ClientController {
     @RequestMapping(value = "/admin/client/edit/{id}", method = RequestMethod.GET)
     public String editClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @PathVariable("id") Long id) {
-
+        publicData.addAttribute("title", "Edit Client");
         OurClientModel ourClientListDataWithId = ourClientService.listClientById(id);
         publicData.addAttribute("list_data", ourClientListDataWithId);
 

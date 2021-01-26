@@ -45,7 +45,7 @@ public class TeamController {
 
     @RequestMapping(value = "/admin/team", method = RequestMethod.GET)
     public String listTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
-
+        publicData.addAttribute("title", "Teams");
         List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
         publicData.addAttribute("list_data", ourTeamListData);
 
@@ -53,8 +53,8 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/admin/team/new", method = RequestMethod.GET)
-    public String newTeam() {
-
+    public String newTeam(Model publicData) {
+        publicData.addAttribute("title", "New Teams");
         return "public/cms/admin/pages/ourteam/new";
     }
 
@@ -202,7 +202,7 @@ public class TeamController {
     @RequestMapping(value = "/admin/team/edit/{id}", method = RequestMethod.GET)
     public String editTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @PathVariable("id") Long id) {
-
+        publicData.addAttribute("title", "Edit Teams");
         OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
         publicData.addAttribute("list_data", ourTeamListDataWithId);
 
