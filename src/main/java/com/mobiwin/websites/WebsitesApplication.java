@@ -21,7 +21,8 @@ public class WebsitesApplication implements WebMvcConfigurer {
         registry.addResourceHandler(
             "/**",
             "/front/**",
-            "/back/**"
+            "/back/**",
+            "/upload/**"
         )
         .addResourceLocations(
             "classpath:/static/",

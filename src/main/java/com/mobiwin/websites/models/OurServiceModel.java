@@ -17,6 +17,9 @@ public class OurServiceModel {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "icon_path")
     private String iconPath;
 
@@ -30,12 +33,21 @@ public class OurServiceModel {
     private Date CreatedAt;
 
 
+
     public Long getId() {
         return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getIconPath() {
@@ -69,5 +81,6 @@ public class OurServiceModel {
     public void setCreatedAt(Date CreatedAt) {
         this.CreatedAt = CreatedAt;
     }
+   
 
 }
