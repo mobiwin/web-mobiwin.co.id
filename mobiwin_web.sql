@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 21 Jan 2021 pada 10.28
+-- Waktu pembuatan: 26 Jan 2021 pada 08.27
 -- Versi server: 10.4.10-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -31,8 +31,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `about_us_tb`;
 CREATE TABLE IF NOT EXISTS `about_us_tb` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) NOT NULL,
-  `summary` varchar(30) NOT NULL,
+  `title` varchar(40) NOT NULL,
+  `summary` varchar(250) NOT NULL,
   `wording` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `about_us_tb` (
 --
 
 INSERT INTO `about_us_tb` (`id`, `title`, `summary`, `wording`, `created_at`) VALUES
-(1, 'About', 'About Us', '<p>Testing</p>\r\n', '2021-01-21 03:39:52');
+(1, 'Services', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna orci, feugiat vel porttitor non, iaculis nec tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna orci, feugiat vel porttitor non, iaculis nec tortor.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna orci, feugiat vel porttitor non, iaculis nec tortor. Suspendisse lobortis aliquet egestas. Maecenas at ligula eu ex pretium egestas eu quis nibh. Aliquam a pellentesque dolor. Nullam elementum urna eget tortor cursus lobortis. Proin aliquam dapibus massa, pellentesque vulputate tellus viverra sed. Integer aliquam dui et massa consectetur tristique. Phasellus finibus nulla sit amet lacus eleifend, quis convallis tellus viverra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mauris nisl, ultricies eu venenatis eu, semper ac nisl. Suspendisse dui orci, luctus nec facilisis ut, egestas at diam.', '2021-01-26 04:34:27');
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,14 @@ CREATE TABLE IF NOT EXISTS `career_tb` (
   `potition_desc` text NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `career_tb`
+--
+
+INSERT INTO `career_tb` (`id`, `job_title`, `icon_of`, `potition`, `requirement`, `potition_desc`, `created_at`) VALUES
+(1, 'Front End', '/career/Front_End_20210126145526.jpg', 'Front End Developer', '<div>JOB SPESIFICATION</div><div><ul><li>Candidate must possess at least a Diploma, Bachelor\'s Degree, Computer Science/Information Technology, Engineering (Computer/Telecommunication) or equivalent</li><li>Fluent in Javascript and NodeJS</li><li>Experience in building page application, server side rendering using ReactJS/VueJS/Angular/Svelte</li><li>Required language(s): English, Bahasa Indonesia</li><li>At least 3 year(s) of working experience in the related field is required for this position.</li><li>Preferably Staff (non-management &amp; non-supervisor)s specializing in IT/Computer - Software or equivalent.</li><li>1 Full-Time position(s) available.</li></ul></div>', '<div>JOB DESCRIPTION</div><div><ul><li>Develop new user-facing features</li><li>Build reusable code and libraries for future use</li><li>Design and ensure the technical feasibility of UI/UX Designs</li><li>Optimize application for maximum speed and scalability</li><li>Documentating all function, method that can be develop in the futhure</li></ul></div>', '2021-01-26 07:55:26');
 
 -- --------------------------------------------------------
 
@@ -134,7 +141,15 @@ CREATE TABLE IF NOT EXISTS `carousel_tb` (
   `caption` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `carousel_tb`
+--
+
+INSERT INTO `carousel_tb` (`id`, `carousel_image`, `caption`, `created_at`) VALUES
+(21, '/slider/20210126102507.jpg', 'asdsadsadsad', '2021-01-26 03:25:07'),
+(22, '/slider/20210126144855.jpg', 'ini adalah caption', '2021-01-26 07:48:55');
 
 -- --------------------------------------------------------
 
@@ -168,7 +183,14 @@ CREATE TABLE IF NOT EXISTS `our_client_tb` (
   `year` varchar(10) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `our_client_tb`
+--
+
+INSERT INTO `our_client_tb` (`id`, `preview_path`, `client_name`, `year`, `created_at`) VALUES
+(1, '/client/PT_Makmur_Sejahtera_20210126145441.jpg', 'PT Makmur Sejahtera', '2021', '2021-01-26 07:54:41');
 
 -- --------------------------------------------------------
 
@@ -180,13 +202,21 @@ DROP TABLE IF EXISTS `our_project_tb`;
 CREATE TABLE IF NOT EXISTS `our_project_tb` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `preview_path` text NOT NULL,
-  `peoject_title` varchar(200) NOT NULL,
-  `year` varchar(10) NOT NULL,
-  `name_user` varchar(200) NOT NULL,
-  `tecknology` text NOT NULL,
-  `created_at` datetime NOT NULL,
+  `project_title` varchar(200) NOT NULL,
+  `kind` varchar(10) NOT NULL,
+  `client` varchar(200) NOT NULL,
+  `technology` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `our_project_tb`
+--
+
+INSERT INTO `our_project_tb` (`id`, `preview_path`, `project_title`, `kind`, `client`, `technology`, `created_at`) VALUES
+(3, '/project/ini_background_20210125164003.jpg', 'ini_background', 'web', 'PT MAJU MAKMUR SEJAHTERA', 'dsadsad', '2021-01-25 09:14:23'),
+(4, '/project/ini_barcode_20210126144943.jpg', 'ini_barcode', 'app', 'PT MAJU MAKMUR SEJAHTERA', 'HTML', '2021-01-26 07:49:43');
 
 -- --------------------------------------------------------
 
@@ -197,12 +227,20 @@ CREATE TABLE IF NOT EXISTS `our_project_tb` (
 DROP TABLE IF EXISTS `our_service_tb`;
 CREATE TABLE IF NOT EXISTS `our_service_tb` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(40) NOT NULL,
   `icon_path` text NOT NULL,
   `short_wording` varchar(200) NOT NULL,
   `full_wording` text NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `our_service_tb`
+--
+
+INSERT INTO `our_service_tb` (`id`, `title`, `icon_path`, `short_wording`, `full_wording`, `created_at`) VALUES
+(2, 'Services', 'bx bx-file', 'Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi', 'testing edited aja', '2021-01-25 06:54:08');
 
 -- --------------------------------------------------------
 
@@ -219,7 +257,14 @@ CREATE TABLE IF NOT EXISTS `our_team_tb` (
   `bio` text NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `our_team_tb`
+--
+
+INSERT INTO `our_team_tb` (`id`, `avatar_path`, `employee_name`, `potition`, `bio`, `created_at`) VALUES
+(1, '/team/dasdsa_20210125105548.jpg', 'dasdsa', 'asdas', 'asdsad', '2021-01-25 03:55:48');
 
 -- --------------------------------------------------------
 
@@ -234,9 +279,16 @@ CREATE TABLE IF NOT EXISTS `testimony_tb` (
   `name_user` varchar(200) NOT NULL,
   `company` varchar(200) NOT NULL,
   `testimony_text` text NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `testimony_tb`
+--
+
+INSERT INTO `testimony_tb` (`id`, `user_ava_path`, `name_user`, `company`, `testimony_text`, `created_at`) VALUES
+(3, '/testimony/ini_bola_20210126145001.jpg', 'ini_bola', 'fdsgsgs', 'fdsfedw', '2021-01-26 07:50:01');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
