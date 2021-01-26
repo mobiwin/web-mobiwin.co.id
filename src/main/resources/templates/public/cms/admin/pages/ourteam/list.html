@@ -51,7 +51,7 @@
                                         <tr th:each="item,no : ${list_data}">
                                             <td th:text="${no.count}"></td>
                                             <td>
-                                                <img class="img img-responsive" style="width: 30%; height: 50px;" th:src="@{'/upload'+${item.getAvatarPath}}" />
+                                                <img th:src="@{'/upload'+${item.getAvatarPath}}" width="100px" height="100px" />
                                             </td>
                                             <td th:text="${item.getEmployeeName}"></td>
                                             <td th:text="${item.getPotition}"></td>
