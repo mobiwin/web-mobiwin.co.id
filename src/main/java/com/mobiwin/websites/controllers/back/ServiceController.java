@@ -51,6 +51,7 @@ public class ServiceController {
 
     @RequestMapping(value = "/admin/service/edit/{id}", method = RequestMethod.GET)
     public String serviceEdit(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("title","Edit Service");
         OurServiceModel ourServiceModel = ourServiceService.findOne(id);
         model.addAttribute("service", ourServiceModel);
         model.addAttribute("services", ourServiceService.listAll());
