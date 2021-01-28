@@ -1,6 +1,8 @@
 package com.mobiwin.websites.controllers.back;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.mobiwin.websites.models.AboutUsModel;
 import com.mobiwin.websites.services.AboutUsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,16 @@ public class AboutController {
     AboutUsService aboutService;
 
     @RequestMapping(value = "/admin/about/edit/{id}", method = RequestMethod.GET)
-    public String about(@PathVariable("id") Integer id, Model model) {
-
-        model.addAttribute("title", "About Us");
-        AboutUsModel aboutUsModel = aboutService.findOne(id);
-        model.addAttribute("about", aboutUsModel);
-        model.addAttribute("abouts", aboutService.findAll());
-        return "public/cms/admin/pages/about/about";
+    public String about(@PathVariable("id") Integer id, Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title", "About Us");
+            AboutUsModel aboutUsModel = aboutService.findOne(id);
+            model.addAttribute("about", aboutUsModel);
+            model.addAttribute("abouts", aboutService.findAll());
+            return "public/cms/admin/pages/about/about";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/about/update/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

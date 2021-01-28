@@ -43,11 +43,15 @@ public class ProjectController {
     OurProjectService ourProjectService;
 
     @RequestMapping(value = "/admin/project", method = RequestMethod.GET)
-    public String project(Model model) {
-        model.addAttribute("title","Project / Portofolio");
-        List<OurProjectModel> getData = ourProjectService.listAll();
-        model.addAttribute("project", getData);
-        return "public/cms/admin/pages/project/project";
+    public String project(Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title","Project / Portofolio");
+            List<OurProjectModel> getData = ourProjectService.listAll();
+            model.addAttribute("project", getData);
+            return "public/cms/admin/pages/project/project";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/project/new", method = RequestMethod.GET)

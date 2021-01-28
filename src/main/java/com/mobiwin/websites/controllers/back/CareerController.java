@@ -47,11 +47,15 @@ public class CareerController {
 
     @RequestMapping(value = "/admin/career", method = RequestMethod.GET)
     public String listCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
-        publicData.addAttribute("title", "career");
-        List<CareerModel> careerListData = careerService.listAllCareer();
-        publicData.addAttribute("list_data", careerListData);
+        if (sessi.getAttribute("id_session") != null) {
+            publicData.addAttribute("title", "career");
+            List<CareerModel> careerListData = careerService.listAllCareer();
+            publicData.addAttribute("list_data", careerListData);
 
-        return "public/cms/admin/pages/career/list";
+            return "public/cms/admin/pages/career/list";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/career/new", method = RequestMethod.GET)

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mobiwin.websites.models.OurServiceModel;
 import com.mobiwin.websites.services.OurServiceService;
@@ -25,11 +26,15 @@ public class ServiceController {
     OurServiceService ourServiceService;
 
     @RequestMapping(value = "/admin/service", method = RequestMethod.GET)
-    public String service(Model model) {
-        model.addAttribute("title","Services");
-        List<OurServiceModel> getData = ourServiceService.listAll();
-        model.addAttribute("service", getData);
-        return "public/cms/admin/pages/service/service";
+    public String service(Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title","Services");
+            List<OurServiceModel> getData = ourServiceService.listAll();
+            model.addAttribute("service", getData);
+            return "public/cms/admin/pages/service/service";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/service/new", method = RequestMethod.GET)

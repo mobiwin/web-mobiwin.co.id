@@ -44,11 +44,15 @@ public class TestimonyController {
     TestimonyService testimonyService;
 
     @RequestMapping(value = "/admin/testimony", method = RequestMethod.GET)
-    public String testimony(Model model) {
-        model.addAttribute("title","Testimonials");
-        List<TestimonyModel> getData = testimonyService.listAll();
-        model.addAttribute("testimony", getData);
-        return "public/cms/admin/pages/testimony/testimony";
+    public String testimony(Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title","Testimonials");
+            List<TestimonyModel> getData = testimonyService.listAll();
+            model.addAttribute("testimony", getData);
+            return "public/cms/admin/pages/testimony/testimony";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/testimony/new", method = RequestMethod.GET)

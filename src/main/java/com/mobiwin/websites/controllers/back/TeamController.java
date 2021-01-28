@@ -47,11 +47,14 @@ public class TeamController {
 
     @RequestMapping(value = "/admin/team", method = RequestMethod.GET)
     public String listTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
-        publicData.addAttribute("title", "Teams");
-        List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
-        publicData.addAttribute("list_data", ourTeamListData);
-
-        return "public/cms/admin/pages/ourteam/list";
+        if (sessi.getAttribute("id_session") != null) {
+            publicData.addAttribute("title", "Teams");
+            List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
+            publicData.addAttribute("list_data", ourTeamListData);
+            return "public/cms/admin/pages/ourteam/list";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/team/new", method = RequestMethod.GET)
