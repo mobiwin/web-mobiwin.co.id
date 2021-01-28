@@ -49,17 +49,25 @@ public class SliderController {
     CarouselRepo carouselRepo;
 
     @RequestMapping(value = "/admin/slider", method = RequestMethod.GET)
-    public String slider(Model model) {
-        model.addAttribute("title", "Sliders");
-        List<CarouselModel> tes = carouselService.listAll();
-        model.addAttribute("carousel", tes);
-        return "public/cms/admin/pages/slider/slider";
+    public String slider(Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title", "Sliders");
+            List<CarouselModel> tes = carouselService.listAll();
+            model.addAttribute("carousel", tes);
+            return "public/cms/admin/pages/slider/slider";
+        }else{
+            return"redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/slider/new", method = RequestMethod.GET)
-    public String sliderNew(Model model) {
-        model.addAttribute("title", "Sliders New");
-        return "public/cms/admin/pages/slider/new";
+    public String sliderNew(Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title", "Sliders New");
+            return "public/cms/admin/pages/slider/new";
+        }else{
+            return"redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/slider/save", method = RequestMethod.POST)
@@ -237,12 +245,16 @@ public class SliderController {
     }
 
     @RequestMapping(value = "/admin/slider/edit/{id}", method = RequestMethod.GET)
-    public String sliderEdit(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("title", "Sliders Edit");
-        CarouselModel carouselModel = carouselService.findOne(id);
-        model.addAttribute("carousel", carouselModel);
-        model.addAttribute("carousels", carouselService.listAll());
-        return "public/cms/admin/pages/slider/edit";
+    public String sliderEdit(@PathVariable("id") Integer id, Model model,HttpSession sessi) {
+        if (sessi.getAttribute("id_session") != null) {
+            model.addAttribute("title", "Sliders Edit");
+            CarouselModel carouselModel = carouselService.findOne(id);
+            model.addAttribute("carousel", carouselModel);
+            model.addAttribute("carousels", carouselService.listAll());
+            return "public/cms/admin/pages/slider/edit";
+        }else{
+            return "redirect:/admin";
+        }
     }
 
     @RequestMapping(value = "/admin/slider/delete/{id}", method = RequestMethod.GET)

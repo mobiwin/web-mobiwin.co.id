@@ -22,7 +22,7 @@
             <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#client">Client</a></li>
-            <li><a href="#carrer">Carrer</a></li>
+            <li><a href="#carrer">Career</a></li>
             <li><a href="#team">Team</a></li>
             <li><a href="#contact">Contact</a></li>
 
@@ -31,30 +31,6 @@
 
       </div>
     </header><!-- End Header -->
-
-    <!-- ======= Hero Section ======= -->
-    <section id="hero" class="d-flex flex-column justify-content-end align-items-center">
-      <div id="demo" class="carousel slide" data-ride="carousel">
-
-        <!-- The slideshow -->
-        <div class="carousel-inner" th:each="itemCarousel:${carousel}">
-          <div class="carousel-item">
-            <img th:src="@{${'/upload'+ itemCarousel.carouselImage}}" width="1100px" height="500px">
-            <div class="carousel-caption">
-              <h2 th:text="${itemCarousel.caption}"></h2>
-            </div>
-          </div>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-          <span class="fa fa-chevron-left" style="font-size:xxx-large !important;"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-          <span class="fa fa-chevron-right" style="font-size:xxx-large !important;"></span>
-        </a>
-      </div>
-    </section><!-- End Hero -->
 
     <main id="main">
 
@@ -70,7 +46,7 @@
           <div class="row content" data-aos="fade-up">
             <div class="col-lg-6 pt-4 pt-lg-0">
               <p th:text="${itemAbout.summary}"></p>
-              <a href="#" class="btn-learn-more">Learn More</a>
+              <a th:href="@{/detail/about/1}" class="btn-learn-more">Learn More</a>
             </div>
           </div>
 
@@ -90,7 +66,7 @@
             <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
               <div class="icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                 <div class="icon"><i th:class="${itemService.iconPath}"></i></div>
-                <h4 class="title"><a href="" th:text="${itemService.title}"></a></h4>
+                <h4 class="title"><a th:href="@{/detail/service/{id}(id = ${itemService.id})}" th:text="${itemService.title}"></a></h4>
                 <p class="description" th:text="${itemService.shortWording}"></p>
               </div>
             </div>
@@ -125,7 +101,7 @@
                 <p th:text="${itemProject.kind}"></p>
                 <a th:href="@{${'/upload'+ itemProject.previewPath}}" data-gall="portfolioGallery"
                   class="venobox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="details-link" title="More Details"><i
+                <a th:href="@{/detail/portofolio/{id}(id = ${itemProject.id})}" class="details-link" title="More Details"><i
                     class="bx bx-link"></i></a>
               </div>
             </div>
@@ -175,28 +151,45 @@
         </div>
       </section>
       <!-- Carrer -->
-      <section id="carrer" class="carrer">
-        <div class="container">
-          <div class="section-title" data-aos="zoom-out">
-            <h2>Carrer</h2>
-            <p>Our Carrer</p>
-          </div>
-          <div class="row" th:each="itemCarrer:${carrer}">
-            <div class="col-md-3">
-              <div class="card">
-                <div class="card-content">
-                  <span class="fa fa-android" style="font-size: xxx-large;padding: 30px 40% 30px 40%;"></span>
-                  <div class="card-body">
-                    <h4 class="card-title" th:text="${itemCarrer.jobTitle}"></h4>
-                    <p class="card-text" th:text="${itemCarrer.potitionDesc}"></p>
-                    <p class="card-text"><small class="text-muted" th:text="${itemCarrer.createdAt}"></small></p>
+      <!-- Team -->
+<section id="team" class="pb-5">
+  <div class="container">
+      <div class="section-title" data-aos="zoom-out">
+        <h2>Career</h2>
+        <p>Our Career</p>
+      </div>
+      <div class="row" th:each="itemCareer:${career}">
+          <!-- Team member -->
+          <div class="col-xs-12 col-sm-6 col-md-4">
+              <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                  <div class="mainflip">
+                      <div class="frontside">
+                          <div class="card">
+                              <div class="card-body text-center">
+                                  <p><img class=" img-fluid" th:src="@{${'/upload'+ itemCareer.iconOf}}" alt="card image"></p>
+                                  <h4 class="card-title"  th:text="${itemCareer.jobTitle}"></h4>
+                                  <p class="card-text" th:text="${itemCareer.potition}"></p>
+                                  <small th:text="${#calendars.format(itemCareer.createdAt,'dd MMMM yyyy')}"></small>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="backside">
+                          <div class="card">
+                              <div class="card-body text-center mt-4">
+                                  <h4 class="card-title" th:text="${itemCareer.jobTitle}"></h4>
+                                  <p class="card-text">Untuk detail lebih lengkapnya silahkan klik button more di bawah ini.</p>
+                                  <a th:href="@{/detail/career/{id}(id=${itemCareer.id})}" class="btn btn-primary">More</a>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                </div>
               </div>
-            </div>
           </div>
-        </div>
-      </section>
+          <!-- ./Team member -->
+      </div>
+  </div>
+</section>
+<!-- Team -->
       <!-- ======= Team Section ======= -->
       <section id="team" class="team">
         <div class="container">
@@ -211,7 +204,7 @@
             <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
               <div class="member" data-aos="fade-up" data-aos-delay="300">
                 <div class="member-img">
-                  <img th:src="@{${'/upload'+ itemTeam.avatarPath}}" class="img-fluid" alt="">
+                  <a th:href="@{/detail/team/{id}(id=${itemTeam.id})}"><img th:src="@{${'/upload'+ itemTeam.avatarPath}}" class="img-fluid" alt=""></a>
                   <div class="social">
                     <a href=""><i class="icofont-twitter"></i></a>
                     <a href=""><i class="icofont-facebook"></i></a>

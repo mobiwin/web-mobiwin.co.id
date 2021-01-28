@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="public/front/fragments/main">
+
+<body>
+    <div layout:fragment="content">
+        <!-- ======= Header ======= -->
+        <header id="header" class="fixed-top d-flex align-items-centers">
+            <div class="container d-flex align-items-center">
+
+                <div class="logo mr-auto">
+                    <a href="index.html"><img th:src="@{/img/logo/mobiwin_logo_c.png}" height="100%" width="80px"
+                            alt=""></a>
+                </div>
+
+                <nav class="nav-menu d-none d-lg-block">
+                    <ul>
+                        <li><a th:href="@{/#home}">Home</a></li>
+                        <li><a th:href="@{/#about}">About</a></li>
+                        <li><a th:href="@{/#services}">Services</a></li>
+                        <li><a th:href="@{/#portfolio}">Portfolio</a></li>
+                        <li><a th:href="@{/#testimonials}">Testimonials</a></li>
+                        <li><a th:href="@{/#client}">Client</a></li>
+                        <li><a th:href="@{/#carrer}">Career</a></li>
+                        <li><a th:href="@{/#team}">Team</a></li>
+                        <li><a th:href="@{/#contact}">Contact</a></li>
+
+                    </ul>
+                </nav><!-- .nav-menu -->
+
+            </div>
+        </header><!-- End Header -->
+
+        <main id="main">
+            <!-- ======= Breadcrumbs ======= -->
+            <section class="breadcrumbs">
+                <div class="container">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>Detail Portofolio</h2>
+                        <ol>
+                            <li><a th:href="@{/}">Home</a></li>
+                            <li>Detail Portofolio</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </section><!-- End Breadcrumbs -->
+
+            <!-- ======= Portfolio Details Section ======= -->
+            <section id="portfolio-details" class="portfolio-details">
+                <div class="container" th:each="item:${project}">
+
+                    <div class="portfolio-details-container" data-aos="fade-up">
+
+                        <div class="owl-carousel portfolio-details-carousel">
+                            <img th:src="@{${'/upload'+ item.previewPath}}" class="img-fluid" alt="">
+                        </div>
+
+                        <div class="portfolio-info">
+                            <h3 th:text="${#strings.toUpperCase(item.projectTitle)}"></h3>
+                            <ul>
+                                <li><strong>Category</strong>: <p th:text="${item.kind}"></p></li>
+                                <li><strong>Client</strong>: <p th:text="${item.client}"></p></li>
+                                <li><strong>Technology</strong>: <p th:text="${item.technology}"></p></li>
+                                <li><strong>Project date</strong>: <p th:text="${item.createdAt}"></p></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section><!-- End Portfolio Details Section -->
+        </main><!-- End #main -->
+    </div>
+</body>
+
+</html>

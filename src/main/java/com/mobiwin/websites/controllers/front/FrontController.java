@@ -22,7 +22,9 @@ import com.mobiwin.websites.services.TestimonyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class FrontController {
@@ -51,10 +53,9 @@ public class FrontController {
     @Autowired
     OurTeamService ourTeamService;
 
-    // @RequestMapping(value = "/", method = RequestMethod.GET)
-    @GetMapping("/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Index(Model model) {
-
+        model.addAttribute("title", "Mobiwin");
         // Carousel
         List<CarouselModel> carousel = carouselService.listAll();
         model.addAttribute("carousel", carousel);
@@ -87,7 +88,7 @@ public class FrontController {
 
         // Carrer 
         List<CareerModel> carrer = carrerService.listAllCareer();
-        model.addAttribute("carrer", carrer);
+        model.addAttribute("career", carrer);
         // End Carrer
 
         // Teams
@@ -96,5 +97,50 @@ public class FrontController {
         // End Teams
 
         return "public/front/index";
+    }
+
+    @RequestMapping(value = "/detail/about/{id}", method = RequestMethod.GET)
+    public String aboutDetail(@PathVariable("id") Integer id, Model model) {
+
+        model.addAttribute("title", "Detail About Us");
+        AboutUsModel aboutUsModel = aboutService.findOne(id);
+        model.addAttribute("about", aboutUsModel);
+        return "public/front/pages/detail/about";
+    }
+
+    @RequestMapping(value = "/detail/service/{id}", method = RequestMethod.GET)
+    public String serviceDetail(@PathVariable("id") Integer id, Model model) {
+
+        model.addAttribute("title", "Detail Service");
+        OurServiceModel ourServiceModel = ourServiceService.findOne(id);
+        model.addAttribute("service", ourServiceModel);
+        return "public/front/pages/detail/service";
+    }
+
+    @RequestMapping(value = "/detail/portofolio/{id}", method = RequestMethod.GET)
+    public String portofolioDetail(@PathVariable("id") Integer id, Model model) {
+
+        model.addAttribute("title", "Detail Portofolio");
+        OurProjectModel ourProjectModel = ourProjectService.findOne(id);
+        model.addAttribute("project", ourProjectModel);
+        return "public/front/pages/detail/portofolio";
+    }
+
+    @RequestMapping(value = "/detail/career/{id}", method = RequestMethod.GET)
+    public String careerDetail(@PathVariable("id") long id, Model model) {
+
+        model.addAttribute("title", "Detail Career");
+        CareerModel careerModel = carrerService.listCareerById(id);
+        model.addAttribute("career", careerModel);
+        return "public/front/pages/detail/career";
+    }
+
+    @RequestMapping(value = "/detail/team/{id}", method = RequestMethod.GET)
+    public String teamDetail(@PathVariable("id") long id, Model model) {
+
+        model.addAttribute("title", "Detail Team");
+        OurTeamModel ourTeamModel = ourTeamService.listTeamById(id);
+        model.addAttribute("team", ourTeamModel);
+        return "public/front/pages/detail/team";
     }
 }
