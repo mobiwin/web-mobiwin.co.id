@@ -44,10 +44,10 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "/admin/service/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void serviceSave(HttpServletResponse response,@RequestParam String icon_path , @RequestParam String short_wording, 
+    public void serviceSave(HttpServletResponse response,@RequestParam String title,@RequestParam String icon_path , @RequestParam String short_wording, 
     @RequestParam String full_wording) {
         try{
-            ourServiceService.serviceSave(icon_path,short_wording,full_wording);
+            ourServiceService.serviceSave(title,icon_path,short_wording,full_wording);
             response.sendRedirect("/admin/service");
         } catch(IOException e){
             System.out.println(e);
@@ -64,10 +64,10 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "/admin/service/update/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void serviceUpdate(HttpServletResponse response, @RequestParam long id,@RequestParam String icon_path , @RequestParam String short_wording, 
+    public void serviceUpdate(HttpServletResponse response, @RequestParam long id,@RequestParam String title,@RequestParam String icon_path , @RequestParam String short_wording, 
     @RequestParam String full_wording) {
         try{
-            ourServiceService.serviceUpdate(id,icon_path,short_wording,full_wording);
+            ourServiceService.serviceUpdate(id,title,icon_path,short_wording,full_wording);
             response.sendRedirect("/admin/service");
         } catch(IOException e){
             System.out.println(e);

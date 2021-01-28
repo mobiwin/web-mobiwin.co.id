@@ -68,6 +68,12 @@ public class TeamController {
             @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
             @RequestParam(value = "positionTxt", required = false) String positionTxt,
             @RequestParam(value = "bioTxt", required = false) String bioTxt,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "website", required = false) String website,
+            @RequestParam(value = "twitter", required = false) String twitter,
+            @RequestParam(value = "instagram", required = false) String instagram,
+            @RequestParam(value = "facebook", required = false) String facebook,
             @RequestParam(value = "pilihAvatarInp", required = false) MultipartFile avatarFiles) {
 
                 String msg = "";
@@ -184,6 +190,12 @@ public class TeamController {
                     ourTeamModel.setEmployeeName(namaKaryawanTxt);
                     ourTeamModel.setPotition(positionTxt);
                     ourTeamModel.setBio(bioTxt);
+                    ourTeamModel.setEmail(email);
+                    ourTeamModel.setAddress(address);
+                    ourTeamModel.setWebsite(website);
+                    ourTeamModel.setTwitter(twitter);
+                    ourTeamModel.setInstagram(instagram);
+                    ourTeamModel.setFacebook(facebook);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());
@@ -226,6 +238,12 @@ public class TeamController {
             @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
             @RequestParam(value = "positionTxt", required = false) String positionTxt,
             @RequestParam(value = "bioTxt", required = false) String bioTxt,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "website", required = false) String website,
+            @RequestParam(value = "twitter", required = false) String twitter,
+            @RequestParam(value = "instagram", required = false) String instagram,
+            @RequestParam(value = "facebook", required = false) String facebook,
             @RequestParam(value = "pilihAvatarInp") MultipartFile avatarFiles) {
 
         String msg = "";
@@ -348,6 +366,12 @@ public class TeamController {
                     ourTeamModel.setEmployeeName(namaKaryawanTxt);
                     ourTeamModel.setPotition(positionTxt);
                     ourTeamModel.setBio(bioTxt);
+                    ourTeamModel.setEmail(email);
+                    ourTeamModel.setAddress(address);
+                    ourTeamModel.setWebsite(website);
+                    ourTeamModel.setTwitter(twitter);
+                    ourTeamModel.setInstagram(instagram);
+                    ourTeamModel.setFacebook(facebook);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateString = format.format(new Date());

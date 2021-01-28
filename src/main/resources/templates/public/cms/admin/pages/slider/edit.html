@@ -36,6 +36,10 @@
                                     <div class="box-body">
                                         <input type="hidden" name="id" th:value="${item.id}">
                                         <div class="form-group">
+                                            <label for="">Order</label>
+                                            <input type="number" th:value="${item.order}" name="orders" class="form-control">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="pilihAvatar">Pilih Image</label>
                                             <input type="file" name="carouselImage" th:value="${item.carouselImage}" class="form-control">
                                         </div>

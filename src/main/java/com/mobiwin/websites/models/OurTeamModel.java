@@ -28,20 +28,45 @@ public class OurTeamModel {
 
     @Column(name = "bio")
     private String bio;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "website")
+    private String website;
+
+    @Column(name = "twitter")
+    private String twitter;
+
+    @Column(name = "instagram")
+    private String instagram;
+
+    @Column(name = "facebook")
+    private String facebook;
     
     @Column(name = "created_at")
     private Date createdAt;
 
 
+
     public OurTeamModel() {
     }
 
-    public OurTeamModel(Long id, String avatarPath, String employeeName, String potition, String bio, Date createdAt) {
+    public OurTeamModel(Long id, String avatarPath, String employeeName, String potition, String bio, String email, String address, String website, String twitter, String instagram, String facebook, Date createdAt) {
         this.id = id;
         this.avatarPath = avatarPath;
         this.employeeName = employeeName;
         this.potition = potition;
         this.bio = bio;
+        this.email = email;
+        this.address = address;
+        this.website = website;
+        this.twitter = twitter;
+        this.instagram = instagram;
+        this.facebook = facebook;
         this.createdAt = createdAt;
     }
 
@@ -85,6 +110,54 @@ public class OurTeamModel {
         this.bio = bio;
     }
 
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWebsite() {
+        return this.website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getTwitter() {
+        return this.twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getInstagram() {
+        return this.instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getFacebook() {
+        return this.facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
     public Date getCreatedAt() {
         return this.createdAt;
     }
@@ -92,4 +165,83 @@ public class OurTeamModel {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+    public OurTeamModel id(Long id) {
+        setId(id);
+        return this;
+    }
+
+    public OurTeamModel avatarPath(String avatarPath) {
+        setAvatarPath(avatarPath);
+        return this;
+    }
+
+    public OurTeamModel employeeName(String employeeName) {
+        setEmployeeName(employeeName);
+        return this;
+    }
+
+    public OurTeamModel potition(String potition) {
+        setPotition(potition);
+        return this;
+    }
+
+    public OurTeamModel bio(String bio) {
+        setBio(bio);
+        return this;
+    }
+
+    public OurTeamModel email(String email) {
+        setEmail(email);
+        return this;
+    }
+
+    public OurTeamModel address(String address) {
+        setAddress(address);
+        return this;
+    }
+
+    public OurTeamModel website(String website) {
+        setWebsite(website);
+        return this;
+    }
+
+    public OurTeamModel twitter(String twitter) {
+        setTwitter(twitter);
+        return this;
+    }
+
+    public OurTeamModel instagram(String instagram) {
+        setInstagram(instagram);
+        return this;
+    }
+
+    public OurTeamModel facebook(String facebook) {
+        setFacebook(facebook);
+        return this;
+    }
+
+    public OurTeamModel createdAt(Date createdAt) {
+        setCreatedAt(createdAt);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", avatarPath='" + getAvatarPath() + "'" +
+            ", employeeName='" + getEmployeeName() + "'" +
+            ", potition='" + getPotition() + "'" +
+            ", bio='" + getBio() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", website='" + getWebsite() + "'" +
+            ", twitter='" + getTwitter() + "'" +
+            ", instagram='" + getInstagram() + "'" +
+            ", facebook='" + getFacebook() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            "}";
+    }
+    
 }

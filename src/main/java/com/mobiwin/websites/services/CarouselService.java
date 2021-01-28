@@ -17,19 +17,12 @@ public class CarouselService {
     public void saveSlider(CarouselModel carouselModel) {
         carouselRepo.save(carouselModel);
     }
-    // public void updateSlider(long id,CarouselModel carouselModel) {
-    //     carouselRepo.findById(id);
-    //     carouselRepo.save(carouselModel);
-    // }
-    // public void sliderSave(String nameImg,String caption) {
-    //     carouselRepo.sliderSave(nameImg,caption);
-    // }
 
-    public void sliderUpdate(long id,String nameImg,String caption) {
-        carouselRepo.sliderUpdate(id,nameImg,caption);
+    public void sliderUpdate(long id,long orders,String nameImg,String caption) {
+        carouselRepo.sliderUpdate(id,orders,nameImg,caption);
     }
-    public void sliderUpdateWithOutImg(long id,String caption) {
-        carouselRepo.sliderUpdateWithOutImg(id,caption);
+    public void sliderUpdateWithOutImg(long id,long orders,String caption) {
+        carouselRepo.sliderUpdateWithOutImg(id,orders,caption);
     }
 
     public List<CarouselModel> listAll() {

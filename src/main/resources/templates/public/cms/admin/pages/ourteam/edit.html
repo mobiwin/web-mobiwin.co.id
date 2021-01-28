@@ -41,6 +41,10 @@
                                             <input th:value="${list_data.getEmployeeName}" type="text" class="form-control" id="namaKaryawan" name="namaKaryawanTxt" placeholder="Tulis nama karywan" required>
                                         </div>
                                         <div class="form-group">
+                                            <label for="namaKaryawan">Email</label>
+                                            <input type="email" th:value="${list_data.email}" class="form-control" id="" name="email" placeholder="Email" required>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="position">Potition</label>
                                             <input th:value="${list_data.getPotition}" type="text" class="form-control" id="position" name="positionTxt" placeholder="Tulis nama jabatan" required>
                                         </div>
@@ -48,6 +52,26 @@
                                             <label for="biodata">Bio</label>
                                             <textarea th:text="${list_data.getBio}" class="form-control" placeholder="Place some text here" id="biodataEdit" name="bioTxt"
                                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Address</label>
+                                            <textarea class="form-control" placeholder="Address" id="address" name="address" >[[${list_data.address}]]</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="position">Website</label>
+                                            <input type="text" class="form-control" th:value="${list_data.website}" id="website" name="website" placeholder="Website">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="position">Twitter</label>
+                                            <input type="text" class="form-control" th:value="${list_data.twitter}" id="" name="twitter" placeholder="Twitter">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="position">Instagram</label>
+                                            <input type="text" class="form-control" th:value="${list_data.instagram}" id="" name="instagram" placeholder="Instagram">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="position">Facebook</label>
+                                            <input type="text" class="form-control" th:value="${list_data.facebook}" id="Facebook" name="facebook" placeholder="Facebook">
                                         </div>
                                         <div class="form-group">
                                             <label for="pilihAvatar">Photo</label>

@@ -17,6 +17,9 @@ public class CarouselModel {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="orders")
+    private Long order;
+
     @Column(name = "carousel_image",nullable = true)
     private String carouselImage;
 
@@ -26,6 +29,7 @@ public class CarouselModel {
     @Column(name = "created_at" ,nullable = true)
     private Date createdAt;
 
+
     public Long getId() {
         return this.id;
     }
@@ -34,6 +38,13 @@ public class CarouselModel {
         this.id = id;
     }
 
+    public Long getOrders() {
+        return this.order;
+    }
+
+    public void setOrders(Long order) {
+        this.order = order;
+    }
 
     public String getCarouselImage() {
         return this.carouselImage;
@@ -58,6 +69,7 @@ public class CarouselModel {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+   
     
 
 }

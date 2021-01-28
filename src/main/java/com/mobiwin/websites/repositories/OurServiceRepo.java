@@ -14,8 +14,9 @@ public interface OurServiceRepo extends JpaRepository<OurServiceModel, Long> {
     
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO our_service_tb(icon_path,short_wording,full_wording) VALUES(:icon_path, :short_wording, :full_wording)", nativeQuery = true)
+    @Query(value = "INSERT INTO our_service_tb(title,icon_path,short_wording,full_wording) VALUES(:title,:icon_path, :short_wording, :full_wording)", nativeQuery = true)
     public void serviceSave(
+        @Param("title") String title,
         @Param("icon_path") String icon_path,
         @Param("short_wording") String short_wording,
         @Param("full_wording") String full_wording
@@ -23,9 +24,10 @@ public interface OurServiceRepo extends JpaRepository<OurServiceModel, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE our_service_tb SET icon_path = :icon_path, short_wording = :short_wording, full_wording = :full_wording WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE our_service_tb SET title = :title, icon_path = :icon_path, short_wording = :short_wording, full_wording = :full_wording WHERE id = :id", nativeQuery = true)
     public void serviceUpdate(
         @Param("id") long id,
+        @Param("title") String title,
         @Param("icon_path") String icon_path,
         @Param("short_wording") String short_wording,
         @Param("full_wording") String full_wording

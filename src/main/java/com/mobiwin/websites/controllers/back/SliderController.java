@@ -72,6 +72,7 @@ public class SliderController {
 
     @RequestMapping(value = "/admin/slider/save", method = RequestMethod.POST)
     public String SliderSave(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @RequestParam(value = "orders", required = true) long orders,
             @RequestParam(value = "caption", required = false) String caption,
             @RequestParam(value = "carouselImage") MultipartFile carouselImage) {
 
@@ -185,6 +186,7 @@ public class SliderController {
 
                     // Membuat Object Models Team
                     CarouselModel carouselModel = new CarouselModel();
+                    carouselModel.setOrders(orders);
                     carouselModel.setCarouselImage(fixRealPath);
                     carouselModel.setCaption(caption);
 
@@ -203,7 +205,7 @@ public class SliderController {
     @RequestMapping(value = "/admin/slider/update/{id}", method = RequestMethod.POST, consumes = {
             "multipart/form-data" })
     public String sliderUpdate(@RequestParam("carouselImage") MultipartFile carouselImage, @RequestParam("id") long id,
-            @RequestParam("caption") String caption, RedirectAttributes attributes, Model model) {
+        @RequestParam("order") long order,@RequestParam("caption") String caption, RedirectAttributes attributes, Model model) {
         String exten = carouselImage.getContentType().toString();
         String ext = "";
             switch (exten) {
@@ -224,7 +226,7 @@ public class SliderController {
             }
         if (carouselImage.isEmpty()) {
             attributes.addFlashAttribute("message", "Please select a file to upload.");
-            carouselService.sliderUpdateWithOutImg(id,caption);
+            carouselService.sliderUpdateWithOutImg(id,order,caption);
             return "redirect:/admin/slider";
         }
         // String fileName = StringUtils.cleanPath(carouselImage.getOriginalFilename());
@@ -235,7 +237,7 @@ public class SliderController {
         try {
             Path path = Paths.get("src/main/resources/static/upload/slider/" + random + "." + ext);
             Files.copy(carouselImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            carouselService.sliderUpdate(id, nameImg, caption);
+            carouselService.sliderUpdate(id,order, nameImg, caption);
         } catch (IOException e) {
             e.printStackTrace();
         }
