@@ -3,11 +3,13 @@ package com.mobiwin.websites.controllers.front;
 import java.io.IOException;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mobiwin.websites.models.AboutUsModel;
 import com.mobiwin.websites.models.CareerModel;
 import com.mobiwin.websites.models.CarouselModel;
+import com.mobiwin.websites.models.ContactModel;
 import com.mobiwin.websites.models.OurClientModel;
 import com.mobiwin.websites.models.OurProjectModel;
 import com.mobiwin.websites.models.OurServiceModel;
@@ -17,6 +19,7 @@ import com.mobiwin.websites.services.AboutUsService;
 import com.mobiwin.websites.services.CareerService;
 import com.mobiwin.websites.services.CarouselService;
 import com.mobiwin.websites.services.ContactService;
+import com.mobiwin.websites.services.EmailService;
 import com.mobiwin.websites.services.OurClientService;
 import com.mobiwin.websites.services.OurProjectService;
 import com.mobiwin.websites.services.OurServiceService;
@@ -25,9 +28,12 @@ import com.mobiwin.websites.services.TestimonyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +68,9 @@ public class FrontController {
 
     @Autowired
     ContactService contactService;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Index(Model model) {
@@ -157,8 +166,10 @@ public class FrontController {
     @RequestMapping(value = "/contact/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public void contactSave(HttpServletResponse response,RedirectAttributes attributes,
     @RequestParam String name, @RequestParam String email , @RequestParam String departement, 
-    @RequestParam String pesan) {
+    @RequestParam String pesan,ContactModel contact) throws MessagingException {
+        
         try{
+            emailService.sendMail(contact);
             contactService.contactSave(name,email,departement,"Contact Us - Mobiwin",pesan);
             attributes.addFlashAttribute("message", "Thank you for the advice");
             response.sendRedirect("/#contact");
