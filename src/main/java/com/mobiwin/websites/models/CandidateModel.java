@@ -20,8 +20,17 @@ public class CandidateModel {
     @Column(name = "ip_user")
     private String ipUser;
 
+    @Column(name = "id_career")
+    private String idCareer;
+
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "candidate_name")
     private String candidateName;
+
+    @Column(name = "candidate_email")
+    private String candidateEmail;
 
     @Column(name = "candidate_skill")
     private String candidateSkill;
@@ -34,4 +43,87 @@ public class CandidateModel {
 
     @Column(name = "created_at")
     private Date createdAt;
+
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getIpUser() {
+        return this.ipUser;
+    }
+
+    public void setIpUser(String ipUser) {
+        this.ipUser = ipUser;
+    }
+
+    public String getIdCareer() {
+        return this.idCareer;
+    }
+
+    public void setIdCareer(String idCareer) {
+        this.idCareer = idCareer;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCandidateName() {
+        return this.candidateName;
+    }
+
+    public void setCandidateName(String candidateName) {
+        this.candidateName = candidateName;
+    }
+
+    public String getCandidateEmail() {
+        return this.candidateEmail;
+    }
+
+    public void setCandidateEmail(String candidateEmail) {
+        this.candidateEmail = candidateEmail;
+    }
+
+    public String getCandidateSkill() {
+        return this.candidateSkill;
+    }
+
+    public void setCandidateSkill(String candidateSkill) {
+        this.candidateSkill = candidateSkill;
+    }
+
+    public String getCandidateDesc() {
+        return this.candidateDesc;
+    }
+
+    public void setCandidateDesc(String candidateDesc) {
+        this.candidateDesc = candidateDesc;
+    }
+
+    public Date getCandidateCvPath() {
+        return this.candidateCvPath;
+    }
+
+    public void setCandidateCvPath(Date candidateCvPath) {
+        this.candidateCvPath = candidateCvPath;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+    
 }

@@ -37,10 +37,10 @@
                 <div class="container">
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>Detail Career</h2>
+                        <h2>New Candidate</h2>
                         <ol>
                             <li><a th:href="@{/}">Home</a></li>
-                            <li>Detail Career</li>
+                            <li>New Candidate</li>
                         </ol>
                     </div>
 
@@ -48,44 +48,35 @@
             </section><!-- End Breadcrumbs -->
 
             <section class="inner-page">
-                <div class="container" th:each="item:${career}">
+                <div class="container" >
                     <div class="col-xs-12 col-md-12">
-                        <div class="panel panel-default job-ads-content">
-                            <div class="panel-body">
-                                <h1 class="clear-top bold" th:text="${item.jobTitle}"></h1>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <h4>
-                                            <small>
-                                                Potition:
-                                            </small>
-                                            <br>
-                                            <p th:text="${item.potition}"></p>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <hr>
-                                <h3 class="clear-top">
-                                    <i class="fa fa-fw fa-briefcase text-muted"></i>
-                                    Description
-                                </h3>
-                                <div class="job_desc" th:utext="${item.potitionDesc}"></div>
-                                <div class="clearfix"></div>
-                                <h3>
-                                    <i class="fa fa-fw fa-file-text text-muted"></i>
-                                    Requerement
-                                </h3>
-                                <div class="job_req" th:utext="${item.requirement}"></div>
+                        <div th:if="${message != null}">
+                            <p class="alert alert-success" th:text=${message}></p>
+                        </div>
+                        <form th:action="@{/candidate/save/{id}(id = ${item.id})}" method="POST" enctype="multipart/form-data" th:each="item:${candidate}">
+                            <input type="hidden" name="id_career" th:value="${item.id}">
+                            <div class="form-group">
+                                <label for="">Your Name</label>
+                                <input type="text" name="candidate_name" placeholder="Your Name" class="form-control" id="">
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="d-flex justify-content-center">
-                            <a th:href="@{/candidate/new/{id}(id = ${item.id})}" class="btn btn-info">   
-                               <i class="fa fa-tasks"></i> apply for a job
-                            </a>
-                        </div>
+                            <div class="form-group">
+                                <label for="">Your Email</label>
+                                <input type="email" name="candidate_email" placeholder="Your Email" class="form-control" id="">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Skill</label>
+                                <textarea placeholder="Your Skill" class="form-control" name="candidate_skill"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Description</label>
+                                <textarea placeholder="Place some text here" class="form-control" name="candidate_desc"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">CV</label>
+                                <input type="file" name="candidate_cv_path" class="form-control" id="">
+                            </div>
+                            <button class="btn btn-info"><i class="fa fa-save"></i> Submit</button>
+                        </form>
                     </div>
                 </div>
             </section>

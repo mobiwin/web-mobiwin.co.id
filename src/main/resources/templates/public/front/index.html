@@ -22,7 +22,7 @@
             <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#client">Client</a></li>
-            <li><a href="#carrer">Career</a></li>
+            <li><a href="#career">Career</a></li>
             <li><a href="#team">Team</a></li>
             <li><a href="#contact">Contact</a></li>
 
@@ -178,15 +178,15 @@
       </section>
       <!-- Carrer -->
       <!-- Team -->
-      <section id="team" class="pb-5">
+      <section id="career" class="pb-5">
         <div class="container">
           <div class="section-title" data-aos="zoom-out">
             <h2>Career</h2>
             <p>Our Career</p>
           </div>
-          <div class="row" th:each="itemCareer:${career}">
+          <div class="row" >
             <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="col-xs-12 col-sm-6 col-md-4" th:each="itemCareer:${career}">
               <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                 <div class="mainflip">
                   <div class="frontside">
@@ -284,7 +284,9 @@
             </div>
 
             <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left">
-
+              <div th:if="${message != null}">
+                <p class="alert alert-success" th:text=${message}></p>
+              </div>
               <form th:action="@{/contact/save}" method="post" role="form">
                 <div class="form-row">
                   <div class="col-md-6 form-group">
