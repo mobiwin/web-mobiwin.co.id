@@ -24,7 +24,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mobiwin.websites.models.CandidateModel;
 import com.mobiwin.websites.models.CareerModel;
+import com.mobiwin.websites.services.CandidateService;
 import com.mobiwin.websites.services.CareerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class CareerController {
 
     @Autowired
     CareerService careerService;
+
+    @Autowired
+    CandidateService candidateService;
 
     @Autowired
     ServletContext servletContext;
@@ -378,6 +383,20 @@ public class CareerController {
         }
 
         return "redirect:/admin/career?msg=" + msg; 
+    }
+
+    @RequestMapping(value = "/admin/career/candidate/{id}", method = RequestMethod.GET)
+    public String candidateCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+            @PathVariable("id") Long id) {
+        publicData.addAttribute("title", "Candidate career");
+
+        List<CandidateModel> candidateNotBeenSeen = candidateService.hasNotBeenSeen(id,"has_not_been_seen");
+        publicData.addAttribute("hasNotBeenSeen", candidateNotBeenSeen);
+
+        List<CandidateModel> candidateBeenSeen = candidateService.hasBeenSeen(id,"has_been_seen");
+        publicData.addAttribute("hasBeenSeen", candidateBeenSeen);
+
+        return "public/cms/admin/pages/career/candidate";
     }
 
     @RequestMapping(value = "/admin/career/delete/{id}", method = RequestMethod.GET)

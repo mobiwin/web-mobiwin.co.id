@@ -57,6 +57,7 @@
                                             <td>
                                                 <a th:href="@{/admin/career/edit/{id}(id = ${item.getId})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
                                                 <a th:href="@{/admin/career/delete/{id}(id = ${item.getId})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                                <a th:href="@{/admin/career/candidate/{id}(id = ${item.getId})}" class="btn btn-info"><i class="fa fa-eye"></i> Candidate</a>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -1,5 +1,7 @@
 package com.mobiwin.websites.repositories;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.mobiwin.websites.models.CandidateModel;
@@ -22,5 +24,22 @@ public interface CandidateRepo extends CrudRepository<CandidateModel, Long> {
         @Param("candidate_skill") String candidate_skill,
         @Param("fileName") String fileName,
         @Param("status") String status
+    );
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "SELECT * FROM candidate_tb WHERE id_career = :id AND status = :status", nativeQuery = true)
+    List<CandidateModel> hasNotBeenSeen(
+    @Param("id") long id,
+    @Param("status") String status
+    );
+
+    @Transactional
+    @Modifying
+    @Query(value = "SELECT * FROM candidate_tb WHERE id_career = :id AND status = :status", nativeQuery = true)
+    List<CandidateModel> hasBeenSeen(
+    @Param("id") long id,
+    @Param("status") String status
     );
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="public/cms/admin/fragments/main">
+
+<body class="skin-blue">
+    <div layout:fragment="content">
+        <!-- header logo: style can be found in header.less -->
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <aside class="right-side">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Candidate Career
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Candidate Career</li>
+                    </ol>
+                </section>
+
+                <!-- Main content -->
+                <section class="content" >
+                   <div class="row">
+                        <div class="col-md-12">
+                             <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item active">
+                            <a class="nav-link active" data-toggle="tab" href="#notSeen">Has Not Been Seen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#seen">Has Been Seen</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div id="notSeen" class="container tab-pane active"><br>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-md-10">
+                                        <h2>Candidate Has Not Been Seen</h2>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-hover table-responsive table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Skill</th>
+                                                <th>Description</th>
+                                                <th>CV</th>
+                                                <th>Options</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="itemBefore,no:${hasNotBeenSeen}">
+                                                <td th:text="${no.count}"></td>
+                                                <td th:text="${itemBefore.candidateName}"></td>
+                                                <td th:text="${itemBefore.candidateEmail}"></td>
+                                                <td th:text="${itemBefore.candidateSkill}"></td>
+                                                <td th:text="${itemBefore.candidateDesc}"></td>
+                                                <td><a th:href="@{'/upload/candidate/'+${itemBefore.candidateCvPath}}" download th:text="${itemBefore.candidateCvPath}"></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="seen" class="container tab-pane fade"><br>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-md-10">
+                                        <h2>Candidate Has Been Seen</h2>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-hover table-responsive table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Skill</th>
+                                                <th>Description</th>
+                                                <th>CV</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="itemAfter,no:${hasBeenSeen}">
+                                                <td th:text="${no.count}"></td>
+                                                <td th:text="${itemAfter.candidateName}"></td>
+                                                <td th:text="${itemAfter.candidateEmail}"></td>
+                                                <td th:text="${itemAfter.candidateSkill}"></td>
+                                                <td th:text="${itemAfter.candidateDesc}"></td>
+                                                <td><a th:href="@{'/upload/candidate/'+${itemAfter.candidateCvPath}}" download th:text="${itemAfter.candidateCvPath}"></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                   </div>
+                </section><!-- /.content -->
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+    </div>
+</body>
+
+</html>

@@ -1,5 +1,7 @@
 package com.mobiwin.websites.services;
 
+import java.util.List;
+
 import com.mobiwin.websites.models.CandidateModel;
 import com.mobiwin.websites.repositories.CandidateRepo;
 
@@ -17,5 +19,14 @@ public class CandidateService {
     }
     public CandidateModel findOne(long id) {
         return candidateRepo.findById(id).get();
+    }
+    public List<CandidateModel> hasNotBeenSeen(long id,String status){
+        var repoDataNotBeenSeen = (List<CandidateModel>) candidateRepo.hasNotBeenSeen(id,status);
+        return repoDataNotBeenSeen;
+    }
+
+    public List<CandidateModel> hasBeenSeen(long id,String status){
+        var repoDataBeenSeen = (List<CandidateModel>) candidateRepo.hasBeenSeen(id,status);
+        return repoDataBeenSeen;
     }
 }

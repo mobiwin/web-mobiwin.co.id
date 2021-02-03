@@ -39,11 +39,7 @@ public class CandidateModel {
     private String candidateDesc;
     
     @Column(name = "candidate_cv_path")
-    private Date candidateCvPath;
-
-    @Column(name = "created_at")
-    private Date createdAt;
-
+    private String candidateCvPath;
 
 
     public Long getId() {
@@ -110,20 +106,12 @@ public class CandidateModel {
         this.candidateDesc = candidateDesc;
     }
 
-    public Date getCandidateCvPath() {
+    public String getCandidateCvPath() {
         return this.candidateCvPath;
     }
 
-    public void setCandidateCvPath(Date candidateCvPath) {
+    public void setCandidateCvPath(String candidateCvPath) {
         this.candidateCvPath = candidateCvPath;
     }
 
-    public Date getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-    
 }
