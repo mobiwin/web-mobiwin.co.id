@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 26 Jan 2021 pada 08.27
+-- Waktu pembuatan: 03 Feb 2021 pada 02.33
 -- Versi server: 10.4.10-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -70,24 +70,6 @@ INSERT INTO `admin_tb` (`id`, `enabled`, `user_name`, `user_password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `candicate_tb`
---
-
-DROP TABLE IF EXISTS `candicate_tb`;
-CREATE TABLE IF NOT EXISTS `candicate_tb` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ip_user` varchar(50) NOT NULL,
-  `candidate_name` varchar(200) NOT NULL,
-  `candidate_skill` text NOT NULL,
-  `candidate_desc` text NOT NULL,
-  `candidate_cv_path` text NOT NULL,
-  `created_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `candidate_tb`
 --
 
@@ -137,9 +119,11 @@ INSERT INTO `career_tb` (`id`, `job_title`, `icon_of`, `potition`, `requirement`
 DROP TABLE IF EXISTS `carousel_tb`;
 CREATE TABLE IF NOT EXISTS `carousel_tb` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `orders` int(11) NOT NULL,
   `carousel_image` text DEFAULT NULL,
   `caption` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `order` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
@@ -147,9 +131,33 @@ CREATE TABLE IF NOT EXISTS `carousel_tb` (
 -- Dumping data untuk tabel `carousel_tb`
 --
 
-INSERT INTO `carousel_tb` (`id`, `carousel_image`, `caption`, `created_at`) VALUES
-(21, '/slider/20210126102507.jpg', 'asdsadsadsad', '2021-01-26 03:25:07'),
-(22, '/slider/20210126144855.jpg', 'ini adalah caption', '2021-01-26 07:48:55');
+INSERT INTO `carousel_tb` (`id`, `orders`, `carousel_image`, `caption`, `created_at`, `order`) VALUES
+(21, 1, '/slider/20210126102507.jpg', 'asdsadsadsad', '2021-01-26 03:25:07', NULL),
+(22, 2, '/slider/20210126144855.jpg', '<div style=\"text-align:justify\">Today MMI does not only provides Software and Hardware Infrastructure to the clients, MMI also delivers total IT Solutions, including Supply Chain Management (SCM), E-Government (ERP), Consulting Services, and Managed-services.</div>', '2021-01-26 07:48:55', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `contact_tb`
+--
+
+DROP TABLE IF EXISTS `contact_tb`;
+CREATE TABLE IF NOT EXISTS `contact_tb` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `departement` varchar(30) NOT NULL,
+  `subject` varchar(50) NOT NULL,
+  `pesan` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `contact_tb`
+--
+
+INSERT INTO `contact_tb` (`id`, `name`, `email`, `departement`, `subject`, `pesan`) VALUES
+(9, 'programmer', 'admin@admin.com', 'business inquery', 'sadasd', 'adasd');
 
 -- --------------------------------------------------------
 
@@ -233,14 +241,15 @@ CREATE TABLE IF NOT EXISTS `our_service_tb` (
   `full_wording` text NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `our_service_tb`
 --
 
 INSERT INTO `our_service_tb` (`id`, `title`, `icon_path`, `short_wording`, `full_wording`, `created_at`) VALUES
-(2, 'Services', 'bx bx-file', 'Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi', 'testing edited aja', '2021-01-25 06:54:08');
+(2, 'Services', 'bx bx-file', 'Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi', 'testing edited aja', '2021-01-25 06:54:08'),
+(3, 'penambahan', 'fa fa-file', 'ini adalah text singkat penuh makna yang tidak bisa ku sampaikan padamu', 'ini text yang sangat panjang ', '2021-01-28 07:47:44');
 
 -- --------------------------------------------------------
 
@@ -255,6 +264,12 @@ CREATE TABLE IF NOT EXISTS `our_team_tb` (
   `employee_name` varchar(200) NOT NULL,
   `potition` varchar(200) NOT NULL,
   `bio` text NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `website` varchar(50) NOT NULL,
+  `twitter` varchar(30) NOT NULL,
+  `instagram` varchar(30) NOT NULL,
+  `facebook` varchar(30) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -263,8 +278,8 @@ CREATE TABLE IF NOT EXISTS `our_team_tb` (
 -- Dumping data untuk tabel `our_team_tb`
 --
 
-INSERT INTO `our_team_tb` (`id`, `avatar_path`, `employee_name`, `potition`, `bio`, `created_at`) VALUES
-(1, '/team/dasdsa_20210125105548.jpg', 'dasdsa', 'asdas', 'asdsad', '2021-01-25 03:55:48');
+INSERT INTO `our_team_tb` (`id`, `avatar_path`, `employee_name`, `potition`, `bio`, `email`, `address`, `website`, `twitter`, `instagram`, `facebook`, `created_at`) VALUES
+(1, '/team/dasdsa_20210125105548.jpg', 'dasdsa', 'asdas', 'asdsad', '', '', '', '', '', '', '2021-01-25 03:55:48');
 
 -- --------------------------------------------------------
 

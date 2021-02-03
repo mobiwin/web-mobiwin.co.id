@@ -92,6 +92,7 @@ public class TestimonyController {
             }
 
             if (ext.isEmpty()) {
+                System.out.println("Ext kosong");
                 publicData.addAttribute("errmsg", "File kosong");
             } else {
 
@@ -185,8 +186,10 @@ public class TestimonyController {
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
                     testimonyService.saveTestimony(testimonyModel);
+                    System.out.println("Upload Berhasil");
                     publicData.addAttribute("sucmsg", "Upload Berhasil");
                 } catch (Exception e) {
+                    System.out.println(e.getMessage());
                     publicData.addAttribute("errmsg", e.getMessage());
                 }
             }
