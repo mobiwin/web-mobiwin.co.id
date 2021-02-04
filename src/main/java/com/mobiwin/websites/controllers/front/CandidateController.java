@@ -10,11 +10,14 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.util.StringUtils;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
+import com.mobiwin.websites.models.CandidateModel;
 import com.mobiwin.websites.models.CareerModel;
 import com.mobiwin.websites.services.CandidateService;
 import com.mobiwin.websites.services.CareerService;
+import com.mobiwin.websites.services.EmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +38,9 @@ public class CandidateController {
     @Autowired
     CareerService careerService;
 
+    @Autowired
+    EmailService emailService;
+
     @RequestMapping(value = "/candidate/new/{id}", method = RequestMethod.GET)
     public String newCandidate(@PathVariable(value="id") long id,Model model) {
         model.addAttribute("title", "New Candidate");
@@ -51,7 +57,7 @@ public class CandidateController {
             @RequestParam(value = "candidate_email", required = false) String candidate_email	,
             @RequestParam(value = "candidate_skill", required = false) String candidate_skill,
             @RequestParam(value = "candidate_cv_path") MultipartFile candidate_cv_path,
-            HttpServletRequest request) {
+            HttpServletRequest request,CandidateModel candidate) throws MessagingException {
         
         if (candidate_cv_path.isEmpty()) {
             attributes.addFlashAttribute("message", "Please select a file to upload.");
@@ -67,6 +73,7 @@ public class CandidateController {
             candidateService.saveData(id_career,candidate_desc,candidate_name,candidate_email,candidate_skill,fileName,"has_not_been_seen");
             Path path = Paths.get("src/main/resources/static/upload/candidate/" + fileName);
             Files.copy(candidate_cv_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            emailService.sendMailCandidate(candidate,candidate_email,candidate_name,candidate_desc);
 
         } catch (IOException e) {
             e.printStackTrace();

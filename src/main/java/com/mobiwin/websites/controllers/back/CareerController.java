@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -20,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,8 +30,10 @@ import com.mobiwin.websites.models.CandidateModel;
 import com.mobiwin.websites.models.CareerModel;
 import com.mobiwin.websites.services.CandidateService;
 import com.mobiwin.websites.services.CareerService;
+import com.mobiwin.websites.services.EmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +53,9 @@ public class CareerController {
 
     @Autowired
     ServletContext servletContext;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/admin/career", method = RequestMethod.GET)
     public String listCareer(Model publicData, HttpSession sessi, HttpServletResponse httpResponse) {
@@ -397,6 +404,18 @@ public class CareerController {
         publicData.addAttribute("hasBeenSeen", candidateBeenSeen);
 
         return "public/cms/admin/pages/career/candidate";
+    }
+    @RequestMapping(value = "/admin/career/candidate/update/{id}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public void candidateUpdate(HttpServletResponse response,@PathVariable("id") Long id,
+    @RequestParam("email") String email,@RequestParam("name") String name)
+    throws MessagingException {
+        try{
+            candidateService.candidateUpdate(id,"has_been_seen");
+            emailService.sendMailDoneCandidate(email,name);
+            response.sendRedirect("/admin/career");
+        } catch(IOException e){
+            System.out.println(e);
+        }
     }
 
     @RequestMapping(value = "/admin/career/delete/{id}", method = RequestMethod.GET)

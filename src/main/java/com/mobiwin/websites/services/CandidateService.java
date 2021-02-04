@@ -29,4 +29,8 @@ public class CandidateService {
         var repoDataBeenSeen = (List<CandidateModel>) candidateRepo.hasBeenSeen(id,status);
         return repoDataBeenSeen;
     }
+
+    public void candidateUpdate(long id,String status) {
+        candidateRepo.candidateUpdate(id,status);
+    }
 }

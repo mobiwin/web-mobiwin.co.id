@@ -42,4 +42,12 @@ public interface CandidateRepo extends CrudRepository<CandidateModel, Long> {
     @Param("id") long id,
     @Param("status") String status
     );
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE candidate_tb SET status = :status WHERE id = :id", nativeQuery = true)
+    public void candidateUpdate(
+        @Param("id") long id,
+        @Param("status") String status
+    );
 }

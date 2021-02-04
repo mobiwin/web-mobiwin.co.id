@@ -65,6 +65,14 @@
                                                 <td th:text="${itemBefore.candidateSkill}"></td>
                                                 <td th:text="${itemBefore.candidateDesc}"></td>
                                                 <td><a th:href="@{'/upload/candidate/'+${itemBefore.candidateCvPath}}" download th:text="${itemBefore.candidateCvPath}"></a></td>
+                                                <td>
+                                                    <form th:action="@{/admin/career/candidate/update/{id}(id = ${itemBefore.id})}" method="post">
+                                                        <input type="hidden" name="id" th:value="${itemBefore.id}">
+                                                        <input type="hidden" name="email" th:value="${itemBefore.candidateEmail}">
+                                                        <input type="hidden" name="name" th:value="${itemBefore.candidateName}" id="">
+                                                        <button class="btn btn-info"> <i class="fa fa-check"></i>  Done</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

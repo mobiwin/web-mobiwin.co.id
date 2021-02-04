@@ -169,7 +169,7 @@ public class FrontController {
     @RequestParam String pesan,ContactModel contact) throws MessagingException {
         
         try{
-            emailService.sendMail(contact);
+            emailService.sendMailContact(contact);
             contactService.contactSave(name,email,departement,"Contact Us - Mobiwin",pesan);
             attributes.addFlashAttribute("message", "Thank you for the advice");
             response.sendRedirect("/#contact");

@@ -21,4 +21,5 @@ public interface CareerRepo extends JpaRepository<CareerModel, Long> {
         @Param("posdesc") String txtPosDesc,
         @Param("id") String txtId
     );
+
 }
