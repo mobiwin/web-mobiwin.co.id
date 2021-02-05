@@ -21,9 +21,10 @@ public class AboutUsService {
 
     }
     
-    public void update(long id,String title, String summary, String wording) {
-        // aboutUsRepo.save(about);
-        aboutUsRepo.updateSql(id,title,summary,wording);
+    public void update(long id,AboutUsModel about) {
+        about.setId(id);
+        aboutUsRepo.save(about);
+        // aboutUsRepo.updateSql(id,title,summary,wording);
     }
 
     public List<AboutUsModel> findAll() {

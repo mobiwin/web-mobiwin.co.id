@@ -18,7 +18,7 @@ public class CarouselModel {
     private Long id;
 
     @Column(name="orders")
-    private Long order;
+    private Long orders;
 
     @Column(name = "carousel_image",nullable = true)
     private String carouselImage;
@@ -39,11 +39,11 @@ public class CarouselModel {
     }
 
     public Long getOrders() {
-        return this.order;
+        return this.orders;
     }
 
-    public void setOrders(Long order) {
-        this.order = order;
+    public void setOrders(Long orders) {
+        this.orders = orders;
     }
 
     public String getCarouselImage() {

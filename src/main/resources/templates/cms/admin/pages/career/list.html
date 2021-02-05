@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="public/cms/admin/fragments/main">
+
+<body class="skin-blue">
+    <div layout:fragment="content">
+    <!-- header logo: style can be found in header.less -->
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="right-side">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Career
+                    <small>Control panel</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Career</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" th:text=${param.msg}></p>
+                                </div>
+                                <div class="col-md-10">
+                                    <h2>Carrer Vacancy</h2>
+                                </div>
+                                <div class="col-md-2">
+                                    <a th:href="@{/admin/career/new}" class="btn btn-primary"><i class="fa fa-plus"></i> New Member</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Job Title</th>
+                                            <th>Potition</th>
+                                            <th>Requirement</th>
+                                            <th>Job Description</th>
+                                            <th>Options</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item,no : ${list_data}">
+                                            <td th:text="${no.count}"></td>
+                                            <td th:text="${item.getJobTitle}"></td>
+                                            <td th:text="${item.getPotition}"></td>
+                                            <td th:utext="${item.getRequirement}"></td>
+                                            <td th:utext="${item.getPotitionDesc}"></td>
+                                            <td>
+                                                <a th:href="@{/admin/career/edit/{id}(id = ${item.getId})}" class="btn btn-warning"><i class="fa fa-edit"></i> Update</a>
+                                                <a th:href="@{/admin/career/delete/{id}(id = ${item.getId})}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                                <a th:href="@{/admin/career/candidate/{id}(id = ${item.getId})}" class="btn btn-info"><i class="fa fa-eye"></i> Candidate</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- /.content -->
+        </aside><!-- /.right-side -->
+    </div><!-- ./wrapper -->
+</div>
+</body>
+
+</html>

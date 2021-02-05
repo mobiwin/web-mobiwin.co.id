@@ -12,8 +12,8 @@ public class OurProjectService {
     @Autowired
     OurProjectRepo ourProjectRepo;
 
-    public void projectUpdate(long id,String title,String kind,String client,String technology,String nameImg) {
-        ourProjectRepo.projectUpdate(id,title,kind,client,technology,nameImg);
+    public void projectUpdate(long id,String projTi,String kind,String client,String technology,String nameImg) {
+        ourProjectRepo.projectUpdate(id,projTi,kind,client,technology,nameImg);
     }
     public void projectUpdateWithOutImg(long id,String title,String kind,String client,String technology) {
         ourProjectRepo.projectUpdateWithOutImg(id,title,kind,client,technology);

@@ -49,7 +49,7 @@ public class TestimonyController {
             model.addAttribute("title","Testimonials");
             List<TestimonyModel> getData = testimonyService.listAll();
             model.addAttribute("testimony", getData);
-            return "public/cms/admin/pages/testimony/testimony";
+            return "cms/admin/pages/testimony/testimony";
         }else{
             return "redirect:/admin";
         }
@@ -58,11 +58,11 @@ public class TestimonyController {
     @RequestMapping(value = "/admin/testimony/new", method = RequestMethod.GET)
     public String testimonyNew(Model model) {
         model.addAttribute("title","New testimonials");
-        return "public/cms/admin/pages/testimony/new";
+        return "cms/admin/pages/testimony/new";
     }
 
     @RequestMapping(value = "/admin/testimony/save", method = RequestMethod.POST)
-    public String testimonySave(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
+    public String testimonySave(RedirectAttributes attributes,Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
             @RequestParam(value = "name_user", required = false) String name_user,
             @RequestParam(value = "company", required = false) String company,
             @RequestParam(value = "testimony_text", required = false) String testimony_text,
@@ -112,6 +112,7 @@ public class TestimonyController {
                     }
 
                     // UPLOAD
+                    String nameUser = name_user;
                     byte[] fileBytes = user_ava_path.getBytes();
                     name_user = name_user.replaceAll("[^a-zA-Z0-9]", "_");
                     String uploadPath = "src/main/resources/static/upload/temp/"+ name_user + "_" + random + "." + ext;
@@ -180,22 +181,22 @@ public class TestimonyController {
                     // Membuat Object Models Team
                     TestimonyModel testimonyModel = new TestimonyModel();
                     testimonyModel.setUserAvaPath(fixRealPath);
-                    testimonyModel.setNameUser(name_user);
+                    testimonyModel.setNameUser(nameUser);
                     testimonyModel.setCompany(company);
                     testimonyModel.setTestimonyText(testimony_text);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
                     testimonyService.saveTestimony(testimonyModel);
                     System.out.println("Upload Berhasil");
-                    publicData.addAttribute("sucmsg", "Upload Berhasil");
+                    attributes.addFlashAttribute("msgsuc","Insert Successfully");   
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    publicData.addAttribute("errmsg", e.getMessage());
+                    attributes.addFlashAttribute("msgerr",e);   
                 }
             }
         }
 
-        return "public/cms/admin/pages/testimony/new";
+        return "redirect:/admin/testimony";
     }
 
     @RequestMapping(value = "/admin/testimony/edit/{id}", method = RequestMethod.GET)
@@ -204,7 +205,7 @@ public class TestimonyController {
         TestimonyModel testimonyModel = testimonyService.findOne(id);
         model.addAttribute("testimony", testimonyModel);
         model.addAttribute("testimonys", testimonyService.listAll());
-        return "public/cms/admin/pages/testimony/edit";
+        return "cms/admin/pages/testimony/edit";
     }
 
     @RequestMapping(value = "/admin/testimony/update/{id}", method = RequestMethod.POST, consumes = {
@@ -217,6 +218,7 @@ public class TestimonyController {
         @RequestParam(value = "user_ava_path") MultipartFile user_ava_path,RedirectAttributes attributes, Model model) {
         String exten = user_ava_path.getContentType().toString();
         String ext = "";
+        String nameUser = name_user;
             switch (exten) {
                 case "image/png":
                     ext = "png";
@@ -234,9 +236,8 @@ public class TestimonyController {
                     break;
             }
         if (user_ava_path.isEmpty()) {
-            attributes.addFlashAttribute("message", "Please select a file to upload.");
-            name_user = name_user.replaceAll("[^a-zA-Z0-9]", "_");
-            testimonyService.testimonyUpdateWithOutImg(id,name_user,company,testimony_text);
+            testimonyService.testimonyUpdateWithOutImg(id,nameUser,company,testimony_text);
+            attributes.addFlashAttribute("msgsuc","Updated Successfully"); 
             return "redirect:/admin/testimony";
         }
         // String fileName = StringUtils.cleanPath(carouselImage.getOriginalFilename());
@@ -248,17 +249,18 @@ public class TestimonyController {
         try {
             Path path = Paths.get("src/main/resources/static/upload/testimony/" + name_user + "_" + random + "." + ext);
             Files.copy(user_ava_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            testimonyService.testimonyUpdate(id,name_user,company,testimony_text,nameImg);
+            testimonyService.testimonyUpdate(id,nameUser,company,testimony_text,nameImg);
+            attributes.addFlashAttribute("msgsuc","Updated Successfully"); 
         } catch (IOException e) {
-            e.printStackTrace();
+            attributes.addFlashAttribute("msgerr",e); 
         }
-        attributes.addFlashAttribute("message", "You successfully uploaded " + random + "." + ext + '!');
+        
 
         return "redirect:/admin/testimony";
     }
 
     @RequestMapping(value = "/admin/testimony/delete/{id}", method = RequestMethod.GET)
-    public String testimonyDelete(@PathVariable("id") Integer id,
+    public String testimonyDelete(RedirectAttributes attributes,@PathVariable("id") Integer id,
      Model model) {
         TestimonyModel testimonyModel = testimonyService.findOne(id);
         Path path = Paths.get("src/main/resources/static/upload/" + testimonyModel.getUserAvaPath());
@@ -266,8 +268,9 @@ public class TestimonyController {
             Files.deleteIfExists(path);
             testimonyService.delete(id);
             model.addAttribute("testimonys", testimonyService.listAll());
-         }catch(IOException io){
-            System.out.printf("No such file or directory: %s\n", path);
+            attributes.addFlashAttribute("msgsuc","Deleted Successfully"); 
+         }catch(Exception e){
+            attributes.addFlashAttribute("msgerr",e); 
          }
         return "redirect:/admin/testimony";
     }

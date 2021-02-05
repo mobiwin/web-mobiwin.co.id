@@ -46,7 +46,7 @@ public class CandidateController {
         model.addAttribute("title", "New Candidate");
         CareerModel candidateModel = careerService.listCareerById(id);
         model.addAttribute("candidate", candidateModel);
-        return "public/front/pages/candidate/new";
+        return "front/pages/candidate/new";
     }
 
     @RequestMapping(value = "/candidate/save/{id}",method = RequestMethod.POST, consumes = {"multipart/form-data"})

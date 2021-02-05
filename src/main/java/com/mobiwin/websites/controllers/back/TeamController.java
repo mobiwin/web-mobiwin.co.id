@@ -51,7 +51,7 @@ public class TeamController {
             publicData.addAttribute("title", "Teams");
             List<OurTeamModel> ourTeamListData = ourTeamService.listAllTeam();
             publicData.addAttribute("list_data", ourTeamListData);
-            return "public/cms/admin/pages/ourteam/list";
+            return "cms/admin/pages/ourteam/list";
         }else{
             return "redirect:/admin";
         }
@@ -60,7 +60,7 @@ public class TeamController {
     @RequestMapping(value = "/admin/team/new", method = RequestMethod.GET)
     public String newTeam(Model publicData) {
         publicData.addAttribute("title", "New Teams");
-        return "public/cms/admin/pages/ourteam/new";
+        return "cms/admin/pages/ourteam/new";
     }
 
     @RequestMapping(value = "/admin/team/save", method = RequestMethod.POST)
@@ -229,7 +229,7 @@ public class TeamController {
         OurTeamModel ourTeamListDataWithId = ourTeamService.listTeamById(id);
         publicData.addAttribute("list_data", ourTeamListDataWithId);
 
-        return "public/cms/admin/pages/ourteam/edit";
+        return "cms/admin/pages/ourteam/edit";
     }
 
     @RequestMapping(value = "/admin/team/update", method = RequestMethod.POST)

@@ -14,11 +14,14 @@ public class OurServiceService {
     @Autowired
     OurServiceRepo ourServiceRepo;
 
-    public void serviceSave(String title,String icon_path, String short_wording,String full_wording) {
-        ourServiceRepo.serviceSave(title,icon_path,short_wording,full_wording);
+    public void serviceSave(OurServiceModel serviceModel) {
+        ourServiceRepo.save(serviceModel);
+        // ourServiceRepo.serviceSave(title,icon_path,short_wording,full_wording);
     }
-    public void serviceUpdate(long id,String title,String icon_path, String short_wording,String full_wording) {
-        ourServiceRepo.serviceUpdate(id,title,icon_path,short_wording,full_wording);
+    public void serviceUpdate(long id,OurServiceModel serviceModel) {
+        // ourServiceRepo.serviceUpdate(id,title,icon_path,short_wording,full_wording);
+        serviceModel.setId(id);
+        ourServiceRepo.save(serviceModel);
     }
     
     public List<OurServiceModel> listAll() {

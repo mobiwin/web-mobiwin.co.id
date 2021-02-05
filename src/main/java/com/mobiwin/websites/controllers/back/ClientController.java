@@ -49,7 +49,7 @@ public class ClientController {
             publicData.addAttribute("title", "Client");
             List<OurClientModel> ourClientListData = ourClientService.listAllClient();
             publicData.addAttribute("list_data", ourClientListData);
-            return "public/cms/admin/pages/ourclient/list";
+            return "cms/admin/pages/ourclient/list";
         }else{
             return "redirect:/admin";
         }
@@ -58,7 +58,7 @@ public class ClientController {
     @RequestMapping(value = "/admin/client/new", method = RequestMethod.GET)
     public String newClient(Model publicData) {
         publicData.addAttribute("title", "New Client");
-        return "public/cms/admin/pages/ourclient/new";
+        return "cms/admin/pages/ourclient/new";
     }
 
     @RequestMapping(value = "/admin/client/save", method = RequestMethod.POST)
@@ -207,7 +207,7 @@ public class ClientController {
         OurClientModel ourClientListDataWithId = ourClientService.listClientById(id);
         publicData.addAttribute("list_data", ourClientListDataWithId);
 
-        return "public/cms/admin/pages/ourclient/edit";
+        return "cms/admin/pages/ourclient/edit";
     }
 
     @RequestMapping(value = "/admin/client/update", method = RequestMethod.POST)

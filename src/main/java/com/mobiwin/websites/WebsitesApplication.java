@@ -22,13 +22,23 @@ public class WebsitesApplication implements WebMvcConfigurer {
             "/**",
             "/front/**",
             "/back/**",
-            "/upload/**"
+            "/carousel/**",
+            "/team/**",
+            "/project/**",
+            "/testimony/**",
+            "/client/**",
+            "/career/**"
         )
         .addResourceLocations(
             "classpath:/static/",
             "classpath:/static/front/",
             "classpath:/static/back/",
-            "classpath:/static/upload/"
+            "classpath:/static/upload/carousel/",
+            "classpath:/static/upload/team/",
+            "classpath:/static/upload/project/",
+            "classpath:/static/upload/testimony/",
+            "classpath:/static/upload/client/",
+            "classpath:/static/upload/career/"
         );
     }
 

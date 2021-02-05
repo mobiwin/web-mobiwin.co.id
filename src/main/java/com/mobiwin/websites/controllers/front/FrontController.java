@@ -114,7 +114,7 @@ public class FrontController {
         model.addAttribute("team", team);
         // End Teams
 
-        return "public/front/index";
+        return "front/index";
     }
 
     @RequestMapping(value = "/detail/about/{id}", method = RequestMethod.GET)
@@ -123,7 +123,7 @@ public class FrontController {
         model.addAttribute("title", "Detail About Us");
         AboutUsModel aboutUsModel = aboutService.findOne(id);
         model.addAttribute("about", aboutUsModel);
-        return "public/front/pages/detail/about";
+        return "front/pages/detail/about";
     }
 
     @RequestMapping(value = "/detail/service/{id}", method = RequestMethod.GET)
@@ -132,7 +132,7 @@ public class FrontController {
         model.addAttribute("title", "Detail Service");
         OurServiceModel ourServiceModel = ourServiceService.findOne(id);
         model.addAttribute("service", ourServiceModel);
-        return "public/front/pages/detail/service";
+        return "front/pages/detail/service";
     }
 
     @RequestMapping(value = "/detail/portofolio/{id}", method = RequestMethod.GET)
@@ -141,7 +141,7 @@ public class FrontController {
         model.addAttribute("title", "Detail Portofolio");
         OurProjectModel ourProjectModel = ourProjectService.findOne(id);
         model.addAttribute("project", ourProjectModel);
-        return "public/front/pages/detail/portofolio";
+        return "front/pages/detail/portofolio";
     }
 
     @RequestMapping(value = "/detail/career/{id}", method = RequestMethod.GET)
@@ -150,7 +150,7 @@ public class FrontController {
         model.addAttribute("title", "Detail Career");
         CareerModel careerModel = carrerService.listCareerById(id);
         model.addAttribute("career", careerModel);
-        return "public/front/pages/detail/career";
+        return "front/pages/detail/career";
     }
 
     @RequestMapping(value = "/detail/team/{id}", method = RequestMethod.GET)
@@ -159,7 +159,7 @@ public class FrontController {
         model.addAttribute("title", "Detail Team");
         OurTeamModel ourTeamModel = ourTeamService.listTeamById(id);
         model.addAttribute("team", ourTeamModel);
-        return "public/front/pages/detail/team";
+        return "front/pages/detail/team";
     }
 
     @RequestMapping(value = "/contact/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

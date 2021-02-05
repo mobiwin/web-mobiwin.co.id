@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 @Controller
@@ -27,20 +28,21 @@ public class AboutController {
             AboutUsModel aboutUsModel = aboutService.findOne(id);
             model.addAttribute("about", aboutUsModel);
             model.addAttribute("abouts", aboutService.findAll());
-            return "public/cms/admin/pages/about/about";
+            return "cms/admin/pages/about/about";
         }else{
             return "redirect:/admin";
         }
     }
 
-    @RequestMapping(value = "/admin/about/update/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void aboutUpdate(HttpServletResponse response,@RequestParam long id, @RequestParam String title , @RequestParam String summary, 
-    @RequestParam String wording) {
+    @RequestMapping(value = "/admin/about/update/{id}", method = RequestMethod.POST)
+    public String aboutUpdate(RedirectAttributes attributes,
+    @RequestParam long id, AboutUsModel about) {
         try{
-            aboutService.update(id,title,summary,wording);
-            response.sendRedirect("/admin/about/update/1");
-        } catch(IOException e){
+            aboutService.update(id,about);
+            attributes.addFlashAttribute("message","Insert Successfully");
+        } catch(Exception e){
             System.out.println(e);
         }
+        return "redirect:/admin/about/edit/1";
     }
 }

@@ -29,7 +29,7 @@ public class DashboardController {
                 sendDataToPublic.addAttribute("list_user", loadUsersData);
                 sendDataToPublic.addAttribute("username", sessi.getAttribute("name_session"));
 
-                return "public/cms/admin/pages/dashboard/dashboard";
+                return "cms/admin/pages/dashboard/dashboard";
             } else {
                 httpResponse.sendRedirect("/admin/");
                 return null;
@@ -38,7 +38,7 @@ public class DashboardController {
             e.printStackTrace();
             System.out.println(e);
             sendDataToPublic.addAttribute("msg", e);
-            return "public/cms/admin/pages/dashboard/dashboard";
+            return "cms/admin/pages/dashboard/dashboard";
         }
     }
 }

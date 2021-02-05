@@ -64,7 +64,7 @@ public class CareerController {
             List<CareerModel> careerListData = careerService.listAllCareer();
             publicData.addAttribute("list_data", careerListData);
 
-            return "public/cms/admin/pages/career/list";
+            return "cms/admin/pages/career/list";
         }else{
             return "redirect:/admin";
         }
@@ -73,7 +73,7 @@ public class CareerController {
     @RequestMapping(value = "/admin/career/new", method = RequestMethod.GET)
     public String newCareer(Model publicData) {
         publicData.addAttribute("title", "New career");
-        return "public/cms/admin/pages/career/new";
+        return "cms/admin/pages/career/new";
     }
 
     @RequestMapping(value = "/admin/career/save", method = RequestMethod.POST)
@@ -232,7 +232,7 @@ public class CareerController {
         CareerModel ourCareerListDataWithId = careerService.listCareerById(id);
         publicData.addAttribute("list_data", ourCareerListDataWithId);
 
-        return "public/cms/admin/pages/career/edit";
+        return "cms/admin/pages/career/edit";
     }
 
     @RequestMapping(value = "/admin/career/update", method = RequestMethod.POST)
@@ -403,7 +403,7 @@ public class CareerController {
         List<CandidateModel> candidateBeenSeen = candidateService.hasBeenSeen(id,"has_been_seen");
         publicData.addAttribute("hasBeenSeen", candidateBeenSeen);
 
-        return "public/cms/admin/pages/career/candidate";
+        return "cms/admin/pages/career/candidate";
     }
     @RequestMapping(value = "/admin/career/candidate/update/{id}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public void candidateUpdate(HttpServletResponse response,@PathVariable("id") Long id,

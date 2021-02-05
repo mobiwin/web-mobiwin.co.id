@@ -26,7 +26,7 @@ public class AuthController {
         if(sessi.getAttribute("id_session") != null){
             return "redirect:/admin/dashboard";
         }else{
-            return "public/cms/admin/login";
+            return "cms/admin/login";
         }
         
     }
@@ -67,7 +67,7 @@ public class AuthController {
         } else {
             sendDataToPublic.addAttribute("msg", "data tidak boleh kosong");
         }
-        return "public/cms/admin/login";
+        return "cms/admin/login";
     }
 
     

@@ -14,10 +14,10 @@ public interface OurProjectRepo extends JpaRepository<OurProjectModel, Long> {
     
     @Transactional
     @Modifying
-    @Query(value = "UPDATE our_project_tb SET preview_path = :nameImg, project_title = :title, client = :client, technology = :technology,kind = :kind  WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE our_project_tb SET preview_path = :nameImg, project_title = :projTi, client = :client, technology = :technology,kind = :kind  WHERE id = :id", nativeQuery = true)
     public void projectUpdate(
         @Param("id") long id,
-        @Param("title") String title,
+        @Param("projTi") String projTi,
         @Param("kind") String kind,
         @Param("client") String client,
         @Param("technology") String technology,
