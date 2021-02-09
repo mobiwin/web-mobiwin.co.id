@@ -352,6 +352,7 @@ public class CareerController {
 
                     // Membuat Object Models Career
                     CareerModel careerModel = new CareerModel();
+                    careerModel.setId(Long.parseLong(idTxt));
                     careerModel.setIconOf("/"+uploadPath);
                     careerModel.setJobTitle(jobTitleTxt);
                     careerModel.setPotition(potitionTxt);

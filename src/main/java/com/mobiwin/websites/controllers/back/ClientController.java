@@ -200,7 +200,7 @@ public class ClientController {
 
     @RequestMapping(value = "/admin/client/update", method = RequestMethod.POST)
     public String updateClient(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
-            @RequestParam(value = "idTxt", required = false) String id,
+            @RequestParam(value = "idTxt", required = false) String idTxt,
             @RequestParam(value = "clientNameTxt", required = false) String clientNameTxt,
             @RequestParam(value = "yearsCooperationTxt", required = false) String yearsTxt,
             @RequestParam(value = "pilihLogoInp", required = false) MultipartFile logoFile) {
@@ -209,7 +209,7 @@ public class ClientController {
 
         if (logoFile.isEmpty()) {
             try {
-                ourClientService.updatePartDataClient(clientNameTxt, yearsTxt, id);
+                ourClientService.updatePartDataClient(clientNameTxt, yearsTxt, idTxt);
                 msg = "Edit Data Client Berhasil";
             } catch (Exception e) {
                 publicData.addAttribute("errmsg", e.getMessage());
@@ -320,6 +320,7 @@ public class ClientController {
 
                     // Membuat Object Models Client
                     OurClientModel ourClientModel = new OurClientModel();
+                    ourClientModel.setId(Long.parseLong(idTxt));
                     ourClientModel.setClientName(clientNameTxt);
                     ourClientModel.setPreviewPath("/"+uploadPath);
                     ourClientModel.setYear(yearsTxt);

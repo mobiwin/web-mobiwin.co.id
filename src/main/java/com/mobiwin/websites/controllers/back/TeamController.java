@@ -223,7 +223,7 @@ public class TeamController {
 
     @RequestMapping(value = "/admin/team/update", method = RequestMethod.POST)
     public String updateTeam(Model publicData, HttpSession sessi, HttpServletResponse httpResponse,
-            @RequestParam(value = "idTxt", required = false) String id,
+            @RequestParam(value = "idTxt", required = false) String idTxt,
             @RequestParam(value = "namaKaryawanTxt", required = false) String namaKaryawanTxt,
             @RequestParam(value = "positionTxt", required = false) String positionTxt,
             @RequestParam(value = "bioTxt", required = false) String bioTxt,
@@ -239,7 +239,7 @@ public class TeamController {
 
         if (avatarFiles.isEmpty()) {
             try {
-                ourTeamService.updatePartDataTeam(namaKaryawanTxt, positionTxt, bioTxt, id);
+                ourTeamService.updatePartDataTeam(namaKaryawanTxt, positionTxt, bioTxt, idTxt);
                 msg = "Update Team data success";
             } catch (Exception e) {
                 publicData.addAttribute("errmsg", e.getMessage());
@@ -350,6 +350,7 @@ public class TeamController {
 
                     // Membuat Object Models Team
                     OurTeamModel ourTeamModel = new OurTeamModel();
+                    ourTeamModel.setId(Long.parseLong(idTxt));
                     ourTeamModel.setAvatarPath("/"+uploadPath);
                     ourTeamModel.setEmployeeName(namaKaryawanTxt);
                     ourTeamModel.setPotition(positionTxt);

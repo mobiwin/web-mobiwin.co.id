@@ -198,7 +198,7 @@ public class TestimonyController {
     @RequestMapping(value = "/admin/testimony/update/{id}", method = RequestMethod.POST, consumes = {
         "multipart/form-data" })
     public String testimonyUpdate(
-        @RequestParam("id") long id,
+        @RequestParam("id") long idTxt,
         @RequestParam(value = "name_user", required = false) String name_user,
         @RequestParam(value = "company", required = false) String company,
         @RequestParam(value = "testimony_text", required = false) String testimony_text,
@@ -223,7 +223,7 @@ public class TestimonyController {
                     break;
             }
         if (user_ava_path.isEmpty()) {
-            testimonyService.testimonyUpdateWithOutImg(id,nameUser,company,testimony_text);
+            testimonyService.testimonyUpdateWithOutImg(idTxt,nameUser,company,testimony_text);
             attributes.addFlashAttribute("msgsuc","Updated Successfully"); 
             return "redirect:/admin/testimony";
         }
@@ -236,7 +236,7 @@ public class TestimonyController {
         try {
             Path path = Paths.get("upload/testimony/" + name_user + "_" + random + "." + ext);
             Files.copy(user_ava_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            testimonyService.testimonyUpdate(id,nameUser,company,testimony_text,nameImg);
+            testimonyService.testimonyUpdate(idTxt,nameUser,company,testimony_text,nameImg);
             attributes.addFlashAttribute("msgsuc","Updated Successfully"); 
         } catch (IOException e) {
             attributes.addFlashAttribute("msgerr",e); 
