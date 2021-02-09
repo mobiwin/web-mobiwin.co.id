@@ -9,7 +9,7 @@
       <div class="container d-flex align-items-center">
 
         <div class="logo mr-auto">
-          <a href="index.html"><img th:src="@{/img/logo/mobiwin_logo_c.png}" height="100%" width="80px" alt=""></a>
+          <a href="/"><img th:src="@{/img/logo/mobiwin_logo_c.png}" height="100%" width="80px" alt=""></a>
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>
@@ -38,10 +38,9 @@
         <!-- The slideshow -->
         <div class="carousel-inner">
           <div class="carousel-item" th:each="itemSlider:${carousel}" th:classappend="${itemSlider.orders} == 1 ? active : nonActive">
-            <img th:src="@{${itemSlider.carouselImage}}" alt="Los Angeles" width="1100" height="500">
+            <img th:src="@{${itemSlider.carouselImage}}" alt="Los Angeles" style="width:100%;height:600px;">
             <div class="carousel-caption">
-              <h2>First slide label</h2>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <div th:utext="${itemSlider.caption}"></div>
             </div>
           </div>
         </div>
@@ -121,7 +120,7 @@
               th:classappend="${itemProject.kind}">
               <div class="portfolio-img">
                 <img th:src="@{${itemProject.previewPath}}" class="img-fluid" alt=""
-                  style="width: 250px !important; height:250px !important;"></div>
+                  style="width: 100% !important; height:250px !important;"></div>
               <div class="portfolio-info">
                 <h4 th:text="${itemProject.projectTitle}"></h4>
                 <p th:text="${itemProject.kind}"></p>
@@ -264,19 +263,19 @@
                 <div class="address">
                   <i class="icofont-google-map"></i>
                   <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
+                  <p>Ruko Bintaro Trade Center Blok A1, No. 9 Bintaro Sektor 7 Pondok Jaya, Pondok Aren TANGERANG SELATAN</p>
                 </div>
 
                 <div class="email">
                   <i class="icofont-envelope"></i>
                   <h4>Email:</h4>
-                  <p>info@example.com</p>
+                  <p>info@mobiwin.co.id</p>
                 </div>
 
                 <div class="phone">
                   <i class="icofont-phone"></i>
                   <h4>Call:</h4>
-                  <p>+1 5589 55488 55s</p>
+                  <p>021 - 7453302</p>
                 </div>
 
               </div>

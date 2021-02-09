@@ -29,7 +29,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-md-12">
-                                    <p class="alert alert-success" th:text=${param.msg}></p>
+                                    <div th:if="${param.msg != null}">
+                                        <p class="alert alert-success" th:text=${param.msg}></p>
+                                    </div>
                                 </div>
                                 <div class="col-md-10">
                                     <h2>Our Client</h2>
