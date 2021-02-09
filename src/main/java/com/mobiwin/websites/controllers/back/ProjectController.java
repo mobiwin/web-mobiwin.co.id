@@ -222,7 +222,7 @@ public class ProjectController {
             String random = simpleDateFormat.format(tanggal).toString();
             String projTi = title;
             title = title.replaceAll("[^a-zA-Z0-9]", "_");
-            String nameImg = "upload/project/"+ title + "_" + random + "." + ext;
+            String nameImg = "/upload/project/"+ title + "_" + random + "." + ext;
             try {
                 Path path = Paths.get("upload/project/" + title + "_" + random + "." + ext);
                 Files.copy(preview_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
