@@ -185,7 +185,7 @@
           </div>
           <div class="row" >
             <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4" th:if="${career == ''}">
+            <div th:if="${#lists.isEmpty(career)}" class="col-xs-12 col-sm-6 col-md-12">
               <h4 class="text-center"> Empty </h4>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4" th:each="itemCareer:${career}">
@@ -234,9 +234,9 @@
                   <div class="member-img">
                     <a th:href="@{/detail/team/{id}(id=${itemTeam.id})}"><img th:src="@{${itemTeam.avatarPath}}" class="img-fluid" alt=""></a>
                     <div class="social">
-                      <a th:href="@{'https://twitter.com/'+${itemTeam.twitter}}"><i class="icofont-twitter"></i></a>
-                      <a th:href="@{'https://id-id.facebook.com/'+${itemTeam.facebook}}"><i class="icofont-facebook"></i></a>
-                      <a th:href="@{'https://www.instagram.com/'+${itemTeam.instagram}}"><i class="icofont-instagram"></i></a>
+                      <a th:href="@{${itemTeam.twitter}}"><i class="icofont-twitter"></i></a>
+                      <a th:href="@{${itemTeam.facebook}}"><i class="icofont-facebook"></i></a>
+                      <a th:href="@{${itemTeam.instagram}}"><i class="icofont-instagram"></i></a>
                       <a th:href="@{${itemTeam.website}}"><i class="fa fa-globe"></i></a>
                     </div>
                   </div>
