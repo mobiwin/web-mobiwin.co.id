@@ -85,7 +85,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" th:each="itemService:${service}">
+            <div class="col-md-12 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" th:each="itemService:${service}">
               <div class="icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                 <div class="icon"><i th:class="${itemService.iconPath}"></i></div>
                 <h4 class="title"><a th:href="@{/detail/service/{id}(id = ${itemService.id})}"
@@ -110,9 +110,9 @@
 
           <ul id="portfolio-flters" class="d-flex justify-content-end" data-aos="fade-up">
             <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".app">App</li>
-            <li data-filter=".card">Card</li>
             <li data-filter=".web">Web</li>
+            <li data-filter=".mobile">Mobile</li>
+            <li data-filter=".api">API</li>
           </ul>
 
           <div class="row portfolio-container" data-aos="fade-up">
@@ -141,12 +141,12 @@
 
           <div class="section-title" data-aos="zoom-out">
             <h2>Testimonials</h2>
-            <p>What they are saying about us</p>
+            <p>What they are saying</p>
           </div>
 
-          <div class="owl-carousel testimonials-carousel" data-aos="fade-up" th:each="itemTestimony:${testimony}">
+          <div class="owl-carousel testimonials-carousel" data-aos="fade-up" >
 
-            <div class="testimonial-item">
+            <div class="testimonial-item" th:each="itemTestimony:${testimony}">
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                 <p th:text="${itemTestimony.testimonyText}"></p>
