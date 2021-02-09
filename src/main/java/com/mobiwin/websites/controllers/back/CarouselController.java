@@ -1,10 +1,5 @@
 package com.mobiwin.websites.controllers.back;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 
 import java.nio.file.Path;
@@ -12,15 +7,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.awt.image.BufferedImage;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -108,73 +96,78 @@ public class CarouselController {
                     String random = simpleDateFormat.format(tanggal).toString();
 
                     // MKDIR TEMP
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
-                    }
+                    // if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
+                    //     Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
+                    // }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/carousel/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/carousel/"));
+                    if (!Files.exists(Paths.get("upload/carousel/"))) {
+                        Files.createDirectories(Paths.get("upload/carousel/"));
                     }
+
+                    // if (!Files.exists(Paths.get("src/main/resources/static/upload/carousel/"))) {
+                    //     Files.createDirectories(Paths.get("src/main/resources/static/upload/carousel/"));
+                    // }
 
                     // UPLOAD
                     byte[] fileBytes = carouselImage.getBytes();
                     // carouselImage = carouselImage.getOriginalFilename();
-                    String uploadPath = "src/main/resources/static/upload/temp/" + random + "." + ext;
+                    String uploadPath = "upload/carousel/" + random + "." + ext;
                     
-
-                    // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
-
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);
 
-                    // COMRESS IMAGE
-                    File imageFile = new File(uploadPath);
+                    // // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
 
-                    String uploadCompressPath = "src/main/resources/static/upload/carousel/"+ random + "."
-                            + ext;
-                    File compressedImageFile = new File(uploadCompressPath);
+                    
 
-                    // SET INPUT OUTPUT IMAGE
-                    InputStream inputStream = new FileInputStream(imageFile);
-                    OutputStream outputStream = new FileOutputStream(compressedImageFile);
+                    // // COMRESS IMAGE
+                    // File imageFile = new File(uploadPath);
 
-                    float imageQuality = 0.3f;
+                    // String uploadCompressPath = "src/main/resources/static/upload/carousel/"+ random + "."
+                    //         + ext;
+                    // File compressedImageFile = new File(uploadCompressPath);
 
-                    // TULIS BUFFER IMAGE
-                    BufferedImage bufferedImage = ImageIO.read(inputStream);
+                    // // SET INPUT OUTPUT IMAGE
+                    // InputStream inputStream = new FileInputStream(imageFile);
+                    // OutputStream outputStream = new FileOutputStream(compressedImageFile);
 
-                    // TULIS DAN CONVERT KE JPG
-                    Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
+                    // float imageQuality = 0.3f;
 
-                    if (!imageWriters.hasNext()) {
-                        publicData.addAttribute("errmsg", "imageWriters.hasNext");
-                    }
+                    // // TULIS BUFFER IMAGE
+                    // BufferedImage bufferedImage = ImageIO.read(inputStream);
 
-                    ImageWriter imageWriter = (ImageWriter) imageWriters.next();
-                    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
-                    imageWriter.setOutput(imageOutputStream);
+                    // // TULIS DAN CONVERT KE JPG
+                    // Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
-                    ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+                    // if (!imageWriters.hasNext()) {
+                    //     publicData.addAttribute("errmsg", "imageWriters.hasNext");
+                    // }
 
-                    // COMPRESS IMAGE
-                    imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                    imageWriteParam.setCompressionQuality(imageQuality);
+                    // ImageWriter imageWriter = (ImageWriter) imageWriters.next();
+                    // ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+                    // imageWriter.setOutput(imageOutputStream);
 
-                    // MEMBUAT IMAGE BARU
-                    imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+                    // ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
 
-                    // TUTUP SEMUA STREAM
-                    inputStream.close();
-                    outputStream.close();
-                    imageOutputStream.close();
-                    imageWriter.dispose();
-                    // COMPRESS SELESAI
+                    // // COMPRESS IMAGE
+                    // imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    // imageWriteParam.setCompressionQuality(imageQuality);
+
+                    // // MEMBUAT IMAGE BARU
+                    // imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+
+                    // // TUTUP SEMUA STREAM
+                    // inputStream.close();
+                    // outputStream.close();
+                    // imageOutputStream.close();
+                    // imageWriter.dispose();
+                    // // COMPRESS SELESAI
 
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/carousel/" + random + "." + ext;
+                    // String fixRealPath = "/carousel/" + random + "." + ext;
 
                     
                     // FINAL, namaKaryawanTxt
@@ -186,7 +179,7 @@ public class CarouselController {
                     // Membuat Object Models Team
                     CarouselModel carouselModel = new CarouselModel();
                     carouselModel.setOrders(orders);
-                    carouselModel.setCarouselImage(fixRealPath);
+                    carouselModel.setCarouselImage("/"+uploadPath);
                     carouselModel.setCaption(caption);
 
                     // SAVE TO DATABASE WITH MODELS OBJECT DATA
@@ -240,14 +233,14 @@ public class CarouselController {
             carouselService.sliderUpdateWithOutImg(id,order,caption);
             attributes.addFlashAttribute("msgsuc","Updated Successfully");
             return "redirect:/admin/carousel";
-        }else{
+        } else{
             // String fileName = StringUtils.cleanPath(carouselImage.getOriginalFilename());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             Date tanggal = new Date();
             String random = simpleDateFormat.format(tanggal).toString();
             String nameImg = "/slider/" + random + "." + ext;
             try {
-                Path path = Paths.get("src/main/resources/static/upload/carousel/" + random + "." + ext);
+                Path path = Paths.get("upload/carousel/" + random + "." + ext);
                 Files.copy(carouselImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                 carouselService.sliderUpdate(id,order, nameImg, caption);
                 attributes.addFlashAttribute("msgsuc","Updated Successfully");
@@ -262,7 +255,7 @@ public class CarouselController {
     public String carouselDelete(RedirectAttributes attributes,@PathVariable("id") Integer id,
      Model model) {
         CarouselModel carouselModel = carouselService.findOne(id);
-        Path path = Paths.get("src/main/resources/static/upload/" + carouselModel.getCarouselImage());
+        Path path = Paths.get("upload/" + carouselModel.getCarouselImage());
          try{
             Files.deleteIfExists(path);
             carouselService.delete(id);

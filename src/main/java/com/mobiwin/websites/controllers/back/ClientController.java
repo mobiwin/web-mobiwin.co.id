@@ -1,23 +1,12 @@
 package com.mobiwin.websites.controllers.back;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -102,72 +91,71 @@ public class ClientController {
                     String random = simpleDateFormat.format(tanggal).toString();
 
                     // MKDIR TEMP
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
+                    if (!Files.exists(Paths.get("upload/temp/"))) {
+                        Files.createDirectories(Paths.get("upload/temp/"));
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/client/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/client/"));
+                    if (!Files.exists(Paths.get("upload/client/"))) {
+                        Files.createDirectories(Paths.get("upload/client/"));
                     }
 
                     // UPLOAD
                     byte[] fileBytes = logoFile.getBytes();
                     String cleanClientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanClientNameTxt + "_" + random + "."
+                    String uploadPath = "upload/temp/" + cleanClientNameTxt + "_" + random + "."
                             + ext;
-
-                    // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
-
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);
 
-                    // COMRESS IMAGE
-                    File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/client/" + cleanClientNameTxt + "_"
-                            + random + "." + ext;
-                    File compressedImageFile = new File(uploadCompressPath);
+                    // // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
+                    // // COMRESS IMAGE
+                    // File imageFile = new File(uploadPath);
 
-                    // SET INPUT OUTPUT IMAGE
-                    InputStream inputStream = new FileInputStream(imageFile);
-                    OutputStream outputStream = new FileOutputStream(compressedImageFile);
+                    // String uploadCompressPath = "src/main/resources/static/upload/client/" + cleanClientNameTxt + "_"
+                    //         + random + "." + ext;
+                    // File compressedImageFile = new File(uploadCompressPath);
 
-                    float imageQuality = 0.3f;
+                    // // SET INPUT OUTPUT IMAGE
+                    // InputStream inputStream = new FileInputStream(imageFile);
+                    // OutputStream outputStream = new FileOutputStream(compressedImageFile);
 
-                    // TULIS BUFFER IMAGE
-                    BufferedImage bufferedImage = ImageIO.read(inputStream);
+                    // float imageQuality = 0.3f;
 
-                    // TULIS DAN CONVERT KE JPG
-                    Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
+                    // // TULIS BUFFER IMAGE
+                    // BufferedImage bufferedImage = ImageIO.read(inputStream);
 
-                    if (!imageWriters.hasNext()) {
-                        publicData.addAttribute("errmsg", imageWriters.hasNext());
-                    }
+                    // // TULIS DAN CONVERT KE JPG
+                    // Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
-                    ImageWriter imageWriter = (ImageWriter) imageWriters.next();
-                    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
-                    imageWriter.setOutput(imageOutputStream);
+                    // if (!imageWriters.hasNext()) {
+                    //     publicData.addAttribute("errmsg", imageWriters.hasNext());
+                    // }
 
-                    ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+                    // ImageWriter imageWriter = (ImageWriter) imageWriters.next();
+                    // ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+                    // imageWriter.setOutput(imageOutputStream);
 
-                    // COMPRESS IMAGE
-                    imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                    imageWriteParam.setCompressionQuality(imageQuality);
+                    // ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
 
-                    // MEMBUAT IMAGE BARU
-                    imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+                    // // COMPRESS IMAGE
+                    // imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    // imageWriteParam.setCompressionQuality(imageQuality);
 
-                    // TUTUP SEMUA STREAM
-                    inputStream.close();
-                    outputStream.close();
-                    imageOutputStream.close();
-                    imageWriter.dispose();
-                    // COMPRESS SELESAI
+                    // // MEMBUAT IMAGE BARU
+                    // imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+
+                    // // TUTUP SEMUA STREAM
+                    // inputStream.close();
+                    // outputStream.close();
+                    // imageOutputStream.close();
+                    // imageWriter.dispose();
+                    // // COMPRESS SELESAI
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/client/" + cleanClientNameTxt + "_" + random + "." + ext;
+                    // String fixRealPath = "/client/" + cleanClientNameTxt + "_" + random + "." + ext;
 
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -178,7 +166,7 @@ public class ClientController {
                     // Membuat Object Models Client
                     OurClientModel ourClientModel = new OurClientModel();
                     ourClientModel.setClientName(clientNameTxt);
-                    ourClientModel.setPreviewPath(fixRealPath);
+                    ourClientModel.setPreviewPath("/"+uploadPath);
                     ourClientModel.setYear(yearsTxt);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -257,73 +245,72 @@ public class ClientController {
                     String random = simpleDateFormat.format(tanggal).toString();
 
                     // MKDIR TEMP
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
+                    if (!Files.exists(Paths.get("upload/temp/"))) {
+                        Files.createDirectories(Paths.get("upload/temp/"));
                     }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/client/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/client/"));
+                    if (!Files.exists(Paths.get("upload/client/"))) {
+                        Files.createDirectories(Paths.get("upload/client/"));
                     }
 
                     // UPLOAD
                     byte[] fileBytes = logoFile.getBytes();
                     String cleanClientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/" + cleanClientNameTxt + "_" + random + "."
+                    String uploadPath = "upload/temp/" + cleanClientNameTxt + "_" + random + "."
                             + ext;
-
-                    // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
 
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);
 
-                    // COMRESS IMAGE
-                    File imageFile = new File(uploadPath);
+                    // // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
+                    // // COMRESS IMAGE
+                    // File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/client/" + cleanClientNameTxt + "_"
-                            + random + "." + ext;
-                    File compressedImageFile = new File(uploadCompressPath);
+                    // String uploadCompressPath = "src/main/resources/static/upload/client/" + cleanClientNameTxt + "_"
+                    //         + random + "." + ext;
+                    // File compressedImageFile = new File(uploadCompressPath);
 
-                    // SET INPUT OUTPUT IMAGE
-                    InputStream inputStream = new FileInputStream(imageFile);
-                    OutputStream outputStream = new FileOutputStream(compressedImageFile);
+                    // // SET INPUT OUTPUT IMAGE
+                    // InputStream inputStream = new FileInputStream(imageFile);
+                    // OutputStream outputStream = new FileOutputStream(compressedImageFile);
 
-                    float imageQuality = 0.3f;
+                    // float imageQuality = 0.3f;
 
-                    // TULIS BUFFER IMAGE
-                    BufferedImage bufferedImage = ImageIO.read(inputStream);
+                    // // TULIS BUFFER IMAGE
+                    // BufferedImage bufferedImage = ImageIO.read(inputStream);
 
-                    // TULIS DAN CONVERT KE JPG
-                    Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
+                    // // TULIS DAN CONVERT KE JPG
+                    // Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
-                    if (!imageWriters.hasNext()) {
-                        publicData.addAttribute("errmsg", imageWriters.hasNext());
+                    // if (!imageWriters.hasNext()) {
+                    //     publicData.addAttribute("errmsg", imageWriters.hasNext());
 
-                    }
+                    // }
 
-                    ImageWriter imageWriter = (ImageWriter) imageWriters.next();
-                    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
-                    imageWriter.setOutput(imageOutputStream);
+                    // ImageWriter imageWriter = (ImageWriter) imageWriters.next();
+                    // ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+                    // imageWriter.setOutput(imageOutputStream);
 
-                    ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+                    // ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
 
-                    // COMPRESS IMAGE
-                    imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                    imageWriteParam.setCompressionQuality(imageQuality);
+                    // // COMPRESS IMAGE
+                    // imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    // imageWriteParam.setCompressionQuality(imageQuality);
 
-                    // MEMBUAT IMAGE BARU
-                    imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+                    // // MEMBUAT IMAGE BARU
+                    // imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
 
-                    // TUTUP SEMUA STREAM
-                    inputStream.close();
-                    outputStream.close();
-                    imageOutputStream.close();
-                    imageWriter.dispose();
-                    // COMPRESS SELESAI
+                    // // TUTUP SEMUA STREAM
+                    // inputStream.close();
+                    // outputStream.close();
+                    // imageOutputStream.close();
+                    // imageWriter.dispose();
+                    // // COMPRESS SELESAI
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/client/" + cleanClientNameTxt + "_" + random + "." + ext;
+                    // String fixRealPath = "/client/" + cleanClientNameTxt + "_" + random + "." + ext;
 
                     // FINAL, namaKaryawanTxt
                     // FINAL, positionTxt
@@ -334,7 +321,7 @@ public class ClientController {
                     // Membuat Object Models Client
                     OurClientModel ourClientModel = new OurClientModel();
                     ourClientModel.setClientName(clientNameTxt);
-                    ourClientModel.setPreviewPath(fixRealPath);
+                    ourClientModel.setPreviewPath("/"+uploadPath);
                     ourClientModel.setYear(yearsTxt);
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
