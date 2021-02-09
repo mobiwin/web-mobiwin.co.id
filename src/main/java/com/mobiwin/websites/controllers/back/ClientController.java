@@ -91,9 +91,9 @@ public class ClientController {
                     String random = simpleDateFormat.format(tanggal).toString();
 
                     // MKDIR TEMP
-                    if (!Files.exists(Paths.get("upload/temp/"))) {
-                        Files.createDirectories(Paths.get("upload/temp/"));
-                    }
+                    // if (!Files.exists(Paths.get("upload/temp/"))) {
+                    //     Files.createDirectories(Paths.get("upload/temp/"));
+                    // }
 
                     // MKDIR PATH
                     if (!Files.exists(Paths.get("upload/client/"))) {
@@ -103,7 +103,7 @@ public class ClientController {
                     // UPLOAD
                     byte[] fileBytes = logoFile.getBytes();
                     String cleanClientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "upload/temp/" + cleanClientNameTxt + "_" + random + "."
+                    String uploadPath = "upload/client/" + cleanClientNameTxt + "_" + random + "."
                             + ext;
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);
@@ -245,9 +245,9 @@ public class ClientController {
                     String random = simpleDateFormat.format(tanggal).toString();
 
                     // MKDIR TEMP
-                    if (!Files.exists(Paths.get("upload/temp/"))) {
-                        Files.createDirectories(Paths.get("upload/temp/"));
-                    }
+                    // if (!Files.exists(Paths.get("upload/temp/"))) {
+                    //     Files.createDirectories(Paths.get("upload/temp/"));
+                    // }
 
                     // MKDIR PATH
                     if (!Files.exists(Paths.get("upload/client/"))) {
@@ -257,7 +257,7 @@ public class ClientController {
                     // UPLOAD
                     byte[] fileBytes = logoFile.getBytes();
                     String cleanClientNameTxt = clientNameTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "upload/temp/" + cleanClientNameTxt + "_" + random + "."
+                    String uploadPath = "upload/client/" + cleanClientNameTxt + "_" + random + "."
                             + ext;
 
                     // WRITE FILE I/O

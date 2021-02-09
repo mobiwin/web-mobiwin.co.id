@@ -113,7 +113,7 @@ public class TeamController {
                     // UPLOAD
                     byte[] fileBytes = avatarFiles.getBytes();
                     String cleanNamaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "upload/temp/" + cleanNamaKaryawanTxt + "_" + random + "."
+                    String uploadPath = "upload/team/" + cleanNamaKaryawanTxt + "_" + random + "."
                             + ext;
 
                      // WRITE FILE I/O
@@ -287,7 +287,7 @@ public class TeamController {
                     // UPLOAD
                     byte[] fileBytes = avatarFiles.getBytes();
                     String cleanNamaKaryawanTxt = namaKaryawanTxt.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "upload/temp/" + cleanNamaKaryawanTxt + "_" + random + "."
+                    String uploadPath = "upload/team/" + cleanNamaKaryawanTxt + "_" + random + "."
                             + ext;
 
                      // WRITE FILE I/O

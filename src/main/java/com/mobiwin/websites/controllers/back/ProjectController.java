@@ -102,7 +102,7 @@ public class ProjectController {
                     String projTitle = title;
                     byte[] fileBytes = preview_path.getBytes();
                     title = title.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "upload/temp/"+ title + "_" + random + "." + ext;
+                    String uploadPath = "upload/project/"+ title + "_" + random + "." + ext;
                     
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);

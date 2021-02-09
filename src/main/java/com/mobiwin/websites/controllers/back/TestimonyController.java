@@ -104,7 +104,7 @@ public class TestimonyController {
                     String nameUser = name_user;
                     byte[] fileBytes = user_ava_path.getBytes();
                     name_user = name_user.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "upload/temp/"+ name_user + "_" + random + "." + ext;
+                    String uploadPath = "upload/testimony/"+ name_user + "_" + random + "." + ext;
                     
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);
