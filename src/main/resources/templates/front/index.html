@@ -85,7 +85,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-12 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" th:each="itemService:${service}">
+            <div class="col-md-12 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-5" th:each="itemService:${service}">
               <div class="icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                 <div class="icon"><i th:class="${itemService.iconPath}"></i></div>
                 <h4 class="title"><a th:href="@{/detail/service/{id}(id = ${itemService.id})}"
@@ -185,6 +185,9 @@
           </div>
           <div class="row" >
             <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4" th:if="${career == null}">
+              <h4 class="text-center"> Empty </h4>
+            </div>
             <div class="col-xs-12 col-sm-6 col-md-4" th:each="itemCareer:${career}">
               <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                 <div class="mainflip">
@@ -225,10 +228,7 @@
           </div>
 
           <div class="row">
-            <div class="owl-team">
-              <div class="col-lg-3 col-md-6 d-flex align-items-stretch" th:if="${team} == null">
-                <h4 class="text-center"> Empty </h4>
-              </div>
+            <!-- <div class="owl-team"> -->
               <div class="col-lg-3 col-md-6 d-flex align-items-stretch" th:each="itemTeam:${team}">
                 <div class="member" data-aos="fade-up" data-aos-delay="300">
                   <div class="member-img">
@@ -246,7 +246,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            <!-- </div> -->
 
           </div>
 
