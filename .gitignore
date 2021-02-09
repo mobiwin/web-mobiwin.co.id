@@ -36,3 +36,4 @@ build/
 src/main/resources/static/front/upload
 src/main/resources/static/back/upload
 src/main/resources/static/upload
+upload/*
