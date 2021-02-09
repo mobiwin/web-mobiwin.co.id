@@ -61,7 +61,7 @@
         <div class="container" th:each="itemAbout:${about}">
 
           <div class="section-title" data-aos="zoom-out">
-            <h2>About</h2>
+            <h2>Abouts</h2>
             <p>Who we are</p>
           </div>
 
@@ -140,7 +140,7 @@
         <div class="container">
 
           <div class="section-title" data-aos="zoom-out">
-            <h2>Testimony</h2>
+            <h2>Testimonys</h2>
             <p>What they say</p>
           </div>
 
@@ -166,8 +166,8 @@
         <div class="container aos-init aos-animate" data-aos="zoom-in">
           <div class="container">
             <div class="section-title" data-aos="zoom-out">
-              <h2 class="text-white">Client</h2>
-              <p>Our Client</p>
+              <h2 class="text-white">Clients</h2>
+              <p>Our Clients</p>
             </div>
             <section class="customer-logos slider">
               <div class="slide" th:each="itemClient:${client}"><img th:src="@{${itemClient.previewPath}}" style="width: 100%;height:200px;"></div>
@@ -180,12 +180,12 @@
       <section id="career" class="pb-5">
         <div class="container">
           <div class="section-title" data-aos="zoom-out">
-            <h2>Career</h2>
-            <p>Our Career</p>
+            <h2>Careers</h2>
+            <p>Our Careers</p>
           </div>
           <div class="row" >
             <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4" th:if="${career == null}">
+            <div class="col-xs-12 col-sm-6 col-md-4" th:if="${career == ''}">
               <h4 class="text-center"> Empty </h4>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4" th:each="itemCareer:${career}">
@@ -223,8 +223,8 @@
         <div class="container">
 
           <div class="section-title" data-aos="zoom-out">
-            <h2>Team</h2>
-            <p>Our Hardworking Team</p>
+            <h2>Teams</h2>
+            <p>Our Hardworking Teams</p>
           </div>
 
           <div class="row">
@@ -234,10 +234,10 @@
                   <div class="member-img">
                     <a th:href="@{/detail/team/{id}(id=${itemTeam.id})}"><img th:src="@{${itemTeam.avatarPath}}" class="img-fluid" alt=""></a>
                     <div class="social">
-                      <a href=""><i class="icofont-twitter"></i></a>
-                      <a href=""><i class="icofont-facebook"></i></a>
-                      <a href=""><i class="icofont-instagram"></i></a>
-                      <a href=""><i class="fa fa-globe"></i></a>
+                      <a th:href="@{'https://twitter.com/'+${itemTeam.twitter}}"><i class="icofont-twitter"></i></a>
+                      <a th:href="@{'https://id-id.facebook.com/'+${itemTeam.facebook}}"><i class="icofont-facebook"></i></a>
+                      <a th:href="@{'https://www.instagram.com/'+${itemTeam.instagram}}"><i class="icofont-instagram"></i></a>
+                      <a th:href="@{${itemTeam.website}}"><i class="fa fa-globe"></i></a>
                     </div>
                   </div>
                   <div class="member-info">
@@ -256,7 +256,7 @@
       <section id="contact" class="contact">
         <div class="container">
           <div class="section-title">
-            <h2>Contact</h2>
+            <h2>Contacts</h2>
             <p>Contact Us</p>
           </div>
 

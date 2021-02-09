@@ -57,7 +57,7 @@
                                         <img th:src="@{'/upload'+${item.avatarPath}}" alt="Admin"
                                             class="rounded-circle" width="150">
                                         <div class="mt-3">
-                                            <h4 th:text="${item.employeeName}"></h4>
+                                            <h4 th:text="${item.employeeName + '| Mobiwin'}"></h4>
                                             <p class="text-secondary mb-1" th:text="${item.potition}"></p>
                                             <p class="text-muted font-size-sm" th:text="${item.address}"></p>
                                         </div>
