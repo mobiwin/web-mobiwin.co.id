@@ -50,7 +50,7 @@
             <section class="inner-page">
                 <div class="container">
                     <div class="about-detail" th:each="item:${about}">
-                        <h3 style="text-align: center;" th:text="${item.title}"></h3>
+                        <h3 style="text-align: justify;" th:utext="${item.title}"></h3>
                         <p th:text="${item.wording}"></p>
                     </div>
                 </div>
