@@ -40,7 +40,7 @@
                         <h2>Detail About Us</h2>
                         <ol>
                             <li><a href="index.html">Home</a></li>
-                            <li>Detail About Us</li>
+                            <li>About Us</li>
                         </ol>
                     </div>
 
@@ -51,7 +51,7 @@
                 <div class="container">
                     <div class="about-detail" th:each="item:${about}">
                         <h3 style="text-align: justify;" th:utext="${item.title}"></h3>
-                        <p th:text="${item.wording}"></p>
+                        <p th:utext="${item.wording}"></p>
                     </div>
                 </div>
             </section>

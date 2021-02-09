@@ -61,7 +61,7 @@
         <div class="container" th:each="itemAbout:${about}">
 
           <div class="section-title" data-aos="zoom-out">
-            <h2>Abouts</h2>
+            <h2>About</h2>
             <p>Who we are</p>
           </div>
 
@@ -140,7 +140,7 @@
         <div class="container">
 
           <div class="section-title" data-aos="zoom-out">
-            <h2>Testimonys</h2>
+            <h2>Testimonies</h2>
             <p>What they say</p>
           </div>
 
@@ -186,7 +186,7 @@
           <div class="row" >
             <!-- Team member -->
             <div th:if="${#lists.isEmpty(career)}" class="col-xs-12 col-sm-6 col-md-12">
-              <h4 class="text-center"> Empty </h4>
+              <h4 class="text-center"> There are currently no job vacancies </h4>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4" th:each="itemCareer:${career}">
               <div class="image-flip" ontouchstart="this.classList.toggle('hover');">

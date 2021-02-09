@@ -54,10 +54,9 @@
                             <div class="card" >
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <img th:src="@{'/upload'+${item.avatarPath}}" alt="Admin"
-                                            class="rounded-circle" width="150">
+                                        <img th:src="@{${item.avatarPath}}" alt="Admin" width="150">
                                         <div class="mt-3">
-                                            <h4 th:text="${item.employeeName + '| Mobiwin'}"></h4>
+                                            <h4 th:text="${item.employeeName}"></h4>
                                             <p class="text-secondary mb-1" th:text="${item.potition}"></p>
                                             <p class="text-muted font-size-sm" th:text="${item.address}"></p>
                                         </div>
@@ -124,7 +123,7 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                    <h4>Bio</h4><br>
-                                   <div th:text="${item.bio}"></div>
+                                   <div th:utext="${item.bio}"></div>
                                 </div>
                             </div>
                             <div class="card mb-3">

@@ -73,7 +73,7 @@ public class FrontController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Index(Model model) {
-        model.addAttribute("title", "Mobiwin");
+        model.addAttribute("title", "PT. Muloska Pratama | Mobiwin");
         // Carousel
         List<CarouselModel> carousel = carouselService.listAll();
         model.addAttribute("carousel", carousel);
@@ -120,7 +120,7 @@ public class FrontController {
     @RequestMapping(value = "/detail/about/{id}", method = RequestMethod.GET)
     public String aboutDetail(@PathVariable("id") Integer id, Model model) {
 
-        model.addAttribute("title", "Detail About Us");
+        model.addAttribute("title", "About Mobiwin");
         AboutUsModel aboutUsModel = aboutService.findOne(id);
         model.addAttribute("about", aboutUsModel);
         return "front/pages/detail/about";
@@ -129,18 +129,18 @@ public class FrontController {
     @RequestMapping(value = "/detail/service/{id}", method = RequestMethod.GET)
     public String serviceDetail(@PathVariable("id") Integer id, Model model) {
 
-        model.addAttribute("title", "Detail Service");
         OurServiceModel ourServiceModel = ourServiceService.findOne(id);
         model.addAttribute("service", ourServiceModel);
+        model.addAttribute("title", ourServiceModel.getTitle()+" | Mobiwin");
         return "front/pages/detail/service";
     }
 
     @RequestMapping(value = "/detail/portofolio/{id}", method = RequestMethod.GET)
     public String portofolioDetail(@PathVariable("id") Integer id, Model model) {
 
-        model.addAttribute("title", "Detail Portofolio");
         OurProjectModel ourProjectModel = ourProjectService.findOne(id);
         model.addAttribute("project", ourProjectModel);
+        model.addAttribute("title", ourProjectModel.getProjectTitle()+" | Mobiwin");
         return "front/pages/detail/portofolio";
     }
 
@@ -156,9 +156,9 @@ public class FrontController {
     @RequestMapping(value = "/detail/team/{id}", method = RequestMethod.GET)
     public String teamDetail(@PathVariable("id") long id, Model model) {
 
-        model.addAttribute("title", "Detail Team");
         OurTeamModel ourTeamModel = ourTeamService.listTeamById(id);
         model.addAttribute("team", ourTeamModel);
+        model.addAttribute("title", ourTeamModel.getEmployeeName()+ " - " + ourTeamModel.getPotition()+" | Mobiwin");
         return "front/pages/detail/team";
     }
 
