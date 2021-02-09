@@ -66,12 +66,12 @@ public class CandidateController {
 
         try {
                 // MKDIR PATH
-            if (!Files.exists(Paths.get("src/main/resources/static/upload/candidate/"))) {
-                Files.createDirectories(Paths.get("src/main/resources/static/upload/candidate/"));
+            if (!Files.exists(Paths.get("upload/candidate/"))) {
+                Files.createDirectories(Paths.get("upload/candidate/"));
             }
             String fileName = StringUtils.cleanPath(candidate_cv_path.getOriginalFilename());
             candidateService.saveData(id_career,candidate_desc,candidate_name,candidate_email,candidate_skill,fileName,"has_not_been_seen");
-            Path path = Paths.get("src/main/resources/static/upload/candidate/" + fileName);
+            Path path = Paths.get("upload/candidate/" + fileName);
             Files.copy(candidate_cv_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             emailService.sendMailCandidate(candidate,candidate_email,candidate_name,candidate_desc);
 

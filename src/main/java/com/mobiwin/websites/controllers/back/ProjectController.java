@@ -1,24 +1,13 @@
 package com.mobiwin.websites.controllers.back;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -100,78 +89,76 @@ public class ProjectController {
                     String random = simpleDateFormat.format(tanggal).toString();
 
                     // MKDIR TEMP
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/temp/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/temp/"));
-                    }
+                    // if (!Files.exists(Paths.get("upload/temp/"))) {
+                    //     Files.createDirectories(Paths.get("upload/temp/"));
+                    // }
 
                     // MKDIR PATH
-                    if (!Files.exists(Paths.get("src/main/resources/static/upload/project/"))) {
-                        Files.createDirectories(Paths.get("src/main/resources/static/upload/project/"));
+                    if (!Files.exists(Paths.get("upload/project/"))) {
+                        Files.createDirectories(Paths.get("upload/project/"));
                     }
 
                     // UPLOAD
                     String projTitle = title;
                     byte[] fileBytes = preview_path.getBytes();
                     title = title.replaceAll("[^a-zA-Z0-9]", "_");
-                    String uploadPath = "src/main/resources/static/upload/temp/"+ title + "_" + random + "." + ext;
+                    String uploadPath = "upload/project/"+ title + "_" + random + "." + ext;
                     
-
-                    // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
-
                     // WRITE FILE I/O
                     Files.write(Paths.get(uploadPath), fileBytes);
 
-                    // COMRESS IMAGE
-                    File imageFile = new File(uploadPath);
+                    // // KALAU GAK MAU PAKAI COMRESS, AMBIL VARIABEL uploadPath
+                    // // COMRESS IMAGE
+                    // File imageFile = new File(uploadPath);
 
-                    String uploadCompressPath = "src/main/resources/static/upload/project/"+ title + "_" + random + "."
-                            + ext;
-                    File compressedImageFile = new File(uploadCompressPath);
+                    // String uploadCompressPath = "src/main/resources/static/upload/project/"+ title + "_" + random + "."
+                    //         + ext;
+                    // File compressedImageFile = new File(uploadCompressPath);
 
-                    // SET INPUT OUTPUT IMAGE
-                    InputStream inputStream = new FileInputStream(imageFile);
-                    OutputStream outputStream = new FileOutputStream(compressedImageFile);
+                    // // SET INPUT OUTPUT IMAGE
+                    // InputStream inputStream = new FileInputStream(imageFile);
+                    // OutputStream outputStream = new FileOutputStream(compressedImageFile);
 
-                    float imageQuality = 0.3f;
+                    // float imageQuality = 0.3f;
 
-                    // TULIS BUFFER IMAGE
-                    BufferedImage bufferedImage = ImageIO.read(inputStream);
+                    // // TULIS BUFFER IMAGE
+                    // BufferedImage bufferedImage = ImageIO.read(inputStream);
 
-                    // TULIS DAN CONVERT KE JPG
-                    Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
+                    // // TULIS DAN CONVERT KE JPG
+                    // Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
 
-                    if (!imageWriters.hasNext()) {
-                        publicData.addAttribute("errmsg", "imageWriters.hasNext");
-                    }
+                    // if (!imageWriters.hasNext()) {
+                    //     publicData.addAttribute("errmsg", "imageWriters.hasNext");
+                    // }
 
-                    ImageWriter imageWriter = (ImageWriter) imageWriters.next();
-                    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
-                    imageWriter.setOutput(imageOutputStream);
+                    // ImageWriter imageWriter = (ImageWriter) imageWriters.next();
+                    // ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+                    // imageWriter.setOutput(imageOutputStream);
 
-                    ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+                    // ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
 
-                    // COMPRESS IMAGE
-                    imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                    imageWriteParam.setCompressionQuality(imageQuality);
+                    // // COMPRESS IMAGE
+                    // imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    // imageWriteParam.setCompressionQuality(imageQuality);
 
-                    // MEMBUAT IMAGE BARU
-                    imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+                    // // MEMBUAT IMAGE BARU
+                    // imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
 
-                    // TUTUP SEMUA STREAM
-                    inputStream.close();
-                    outputStream.close();
-                    imageOutputStream.close();
-                    imageWriter.dispose();
-                    // COMPRESS SELESAI
+                    // // TUTUP SEMUA STREAM
+                    // inputStream.close();
+                    // outputStream.close();
+                    // imageOutputStream.close();
+                    // imageWriter.dispose();
+                    // // COMPRESS SELESAI
 
 
                     // INIT PATH
                     // String fixTempPath = "/temp/" + namaKaryawanTxt + "_" + random + "." + ext;
-                    String fixRealPath = "/project/"+ title + "_" + random + "." + ext;
+                    // String fixRealPath = "/project/"+ title + "_" + random + "." + ext;
 
                     // Membuat Object Models Team
                     OurProjectModel ourProjectModel = new OurProjectModel();
-                    ourProjectModel.setPreviewPath(fixRealPath);
+                    ourProjectModel.setPreviewPath("/"+uploadPath);
                     ourProjectModel.setProjectTitle(projTitle);
                     ourProjectModel.setKind(kind);
                     ourProjectModel.setClient(client);
@@ -237,7 +224,7 @@ public class ProjectController {
             title = title.replaceAll("[^a-zA-Z0-9]", "_");
             String nameImg = "/project/"+ title + "_" + random + "." + ext;
             try {
-                Path path = Paths.get("src/main/resources/static/upload/project/" + title + "_" + random + "." + ext);
+                Path path = Paths.get("upload/project/" + title + "_" + random + "." + ext);
                 Files.copy(preview_path.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                 ourProjectService.projectUpdate(id,projTi,kind,client,technology,nameImg);
                 attributes.addFlashAttribute("msgsuc","Updated Successfully");
@@ -252,7 +239,7 @@ public class ProjectController {
     public String sliderDelete(RedirectAttributes attributes,@PathVariable("id") Integer id,
      Model model) {
         OurProjectModel ourProjectModel = ourProjectService.findOne(id);
-        Path path = Paths.get("src/main/resources/static/upload/" + ourProjectModel.getPreviewPath());
+        Path path = Paths.get("upload/" + ourProjectModel.getPreviewPath());
          try{
             Files.deleteIfExists(path);
             ourProjectService.delete(id);
