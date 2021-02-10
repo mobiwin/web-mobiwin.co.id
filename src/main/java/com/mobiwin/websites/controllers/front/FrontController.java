@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mobiwin.websites.models.AboutUsModel;
@@ -74,6 +75,10 @@ public class FrontController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Index(Model model) {
         model.addAttribute("title", "PT. Muloska Pratama | Mobiwin");
+        model.addAttribute("keyword", "mobiwin,muloska pratama,bintaro");
+        model.addAttribute("description", "Muloska Pratama known as MOBIWIN is an Information Technology Services (IT) company in Indonesia. Our commitment is to help our client optimize their information technology functions by improving the effectiveness and efficiency of our client’s business.");
+        model.addAttribute("url", "www.mobiwin.co.id");
+        model.addAttribute("image", "/img/logo/logo-title.png");
         // Carousel
         List<CarouselModel> carousel = carouselService.listAll();
         model.addAttribute("carousel", carousel);
@@ -118,47 +123,67 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/detail/about/{id}", method = RequestMethod.GET)
-    public String aboutDetail(@PathVariable("id") Integer id, Model model) {
+    public String aboutDetail(@PathVariable("id") Integer id, Model model,HttpServletRequest req) {
 
         model.addAttribute("title", "About Mobiwin");
         AboutUsModel aboutUsModel = aboutService.findOne(id);
         model.addAttribute("about", aboutUsModel);
+        model.addAttribute("keyword", aboutUsModel.getTitle());
+        model.addAttribute("description", aboutUsModel.getWording());
+        model.addAttribute("url", req.getRequestURI());
+        model.addAttribute("image", "/img/logo/logo-title.png");
         return "front/pages/detail/about";
     }
 
     @RequestMapping(value = "/detail/service/{id}", method = RequestMethod.GET)
-    public String serviceDetail(@PathVariable("id") Integer id, Model model) {
+    public String serviceDetail(@PathVariable("id") Integer id, Model model,HttpServletRequest req) {
 
         OurServiceModel ourServiceModel = ourServiceService.findOne(id);
         model.addAttribute("service", ourServiceModel);
         model.addAttribute("title", ourServiceModel.getTitle()+" | Mobiwin");
+        model.addAttribute("keyword", ourServiceModel.getTitle());
+        model.addAttribute("description", ourServiceModel.getFullWording());
+        model.addAttribute("url", req.getRequestURI());
+        model.addAttribute("image", "/img/logo/logo-title.png");
         return "front/pages/detail/service";
     }
 
     @RequestMapping(value = "/detail/portofolio/{id}", method = RequestMethod.GET)
-    public String portofolioDetail(@PathVariable("id") Integer id, Model model) {
+    public String portofolioDetail(@PathVariable("id") Integer id, Model model , HttpServletRequest req) {
 
         OurProjectModel ourProjectModel = ourProjectService.findOne(id);
         model.addAttribute("project", ourProjectModel);
         model.addAttribute("title", ourProjectModel.getProjectTitle()+" | Mobiwin");
+        model.addAttribute("keyword", ourProjectModel.getProjectTitle()+","+ourProjectModel.getKind());
+        model.addAttribute("description", ourProjectModel.getTechnology());
+        model.addAttribute("url", req.getRequestURI());
+        model.addAttribute("image", ourProjectModel.getPreviewPath());
         return "front/pages/detail/portofolio";
     }
 
     @RequestMapping(value = "/detail/career/{id}", method = RequestMethod.GET)
-    public String careerDetail(@PathVariable("id") long id, Model model) {
+    public String careerDetail(@PathVariable("id") long id, Model model,HttpServletRequest req) {
 
-        model.addAttribute("title", "Detail Career");
         CareerModel careerModel = carrerService.listCareerById(id);
         model.addAttribute("career", careerModel);
+        model.addAttribute("title", careerModel.getJobTitle()+" | Mobiwin");
+        model.addAttribute("keyword", careerModel.getJobTitle()+","+careerModel.getPotition());
+        model.addAttribute("description", careerModel.getPotitionDesc());
+        model.addAttribute("url", req.getRequestURI());
+        model.addAttribute("image", careerModel.getIconOf());
         return "front/pages/detail/career";
     }
 
     @RequestMapping(value = "/detail/team/{id}", method = RequestMethod.GET)
-    public String teamDetail(@PathVariable("id") long id, Model model) {
+    public String teamDetail(@PathVariable("id") long id, Model model,HttpServletRequest req) {
 
         OurTeamModel ourTeamModel = ourTeamService.listTeamById(id);
         model.addAttribute("team", ourTeamModel);
         model.addAttribute("title", ourTeamModel.getEmployeeName()+ " - " + ourTeamModel.getPotition()+" | Mobiwin");
+        model.addAttribute("keyword", ourTeamModel.getEmployeeName()+","+ourTeamModel.getInstagram());
+        model.addAttribute("description", ourTeamModel.getBio());
+        model.addAttribute("url", req.getRequestURI());
+        model.addAttribute("image", ourTeamModel.getAvatarPath());
         return "front/pages/detail/team";
     }
 

@@ -2,6 +2,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta content="ie=edge" http-equiv="x-ua-compatible" />
+
+    <!-- STANDARD TAG -->
+    <meta name="author" content="Mobiwin">
+    <meta name="subject" content="PT Muloska Pratama - Mobiwin">
+    <meta name="keywords" th:content="${keyword}">
+    <meta name="description" th:content="${description}">
+    <meta name="geo.country" content="id">
+    <meta name="rating" content="general">
+    <meta name="audience" content="all">
+    <meta name="geo.placename" content="Indonesia">
+    <meta name="google-site-verification" content="" />
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@muloskapratama" />
+    <meta name="twitter:creator" content="@muloskapratama" />
+
+    <!-- OPEN GRAPH -->
+    <meta property="og:url" th:content="@{${url}}" />
+    <meta property="og:title" th:content="${title}" />
+    <meta property="og:description" th:content="${description}" />
+    <meta property="og:image" th:content="@{${image}}">
+
     <title th:text="${title}"></title>
 
     <!-- Favicons -->
